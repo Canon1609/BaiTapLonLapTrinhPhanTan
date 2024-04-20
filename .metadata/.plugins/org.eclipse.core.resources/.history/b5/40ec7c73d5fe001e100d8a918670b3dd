@@ -1,0 +1,8 @@
+package dao.Impl;
+
+import java.rmi.server.UnicastRemoteObject;
+
+public class DangNhapDaoImpl extends UnicastRemoteObject  implements DangNhapDao{
+	
+	
+}

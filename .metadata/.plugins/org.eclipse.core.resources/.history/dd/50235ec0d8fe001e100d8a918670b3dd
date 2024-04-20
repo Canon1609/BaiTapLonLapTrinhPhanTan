@@ -1,0 +1,45 @@
+package dao.Impl;
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+import dao.DangNhapDao;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Persistence;
+
+import java.util.List;
+
+import entity.DangNhap;
+public class DangNhapDaoImpl extends UnicastRemoteObject implements DangNhapDao{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3657173358827158039L;
+private EntityManager em;
+	
+	public DangNhapDaoImpl() throws RemoteException {
+		em = Persistence.createEntityManagerFactory("jpa-mssql")
+				.createEntityManager();
+	}
+	
+	// viết phương thức tìm kiếm tài khoản trả về list
+		@Override
+		public List<DangNhap> TimKiem(String tk, String mk) {
+			// TODO Auto-generated method stub
+			try {
+	            em.getTransaction().begin();
+	            List<DangNhap> list = em.createQuery("select dn from TaiKhoan dn where dn.TaiKhoan like :tk and dn.MatKhau like :mk", DangNhap.class)
+	                    .setParameter("tk", tk)
+	                    .setParameter("mk", mk)
+	                    .getResultList();
+	            em.getTransaction().commit();
+	            return list;
+	        } catch (Exception e) {
+				em.getTransaction().rollback();
+				return null;
+	        }
+		}
+	
+
+}

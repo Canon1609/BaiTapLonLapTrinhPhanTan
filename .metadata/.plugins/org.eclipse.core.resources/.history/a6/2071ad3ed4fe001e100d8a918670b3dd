@@ -1,0 +1,9 @@
+USE QuanLyLuongSanPham
+
+
+CREATE TABLE TaiKhoan(
+	TaiKhoan nvarchar (30) NOT NULL,
+	MatKhau nvarchar (20) NOT NULL,
+)
+INSERT INTO TaiKhoan (TaiKhoan, MatKhau)
+VALUES ('admin', 'admin123@');

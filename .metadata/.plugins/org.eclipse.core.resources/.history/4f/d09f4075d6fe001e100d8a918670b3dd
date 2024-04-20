@@ -1,0 +1,9 @@
+package dao;
+
+import java.rmi.Remote;
+import java.util.List;
+
+public interface DangNhapDao extends Remote{
+	List<DangNhap> TimKiem(String tk, String mk) throws RemoteException;
+
+}

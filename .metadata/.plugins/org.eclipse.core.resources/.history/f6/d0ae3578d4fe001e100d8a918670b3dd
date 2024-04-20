@@ -1,0 +1,4 @@
+USE QuanLyLuongSanPham
+
+INSERT INTO DangNhap (TaiKhoan, MatKhau)
+VALUES ('admin', 'admin123@');
