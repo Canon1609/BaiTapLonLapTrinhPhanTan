@@ -7,6 +7,7 @@ import lombok.*;
 import jakarta.persistence.*;
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Entity
@@ -15,24 +16,26 @@ public class NhanVien {
 	@Id
 	@Column(name = "maNhanVien", nullable = false, columnDefinition = "nvarchar(255)")
 	private String maNhanVien;
-	@Column(name = "HoTen", columnDefinition = "nvarchar(255)")
+	@Column(name = "hoTen", columnDefinition = "nvarchar(255)")
 	private String hoTen;
+	@Column(name = "CCCD", columnDefinition = "nvarchar(255)")
 	private String CCCD;
-	private LocalDate ngaySinh;
-	@Column(name = "GioiTinh", columnDefinition = "nvarchar(255)",nullable = false)
+	@Column(name = "ngaySinh", columnDefinition = "date")
+	private String ngaySinh;
+	@Column(name = "gioiTinh", columnDefinition = "nvarchar(255)",nullable = false)
 	private String gioiTinh;
+	@Column(name = "diaChi", columnDefinition = "nvarchar(255)")
 	private String diaChi;
+	@Column(name = "soDienThoai", columnDefinition = "nvarchar(255)")
+	private String soDienThoai;
+	@Column(name ="luongCoBan",columnDefinition = "float")
 	private double luongCoBan;
-	@Column(name = "PhuCap", columnDefinition = "float",nullable = false)
+	@Column(name = "phuCap", columnDefinition = "float",nullable = false)
 	private double phuCap;
+	@Column(name = "phongban", columnDefinition = "nvarchar(255)")
 	private String phongban;
-	@Column(name = "HeSoLuong", columnDefinition = "float",nullable = false)
+	@Column(name = "heSoLuong", columnDefinition = "float",nullable = false)
 	private double heSoLuong;
-//	@OneToMany(mappedBy = "nhanVien" , fetch = FetchType.LAZY)
-//	private Set<HopDong> hopDongs;
-//	@OneToMany(mappedBy = "nhanVien" , fetch = FetchType.LAZY)
-//	private Set<CongCuaCongNhan> congCuacongNhans;
-//	@OneToMany(mappedBy = "nhanVien" , fetch = FetchType.LAZY)
-//	private Set<LuongNhanVien> luongNhanViens;
+
 	
 }

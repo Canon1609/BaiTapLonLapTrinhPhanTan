@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.rmi.RemoteException;
 
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -259,7 +260,12 @@ public class TrangChu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pnCenter.removeAll();
-				pnCenter.add(new Form_NV_CapNhat());
+				try {
+					pnCenter.add(new Form_NV_CapNhat());
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				pnCenter.revalidate();
 				pnCenter.repaint();
 			}

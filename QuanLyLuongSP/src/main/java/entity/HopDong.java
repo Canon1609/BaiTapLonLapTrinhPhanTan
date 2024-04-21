@@ -16,18 +16,24 @@ public class HopDong {
 	@Column(name = "maHopDong", nullable = false, columnDefinition = "nvarchar(255)")
 	private String maHopDong;
 	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-	@JoinColumn(name = "maSanPham")
+	@JoinColumn(name = "maSanPham",nullable = false,columnDefinition = "nvarchar(255)")
 	private SanPham maSanPham;
+	@Column(name = "tenSanPham", columnDefinition = "nvarchar(255)")
 	private String tenSanPham;
+	@Column(name = "tenKhachHang", columnDefinition = "nvarchar(255)")
 	private String tenKhachHang;
 	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-	@JoinColumn(name = "maNhanVien")
+	@JoinColumn(name = "maNhanVien" , columnDefinition = "nvarchar(255)")
 	private NhanVien maNhanVien;
+	@Column(columnDefinition = "nvarchar(255)")
 	private String tenNhanVien;
-	private LocalDate ngayLap;
-	private LocalDate ngayGiao;
+	@Column(name = "ngayLap", columnDefinition = "date")
+	private String ngayLap;
+	@Column(name = "ngayGiao", columnDefinition = "date")
+	private String ngayGiao;
+	@Column(name = "soLuong", columnDefinition = "int")
 	private int soLuong;
-	@Column( name = "DonGia", columnDefinition = "float",nullable = false)
+	@Column( name = "donGia", columnDefinition = "float",nullable = false)
 	private double donGia;
 	
 }

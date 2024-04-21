@@ -14,14 +14,15 @@ public class LuongCongNhan {
 	@Column(name = "maLuongCongNhan", nullable = false, columnDefinition = "nvarchar(255)")
 	private String maLuongCongNhan;
 	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@JoinColumn(name = "maCongNhan")
+	@JoinColumn(name = "maCongNhan" , columnDefinition = "nvarchar(255)")
 	private CongNhan maCongNhan;
+	@Column(name = "tenCongNhan", columnDefinition = "nvarchar(255)")
 	private String tenCongNhan;
 	@Column(name = "soNgayDiLam", columnDefinition = "int", nullable = false)
 	private int soNgayDiLam;
-	@Column(name = "ThangNhan", columnDefinition = "int", nullable = false)
+	@Column(name = "thangNhan", columnDefinition = "int", nullable = false)
 	private int ThangNhan;
-	@Column(name = "NamNhan", columnDefinition = "int", nullable = false)
+	@Column(name = "namNhan", columnDefinition = "int", nullable = false)
 	private int NamNhan;
 	@Column(name = "ThucNhan", columnDefinition = "float", nullable = false)
 	private double thucNhan;

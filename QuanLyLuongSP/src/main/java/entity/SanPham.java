@@ -23,15 +23,15 @@ import lombok.Setter;
 @Table(name = "SanPham")
 public class SanPham implements Serializable{
 	@Id
-	@Column(name = "MaSanPham" , nullable = false , columnDefinition = "nvarchar(255)")
+	@Column(name = "maSanPham" , nullable = false , columnDefinition = "nvarchar(255)")
 	private String  maSanPham;
-	@Column(name = "TenSanPham" , columnDefinition = "nvarchar(255)")
+	@Column(name = "tenSanPham" , columnDefinition = "nvarchar(255)")
 	private String tenSanPham;
-	@Column(name = "KieuDang" , columnDefinition = "nvarchar(255)")
+	@Column(name = "kieuDang" , columnDefinition = "nvarchar(255)")
 	private String kieuDang;
-	@Column(name = "ChatLieu" , columnDefinition = "nvarchar(255)")
+	@Column(name = "chatLieu" , columnDefinition = "nvarchar(255)")
 	private String chatLieu;
-	@Column(name = "SoLuong" , columnDefinition = "int" , nullable = false)
+	@Column(name = "soLuong" , columnDefinition = "int" , nullable = false)
 	private int soLuong;
 
 }

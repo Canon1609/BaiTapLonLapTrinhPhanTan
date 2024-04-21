@@ -1,0 +1,10 @@
+package dao.Impl;
+
+import java.rmi.server.UnicastRemoteObject;
+
+import dao.NhanVienDao;
+
+public class NhanVienDaoImpl extends UnicastRemoteObject implements NhanVienDao{
+	
+
+}

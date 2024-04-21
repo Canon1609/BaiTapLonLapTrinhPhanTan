@@ -13,15 +13,16 @@ public class LuongNhanVien {
 	@Column(name = "maLuongNhanVien", nullable = false, columnDefinition = "nvarchar(255)")
 	private String maLuongNhanVien;
 	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-	@JoinColumn(name = "maNhanVien")
+	@JoinColumn(name = "maNhanVien", columnDefinition = "nvarchar(255)")
 	private NhanVien maNhanVien;
+	@Column(name = "tenNhanVien", columnDefinition = "nvarchar(255)")
 	private String tenNhanVien;
 	@Column(name = "soNgayDiLam", columnDefinition = "int", nullable = false)
 	private int soNgayDiLam;
-	@Column(name = "ThangNhan", columnDefinition = "int", nullable = false)
+	@Column(name = "thangNhan", columnDefinition = "int", nullable = false)
 	private int ThangNhan;
-	@Column(name = "NamNhan", columnDefinition = "int", nullable = false)
+	@Column(name = "namNhan", columnDefinition = "int", nullable = false)
 	private int NamNhan;
-	@Column(name = "ThucNhan", columnDefinition = "float", nullable = false)
+	@Column(name = "thucNhan", columnDefinition = "float", nullable = false)
 	private double thucNhan;
 }

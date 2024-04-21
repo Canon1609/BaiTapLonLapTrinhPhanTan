@@ -17,19 +17,27 @@ public class CongCuaCongNhan implements java.io.Serializable {
 	@Column(name = "maCongCuaCongNhan" , nullable = false,columnDefinition = "nvarchar(255)")
 	private String maCongCN;
 	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-	@JoinColumn(name = "maCongNhan")
+	@JoinColumn(name = "maCongNhan" , columnDefinition = "nvarchar(255)")
 	private CongNhan congNhan;
+	@Column(columnDefinition = "nvarchar(255)")
 	private String tenCongNhan;
-	private String maPhanCong;
-	private String maCongDoan;
+	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@JoinColumn(name = "maPhanCong",columnDefinition = "nvarchar(255)")
+	private PhanCong maPhanCong;
+	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@JoinColumn( name = "maCongDoan",columnDefinition = "nvarchar(255)")
+	private CongDoan maCongDoan;
+	@Column(columnDefinition = "nvarchar(255)")
 	private String tenCongDoan;
+	@Column(name = "ngayChamCong" , columnDefinition = "date")
 	private String ngayChamCong;
-	@Column(columnDefinition = "nvarchar(255)",nullable = false)
+	@Column(name = "caLam",columnDefinition = "nvarchar(255)",nullable = false)
 	private String caLam;
+	@Column(name = "gioLam",columnDefinition = "nvarchar(255)")
 	private String giolam;
-	@Column(columnDefinition = "float",nullable = false)
+	@Column(name = "luongCaLam",columnDefinition = "float",nullable = false)
 	private double luongCaLam;
-	@Column(columnDefinition = "int",nullable = false)
+	@Column(name = "soLuongSanPhamDaLam",columnDefinition = "int",nullable = false)
 	private int soLuongSanPhamDaLam;
 	@Column(columnDefinition = "nvarchar(255)",nullable = false)
 	private String trangThai;

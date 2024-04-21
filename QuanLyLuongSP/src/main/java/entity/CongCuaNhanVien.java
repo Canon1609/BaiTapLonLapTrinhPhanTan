@@ -17,16 +17,18 @@ public class CongCuaNhanVien implements java.io.Serializable{
 	@Column(name = "maCongCuaNhanVien", nullable = false, columnDefinition = "nvarchar(255)")
 	private String maCongCuaNhanVien;
 	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-	@JoinColumn(name = "maNhanVien")
+	@JoinColumn(name = "maNhanVien" , columnDefinition = "nvarchar(255)")
 	private NhanVien maNhanVien;
-	private LocalDate ngayChamCong;
-	@Column( name = "CaLam" ,columnDefinition = "nvarchar(255)", nullable = false)
+	@Column(columnDefinition = "date")
+	private String ngayChamCong;
+	@Column( name = "caLam" ,columnDefinition = "nvarchar(255)", nullable = false)
 	private String caLam;
-	private int gioLam;
-	@Column(name = "LuongCaLam", columnDefinition = "float", nullable = false)
-	private double luongCaLam;
-	@Column(name = "TrangThai", columnDefinition = "nvarchar(255)", nullable = false)
+	@Column(name = "gioLam", columnDefinition = "nvarchar(255)")
+	private String gioLam;
+	@Column(name = "luongCaLam", columnDefinition = "float", nullable = false)
+	private float luongCaLam;
+	@Column(name = "trangThai", columnDefinition = "nvarchar(255)", nullable = false)
 	private String trangThai;
-	@Column(name = "NghiPhep", columnDefinition = "nvarchar(255)", nullable = false)
+	@Column(name = "nghiPhep", columnDefinition = "nvarchar(255)", nullable = false)
 	private String nghiPhep;
 }
