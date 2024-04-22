@@ -6,7 +6,6 @@ import java.util.List;
 
 import dao.CongDoanDao;
 import entity.CongDoan;
-import entity.NhanVien;
 import entity.SanPham;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;

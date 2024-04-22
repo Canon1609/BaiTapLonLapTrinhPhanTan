@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.awt.Color;
@@ -22,6 +23,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import dao.Impl.SanPhamDAOImpl;
+import entity.SanPham;
 
 import javax.swing.JScrollPane;
 
@@ -34,11 +37,13 @@ public class Form_SP_TimKiem extends JPanel {
 	private JTable tblDanhSachSanPham;
 	private DefaultTableModel tableModel;
 	private JTextField txtKieu;
+	private SanPhamDAOImpl sp_dao;
 
 	/**
 	 * Create the panel.
+	 * @throws RemoteException 
 	 */
-	public Form_SP_TimKiem() {
+	public Form_SP_TimKiem() throws RemoteException {
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel pnNorth = new JPanel();
@@ -198,71 +203,66 @@ public class Form_SP_TimKiem extends JPanel {
 		
 	
 		// Khởi tạo kết nối đến CSDL
-//		try {
-//		    Conection_DB.getInstance().connect();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//		    e.printStackTrace();
-//		}
+
 //
 //		// Tạo đối tượng DAO sản phẩm
-//		sp_dao = new DAO_SanPham();
+		sp_dao = new SanPhamDAOImpl();
 //
-//		btnTimKiem.addActionListener(new ActionListener() {
-//		    @Override
-//		    public void actionPerformed(ActionEvent e) {
-//		        String timKiemKieuDang = txtKieu.getText().trim();
-//		        String timKiemTheoTenSP = txtTen.getText().trim();
-//
-//		        if (!timKiemKieuDang.isEmpty()) {
-//		            // Tìm kiếm theo kiểu dáng và lấy danh sách sản phẩm
-//		            ArrayList<SanPham> danhSachSanPham = (ArrayList<SanPham>) sp_dao.timKiemKD(timKiemKieuDang);
-//
-//		            // Kiểm tra xem danh sách có dữ liệu không
-//		            if (danhSachSanPham.isEmpty()) {
-//		                txtThongBao.setText("Không tìm thấy sản phẩm theo kiểu dáng!");
-//		                updateTableData(danhSachSanPham);
-//		            } else {
-//		                txtThongBao.setText("Tìm thành công theo kiểu dáng!");
-//		                updateTableData(danhSachSanPham);
-//		            }
-//		        } else if (!timKiemTheoTenSP.isEmpty()) {
-//		            // Tìm kiếm theo chất liệu và lấy danh sách sản phẩm
-//		            ArrayList<SanPham> danhSachSanPham = (ArrayList<SanPham>) sp_dao.timKiemTen(timKiemTheoTenSP);
-//
-//		            // Kiểm tra xem danh sách có dữ liệu không
-//		            if (danhSachSanPham.isEmpty()) {
-//		                txtThongBao.setText("Không tìm thấy sản phẩm theo tên sản phẩm!");
-//		                updateTableData(danhSachSanPham);
-//		            } else {
-//		                txtThongBao.setText("Tìm thành công theo tên sản phẩm!");
-//		                updateTableData(danhSachSanPham);
-//		            }
-//		        }
-//		    }
-//		}); 
-//		btnThoat.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				setVisible(false);
-//			}
-//		});
-//		}
-//	
-//		private void updateTableData(ArrayList<SanPham> danhSachSanPham) {
-//		    DefaultTableModel model = (DefaultTableModel) tblDanhSachSanPham.getModel();
-//		    model.setRowCount(0); // Xóa dữ liệu cũ
-//
-//		    for (SanPham sp : danhSachSanPham) {
-//		        model.addRow(new Object[] {
-//		            sp.getMaSanPham(),
-//		            sp.getTenSanPham(),
-//		            sp.getKieuDang(),
-//		            sp.getChatLieu(),
-//		            sp.getSoLuong(),
-//
-//		        });
-//		    }
+		btnTimKiem.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        String timKiemKieuDang = txtKieu.getText().trim();
+		        String timKiemTheoTenSP = txtTen.getText().trim();
+
+		        if (!timKiemKieuDang.isEmpty()) {
+		            // Tìm kiếm theo kiểu dáng và lấy danh sách sản phẩm
+		            ArrayList<SanPham> danhSachSanPham = (ArrayList<SanPham>) sp_dao.TimSanPhamTheoKieuDang(timKiemKieuDang);
+
+		            // Kiểm tra xem danh sách có dữ liệu không
+		            if (danhSachSanPham.isEmpty()) {
+		                txtThongBao.setText("Không tìm thấy sản phẩm theo kiểu dáng!");
+		                updateTableData(danhSachSanPham);
+		            } else {
+		                txtThongBao.setText("Tìm thành công theo kiểu dáng!");
+		                updateTableData(danhSachSanPham);
+		            }
+		        } else if (!timKiemTheoTenSP.isEmpty()) {
+		            // Tìm kiếm theo chất liệu và lấy danh sách sản phẩm
+		            ArrayList<SanPham> danhSachSanPham = (ArrayList<SanPham>) sp_dao.TimSanPhamTheoTen(timKiemTheoTenSP);
+
+		            // Kiểm tra xem danh sách có dữ liệu không
+		            if (danhSachSanPham.isEmpty()) {
+		                txtThongBao.setText("Không tìm thấy sản phẩm theo tên sản phẩm!");
+		                updateTableData(danhSachSanPham);
+		            } else {
+		                txtThongBao.setText("Tìm thành công theo tên sản phẩm!");
+		                updateTableData(danhSachSanPham);
+		            }
+		        }
+		    }
+		}); 
+		btnThoat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		}
+	
+		private void updateTableData(ArrayList<SanPham> danhSachSanPham) {
+		    DefaultTableModel model = (DefaultTableModel) tblDanhSachSanPham.getModel();
+		    model.setRowCount(0); // Xóa dữ liệu cũ
+
+		    for (SanPham sp : danhSachSanPham) {
+		        model.addRow(new Object[] {
+		            sp.getMaSanPham(),
+		            sp.getTenSanPham(),
+		            sp.getKieuDang(),
+		            sp.getChatLieu(),
+		            sp.getSoLuong(),
+
+		        });
+		    }
 	}
 
 }

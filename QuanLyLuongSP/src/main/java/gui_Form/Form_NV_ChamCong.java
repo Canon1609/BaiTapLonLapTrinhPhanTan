@@ -348,10 +348,7 @@ public class Form_NV_ChamCong extends JPanel {
 		String[] columnNames = { "Mã Nhân Viên", "Họ Tên", "CMND/CCCD", "Ngày Sinh", "Giới Tính", "Địa Chỉ",
 				"Số Điện Thoại", "Lương Cơ bản", "Phụ Cấp", "Phòng Ban", "Hệ Số Lương" };
 		tableModel.setColumnIdentifiers(columnNames);
-		//EntityManager và EntityTransaction được khởi tạo ở đây
-        emf = Persistence.createEntityManagerFactory("jpa-mssql");
-        em = emf.createEntityManager();
-        tx = em.getTransaction();
+ 
         cnv_dao = new ChamCongNhanVienDaoImpl();
         nv_dao = new NhanVienDaoImpl();
 //		// Đưa dữ liệu từ bảng lên các trường nhập liệu khi click vào một dòng trong

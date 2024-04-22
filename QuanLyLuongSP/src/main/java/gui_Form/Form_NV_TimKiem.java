@@ -217,10 +217,6 @@ public class Form_NV_TimKiem extends JPanel {
 		String[] columnNames = { "Mã Nhân Viên", "Họ Tên", "CMND/CCCD", "Ngày Sinh", "Giới Tính", "Địa Chỉ",
 				"Số Điện Thoại", "Lương Cơ bản", "Phụ Cấp", "Phòng Ban", "Hệ Số Lương" };
 		tableModel.setColumnIdentifiers(columnNames);
-//		// khởi tạo kết nối đến CSDL
-		emf = Persistence.createEntityManagerFactory("jpa-mssql");
-        em = emf.createEntityManager();
-        tx = em.getTransaction();
         nv_dao = new NhanVienDaoImpl();
 		btnTimKiem.addActionListener(new ActionListener() {
 		    @Override

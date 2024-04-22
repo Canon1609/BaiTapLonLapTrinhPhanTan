@@ -61,9 +61,6 @@ public class Form_NV_CapNhat extends JPanel {
 	private JDateChooser dateChooser;
 	private JComboBox cmbGioiTinh;
 	private JComboBox cmbPhongBan;
-	private EntityManagerFactory emf;
-	private EntityManager em;
-	private EntityTransaction tx;
 	private NhanVienDaoImpl nv_dao;
 
 	/**
@@ -383,10 +380,7 @@ public class Form_NV_CapNhat extends JPanel {
 		String[] columnNames = { "Mã Nhân Viên", "Họ Tên", "CMND/CCCD", "Ngày Sinh", "Giới Tính", "Địa Chỉ",
 				"Số Điện Thoại", "Lương Cơ bản", "Phụ Cấp", "Phòng Ban", "Hệ Số Lương" };
 		tableModel.setColumnIdentifiers(columnNames);
-		  //EntityManager và EntityTransaction được khởi tạo ở đây
-        emf = Persistence.createEntityManagerFactory("jpa-mssql");
-        em = emf.createEntityManager();
-        tx = em.getTransaction();
+		
         nv_dao = new NhanVienDaoImpl();
 		DocDuLieuDBVaoTable();
 //		// THÊM NHÂN VIÊN

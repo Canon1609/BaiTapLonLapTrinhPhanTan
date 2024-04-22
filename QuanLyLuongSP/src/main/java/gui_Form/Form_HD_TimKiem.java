@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +24,8 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import com.toedter.calendar.JDateChooser;
 
-
+import dao.Impl.HopDongDAOImpl;
+import entity.HopDong;
 
 import java.awt.Component;
 import javax.swing.DefaultComboBoxModel;
@@ -35,11 +37,14 @@ public class Form_HD_TimKiem extends JPanel {
 	private JTable table;
 	private DefaultTableModel tableModel;
 	private JTable tblDanhSachNhanVien;
+	private HopDongDAOImpl hd_dao;
+	private JTextField txtMa;
 
 	/**
 	 * Create the panel.
+	 * @throws RemoteException 
 	 */
-	public Form_HD_TimKiem() {
+	public Form_HD_TimKiem() throws RemoteException {
 	setLayout(new BorderLayout(0, 0));
 		
 		JPanel pnNorth = new JPanel();
@@ -81,6 +86,8 @@ public class Form_HD_TimKiem extends JPanel {
         lblNhapTen.setPreferredSize(lblNhapMa.getPreferredSize());
         b2.add(Box.createHorizontalStrut(30));
         b2.add(txtTen = new JTextField());
+        b2.add(txtMa = new JTextField());
+        txtMa.setVisible(false);
         txtTen.setPreferredSize(new Dimension(10,20));
         b.add(Box.createVerticalStrut(10));
 
@@ -92,12 +99,14 @@ public class Form_HD_TimKiem extends JPanel {
                 if(cmbMaNV.getSelectedItem().equals("Tên Khách Hàng")){
                     lblNhapTen.setText("Nhập Tên:");
                     txtTen.setPreferredSize(new Dimension(20,30));
+                    txtMa.setVisible(false);
                     txtTen.setVisible(true);
                   
                 }
                 else if(cmbMaNV.getSelectedItem().equals("Mã Nhân Viên")){
                     lblNhapTen.setText("Nhập Mã:");
-                    
+                    txtTen.setVisible(false);
+                    txtMa.setVisible(true);
                    
                 }
               
@@ -197,85 +206,66 @@ public class Form_HD_TimKiem extends JPanel {
 		String[] columnNames = { "Mã Hợp Đồng", "Tên Khách Hàng", "Mã Nhân Viên",  "Ngày Lập", "Ngày Giao",
 				"Đơn Giá" };
 		tableModel.setColumnIdentifiers(columnNames);
-//		// khởi tạo kết nối đến CSDL
-//				try {
-//					Conection_DB.getInstance().connect();
-//				} catch (SQLException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
+		hd_dao = new HopDongDAOImpl();
 //		DocDuLieuDBVaoTable();
-//		btnTimKiem.addActionListener(new ActionListener() {
-//		    @Override
-//		    public void actionPerformed(ActionEvent e) {
-//		        String loaiTimKiem = cmbMaNV.getSelectedItem().toString();
-//		        String timKiemTen = txtTen.getText().trim();
-//		        String timKiemMa = txtTen.getText().trim();
-//		        String ngayLap =txtTen.getText().trim();
-//		        String ngayGiao =txtTen.getText().trim();
-//
-//		        if (loaiTimKiem.equals("Tên Khách Hàng")) {
-//		            // Tìm kiếm theo tên và lấy danh sách nhân viên
-//		            ArrayList<HopDong> danhSachNhanVien = (ArrayList<HopDong>) hd_dao.timKiemTenKhachHang(timKiemTen);
-//		           
-//		            // Kiểm tra xem danh sách có dữ liệu không
-//		            if (danhSachNhanVien.isEmpty()) {
-//		                txtThongBao.setText("Không tìm thấy HD!");
-//		                updateTableData(danhSachNhanVien);
-//		            } else {
-//		                txtThongBao.setText("Tìm thành công!");
-//		                updateTableData(danhSachNhanVien);
-//		            }
-//		        } else if (loaiTimKiem.equals("Mã Nhân Viên")) {
-//		            // Tìm kiếm theo giới tính và lấy danh sách nhân viên
-//		        	 ArrayList<HopDong> danhSachNhanVien1 = (ArrayList<HopDong>) hd_dao.timKiemMaNhanVien(timKiemMa);
-//		        	 if (danhSachNhanVien1.isEmpty()) {
-//			                txtThongBao.setText("Không tìm thấy HD!");
-//			                updateTableData(danhSachNhanVien1);
-//			            } else {
-//			                txtThongBao.setText("Tìm thành công!");
-//			                updateTableData(danhSachNhanVien1);
-//			            }
-//		            
-//		            // Kiểm tra xem danh sách có dữ liệu không
-//		         
-//		        }
-//		       
-//		    }
-//		});
-//		btnThoat.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				setVisible(false);
-//			}
-//		});
+		btnTimKiem.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        String timKiemTen = txtTen.getText().trim();
+		        String timKiemMa = txtMa.getText().trim();
+
+		         
+		        if(!timKiemTen.isEmpty()) {
+					ArrayList<HopDong> danhSachNhanVien = (ArrayList<HopDong>) hd_dao.getHopDongTheoTenKH(timKiemTen);
+					if (danhSachNhanVien.isEmpty()) {
+						txtThongBao.setText("Không tìm thấy HD!");
+						updateTableData(danhSachNhanVien);
+					} else {
+						txtThongBao.setText("Tìm thành công!");
+						updateTableData(danhSachNhanVien);
+					}
+				} else if (!timKiemMa.isEmpty()) {
+					ArrayList<HopDong> danhSachNhanVien = (ArrayList<HopDong>) hd_dao.getHopDongTheoMaNV(timKiemMa);
+					if (danhSachNhanVien.isEmpty()) {
+						txtThongBao.setText("Không tìm thấy HD!");
+						updateTableData(danhSachNhanVien);
+					} else {
+						txtThongBao.setText("Tìm thành công!");
+						updateTableData(danhSachNhanVien);
+					}
+		        }
+		       
+		    }
+		});
+		btnThoat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
 	}
 //		
 //		//
 //		
 //		// Phương thức cập nhật dữ liệu trong bảng
-//		private void updateTableData(ArrayList<HopDong> danhSachNhanVien) {
-//		    DefaultTableModel model = (DefaultTableModel) tblDanhSachNhanVien.getModel();
-//		    model.setRowCount(0); // Xóa dữ liệu cũ
-//
-//		    for (HopDong hd : danhSachNhanVien) {
-//		        model.addRow(new Object[] {hd.getMaHopDong(),hd.getTenKH(),hd.getNhanVien().getMaNhanVien(), hd.getNgayLap(),hd.getNgayGiao(), hd.getDonGia()
-//		        	
-//		        });
-//		    }
-//		}
-//	
-//	public void DocDuLieuDBVaoTable() {
-//		List<HopDong> list =hd_dao.getAllHopDong() ;
-//		for (HopDong hd : list) {
-//			
-//			tableModel.addRow(new Object[] {hd.getMaHopDong(),hd.getTenKH(),hd.getNhanVien().getMaNhanVien(), hd.getNgayLap(),hd.getNgayGiao(), hd.getDonGia()
-//			});
-//		}
-//	}
-//	
-//	public static void main(String[] args) {
-//		Form_HD_TimKiem f =new Form_HD_TimKiem();
-//		f.setVisible(true);
-//	}
+		private void updateTableData(ArrayList<HopDong> danhSachNhanVien) {
+		    DefaultTableModel model = (DefaultTableModel) tblDanhSachNhanVien.getModel();
+		    model.setRowCount(0); // Xóa dữ liệu cũ
+
+		    for (HopDong hd : danhSachNhanVien) {
+		        model.addRow(new Object[] {hd.getMaHopDong(),hd.getTenKhachHang(),hd.getMaNhanVien().getMaNhanVien(), hd.getNgayLap(),hd.getNgayGiao(), hd.getDonGia()
+		        	
+		        });
+		    }
+		}
+	
+	public void DocDuLieuDBVaoTable() throws RemoteException {
+		List<HopDong> list =hd_dao.getDanhSachHopDong() ;
+		for (HopDong hd : list) {
+			
+			tableModel.addRow(new Object[] {hd.getMaHopDong(),hd.getTenKhachHang(),hd.getMaNhanVien().getMaNhanVien(), hd.getNgayLap(),hd.getNgayGiao(), hd.getDonGia()
+			});
+		}
+	}
+
 }

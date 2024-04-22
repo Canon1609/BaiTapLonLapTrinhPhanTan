@@ -35,5 +35,11 @@ public class SanPham implements Serializable{
 	private String chatLieu;
 	@Column(name = "soLuong" , columnDefinition = "int")
 	private int soLuong;
+	public SanPham(String maSanPham) {
+		super();
+		this.maSanPham = maSanPham;
+	}
+	
+	
 
 }

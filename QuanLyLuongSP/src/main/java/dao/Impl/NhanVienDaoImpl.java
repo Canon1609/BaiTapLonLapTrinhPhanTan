@@ -143,6 +143,25 @@ public class NhanVienDaoImpl extends UnicastRemoteObject implements NhanVienDao 
 		return null; // Trả về giá trị mặc định nếu có lỗi
 	}
 	
+	//Viết phương thức trả về list nhân viên theo mã nhân viên
+	@Override
+	public List<NhanVien> getNhanVienTheoMa(String maNhanVien) {
+        EntityManager em = emf.createEntityManager(); // Mở EntityManager
+        try {
+            // Sử dụng JPQL để truy vấn nhân viên theo mã nhân viên
+            TypedQuery<NhanVien> query = em.createQuery("SELECT nv FROM NhanVien nv WHERE nv.maNhanVien = :maNhanVien", NhanVien.class);
+            List<NhanVien> list = query.getResultList(); // Thực hiện truy vấn và lấy kết quả
+            return list;
+            } catch (Exception e) {
+            	e.printStackTrace();
+            	
+            } finally {
+            	em.close(); // Đóng EntityManager sau khi sử dụng
+            }
+        return null; // Trả về giá trị mặc định nếu có lỗi
+        
+            }
+	
 	// Viết phương thức trả về thông tin nhân viên theo tên nhân viên trả về list
 	@Override
 	public List<NhanVien> getNhanVienTheoTen(String tenNhanVien) {
@@ -186,5 +205,9 @@ public class NhanVienDaoImpl extends UnicastRemoteObject implements NhanVienDao 
 
 		return null; // Trả về giá trị mặc định nếu có lỗi
 	}
+	
+	
+	
+            
 
 }
