@@ -1,0 +1,11 @@
+package dao;
+
+import java.rmi.Remote;
+
+public interface LuongNhanVienDao extends Remote{
+
+	int getMaxSalaryId();
+
+	boolean tinhLuongNhanVien(LuongNhanVien luongNV);
+
+}

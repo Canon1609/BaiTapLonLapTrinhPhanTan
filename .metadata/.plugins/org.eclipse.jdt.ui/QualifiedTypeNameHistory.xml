@@ -15,4 +15,7 @@
     <fullyQualifiedTypeName name="dao.LuongNhanVienDao"/>
     <fullyQualifiedTypeName name="java.rmi.server.UnicastRemoteObject"/>
     <fullyQualifiedTypeName name="entity.HopDong"/>
+    <fullyQualifiedTypeName name="entity.LuongNhanVien"/>
+    <fullyQualifiedTypeName name="dao.Impl.NhanVienDaoImpl"/>
+    <fullyQualifiedTypeName name="gui_Form.Form_NV_ChamCong"/>
 </qualifiedTypeNameHistroy>
