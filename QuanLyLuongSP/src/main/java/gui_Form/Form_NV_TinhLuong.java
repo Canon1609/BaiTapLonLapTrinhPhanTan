@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.Calendar;
@@ -51,8 +52,9 @@ public class Form_NV_TinhLuong extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @throws RemoteException 
 	 */
-	public Form_NV_TinhLuong() {
+	public Form_NV_TinhLuong() throws RemoteException {
 		setLayout(new BorderLayout(0, 0));
 
 		JPanel pnNorth = new JPanel();

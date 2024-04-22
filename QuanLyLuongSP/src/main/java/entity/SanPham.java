@@ -1,12 +1,10 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -22,6 +20,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "SanPham")
 public class SanPham implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3480137035395910224L;
 	@Id
 	@Column(name = "maSanPham" , nullable = false , columnDefinition = "nvarchar(255)")
 	private String  maSanPham;
@@ -31,7 +33,7 @@ public class SanPham implements Serializable{
 	private String kieuDang;
 	@Column(name = "chatLieu" , columnDefinition = "nvarchar(255)")
 	private String chatLieu;
-	@Column(name = "soLuong" , columnDefinition = "int" , nullable = false)
+	@Column(name = "soLuong" , columnDefinition = "int")
 	private int soLuong;
 
 }

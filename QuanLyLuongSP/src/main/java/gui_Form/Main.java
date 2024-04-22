@@ -9,7 +9,7 @@ public class Main {
 //        formDangNhap.setLocationRelativeTo(null);
 //
 //        // Hiển thị form đăng nhập
-//        formDangNhap.setVisible(true);
+//        formDangNhap.setVisible(true); 
     	
 		TrangChu tc = new TrangChu();
 		tc.setLocationRelativeTo(null);

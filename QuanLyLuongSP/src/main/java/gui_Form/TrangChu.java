@@ -203,7 +203,7 @@ public class TrangChu extends JFrame {
 		JPanel pnSouth = new JPanel();
 		cp.add(pnSouth, BorderLayout.SOUTH);
 
-		JLabel lblTen = new JLabel("Trần Quốc Anh - Nguyễn Hoàng Khôi - Hồ Nguyễn Công Hiếu");
+		JLabel lblTen = new JLabel("Trần Quốc Anh - Nguyễn Hoàng Khôi - Hồ Nguyễn Công Hiếu - Nguyễn Phước Huy");
 		lblTen.setFont(new Font("Arial", Font.ITALIC, 18));
 		pnSouth.setPreferredSize(new Dimension(0, 40));
 		pnSouth.setBackground(Color.LIGHT_GRAY);
@@ -276,7 +276,12 @@ public class TrangChu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pnCenter.removeAll();
-				pnCenter.add(new Form_NV_ChamCong());
+				try {
+					pnCenter.add(new Form_NV_ChamCong());
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				pnCenter.revalidate();
 				pnCenter.repaint();
 
@@ -288,7 +293,12 @@ public class TrangChu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pnCenter.removeAll();
-				pnCenter.add(new Form_NV_TinhLuong());
+				try {
+					pnCenter.add(new Form_NV_TinhLuong());
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				pnCenter.revalidate();
 				pnCenter.repaint();
 

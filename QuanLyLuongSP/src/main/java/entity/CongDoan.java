@@ -1,7 +1,6 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,20 +15,24 @@ import lombok.*;
 @Table(name = "CongDoan")
 
 public class CongDoan implements Serializable {
-	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2054612670321170819L;
 	@Id
 	@Column(name = "maCongDoan" , nullable = false , columnDefinition = "nvarchar(255)")
 	private String maCongDoan;
 	@Column(name = "TenCongDoan" , columnDefinition = "nvarchar(255)")
 	private String tenCongDoan;
-	@Column(name = "GiaCongDoan",columnDefinition ="float" , nullable = false)
+	@Column(name = "GiaCongDoan",columnDefinition ="float" )
 	private double giaCongDoan;
 	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-	@JoinColumn(name = "maSanPham", nullable = false,columnDefinition = "nvarchar(255)")
+	@JoinColumn(name = "maSanPham", referencedColumnName = "maSanPham")
 	private SanPham sanPham;
 	@Column(name = "tenSanPham", columnDefinition = "nvarchar(255)")
 	private String tenSanPham;
-	@Column(name = "soLuong" , columnDefinition = "int" , nullable = false)
+	@Column(name = "soLuong" , columnDefinition = "int" )
 	private int soLuong;
 	@Column(name = "congDoanYeuCau" , columnDefinition = "nvarchar(255)")
 	private String congDoanYeuCau;

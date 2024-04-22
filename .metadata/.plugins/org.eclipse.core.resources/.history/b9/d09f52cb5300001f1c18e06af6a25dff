@@ -1,0 +1,12 @@
+package dao;
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+
+import entity.CongCuaNhanVien;
+
+public interface ChamCongNhanVienDao extends Remote{
+
+	boolean ChamCongNhanVien(CongCuaNhanVien congNV) throws RemoteException;
+
+}

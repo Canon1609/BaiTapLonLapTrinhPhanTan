@@ -388,7 +388,7 @@ public class Form_NV_CapNhat extends JPanel {
         em = emf.createEntityManager();
         tx = em.getTransaction();
         nv_dao = new NhanVienDaoImpl();
-//				DocDuLieuDBVaoTable();
+		DocDuLieuDBVaoTable();
 //		// THÊM NHÂN VIÊN
         btnThemNhanVien.addActionListener(new ActionListener() {
             @Override
@@ -449,258 +449,258 @@ public class Form_NV_CapNhat extends JPanel {
         });
 
 //		//XÓA NHÂN VIÊN
-//		btnXoaNhanVien.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				int row = table.getSelectedRow();
-//				if(row < 0) {
-//					JOptionPane.showMessageDialog(null, "Chọn nhân viên cần xóa");
-//				}else {
-//					String maNV = (String) table.getValueAt(row, 0);
-//					nv_dao.deleteNV(maNV);
-//					tableModel.removeRow(row);
-//					JOptionPane.showMessageDialog(null, "Xóa nhân viên thành công");
-//				}
-//				
-//			}
-//		});
+		btnXoaNhanVien.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row = table.getSelectedRow();
+				if(row < 0) {
+					JOptionPane.showMessageDialog(null, "Chọn nhân viên cần xóa");
+				}else {
+					String maNV = (String) table.getValueAt(row, 0);
+					nv_dao.XoaNhanVien(maNV);
+					tableModel.removeRow(row);
+					JOptionPane.showMessageDialog(null, "Xóa nhân viên thành công");
+				}
+				
+			}
+		});
 //		//SỬA NHÂN VIÊN
-//		btnSuaNhanVien.addActionListener(new ActionListener() {
-//		    @Override
-//		    public void actionPerformed(ActionEvent e) {
-//		        int selectedRow = table.getSelectedRow();
-//		        if (selectedRow < 0) {
-//		            JOptionPane.showMessageDialog(null, "Chọn một nhân viên trong bảng để sửa.");
-//		            return;
-//		        }
-//
-//		        // Lấy thông tin nhân viên từ dòng được chọn trong bảng
-//		        String maNV = txtMaNV.getText().trim();
-//		        String ten = txtHoTen.getText().trim();
-//		        String cmnd = txtCMND.getText().trim();
-//		        // Xử lý ngày sinh
-//		        Date ngaySinh = (Date) dateChooser.getDate();
-//		        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//		        String ngaySinhStr = dateFormat.format(ngaySinh);		        
-//		        String gioiTinh = cmbGioiTinh.getSelectedItem().toString();
-//		        String diaChi = txtDiaChi.getText().trim();
-//		        String soDienThoai = txtSoDienThoai.getText().trim();
-//		        double luongCoBan = Double.parseDouble(txtLuongCoBan.getText().trim());
-//		        double phuCap = Double.parseDouble(txtPhuCap.getText().trim());
-//		        String phongBan = cmbPhongBan.getSelectedItem().toString();
-//		        double heSoLuong = Double.parseDouble(cmbHeSoLuong.getSelectedItem().toString());
-//		        // Tạo đối tượng NhanVien mới
-//		        NhanVien nv = new NhanVien(maNV, ten, cmnd, ngaySinhStr, gioiTinh, diaChi, soDienThoai, luongCoBan, phuCap, phongBan, heSoLuong);
-//		        // Gọi phương thức DAO để cập nhật thông tin nhân viên
-//		        boolean updated = nv_dao.update(nv);
-//
-//		        if (updated) {
-//		            // Cập nhật lại thông tin trong bảng
-//		            tableModel.setValueAt(ten, selectedRow, 1);
-//		            tableModel.setValueAt(cmnd, selectedRow, 2);
-//		            tableModel.setValueAt(ngaySinhStr, selectedRow, 3);
-//		            tableModel.setValueAt(gioiTinh, selectedRow, 4);
-//		            tableModel.setValueAt(diaChi, selectedRow, 5);
-//		            tableModel.setValueAt(soDienThoai, selectedRow, 6);
-//		            tableModel.setValueAt(luongCoBan, selectedRow, 7);
-//		            tableModel.setValueAt(phuCap, selectedRow, 8);
-//		            tableModel.setValueAt(phongBan, selectedRow, 9);
-//		            tableModel.setValueAt(heSoLuong, selectedRow, 10);
-//
-//		            JOptionPane.showMessageDialog(null, "Cập nhật thông tin nhân viên thành công");
-//		        } else {
-//		            JOptionPane.showMessageDialog(null, "Cập nhật thông tin nhân viên thất bại");
-//		        }
-//		    }
-//		});
+		btnSuaNhanVien.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        int selectedRow = table.getSelectedRow();
+		        if (selectedRow < 0) {
+		            JOptionPane.showMessageDialog(null, "Chọn một nhân viên trong bảng để sửa.");
+		            return;
+		        }
+
+		        // Lấy thông tin nhân viên từ dòng được chọn trong bảng
+		        String maNV = txtMaNV.getText().trim();
+		        String ten = txtHoTen.getText().trim();
+		        String cmnd = txtCMND.getText().trim();
+		        // Xử lý ngày sinh
+		        Date ngaySinh = (Date) dateChooser.getDate();
+		        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		        String ngaySinhStr = dateFormat.format(ngaySinh);		        
+		        String gioiTinh = cmbGioiTinh.getSelectedItem().toString();
+		        String diaChi = txtDiaChi.getText().trim();
+		        String soDienThoai = txtSoDienThoai.getText().trim();
+		        double luongCoBan = Double.parseDouble(txtLuongCoBan.getText().trim());
+		        double phuCap = Double.parseDouble(txtPhuCap.getText().trim());
+		        String phongBan = cmbPhongBan.getSelectedItem().toString();
+		        double heSoLuong = Double.parseDouble(cmbHeSoLuong.getSelectedItem().toString());
+		        // Tạo đối tượng NhanVien mới
+		        NhanVien nv = new NhanVien(maNV, ten, cmnd, ngaySinhStr, gioiTinh, diaChi, soDienThoai, luongCoBan, phuCap, phongBan, heSoLuong);
+		        // Gọi phương thức DAO để cập nhật thông tin nhân viên
+		        boolean updated = nv_dao.CapNhatNhanVien(nv);
+
+		        if (updated) {
+		            // Cập nhật lại thông tin trong bảng
+		            tableModel.setValueAt(ten, selectedRow, 1);
+		            tableModel.setValueAt(cmnd, selectedRow, 2);
+		            tableModel.setValueAt(ngaySinhStr, selectedRow, 3);
+		            tableModel.setValueAt(gioiTinh, selectedRow, 4);
+		            tableModel.setValueAt(diaChi, selectedRow, 5);
+		            tableModel.setValueAt(soDienThoai, selectedRow, 6);
+		            tableModel.setValueAt(luongCoBan, selectedRow, 7);
+		            tableModel.setValueAt(phuCap, selectedRow, 8);
+		            tableModel.setValueAt(phongBan, selectedRow, 9);
+		            tableModel.setValueAt(heSoLuong, selectedRow, 10);
+
+		            JOptionPane.showMessageDialog(null, "Cập nhật thông tin nhân viên thành công");
+		        } else {
+		            JOptionPane.showMessageDialog(null, "Cập nhật thông tin nhân viên thất bại");
+		        }
+		    }
+		});
 //		
 //		// XÓA RỖNG
-//		btnXoaRong.addActionListener(new ActionListener() {
-//		    @Override
-//		    public void actionPerformed(ActionEvent e) {
-//		        // Đặt giá trị của các trường nhập liệu về rỗng hoặc giá trị mặc định
-//		        txtMaNV.setText("");
-//		        txtHoTen.setText("");
-//		        txtCMND.setText("");
-//		        dateChooser.setDate(null);
-//		        cmbGioiTinh.setSelectedIndex(0); // Đặt lại giá trị mặc định
-//		        txtDiaChi.setText("");
-//		        txtSoDienThoai.setText("");
-//		        txtLuongCoBan.setText("");
-//		        txtPhuCap.setText("");
-//		        cmbPhongBan.setSelectedIndex(0); // Đặt lại giá trị mặc định
-//		        cmbHeSoLuong.setSelectedIndex(0); // Đặt lại giá trị mặc định
-//		    }
-//		});
+		btnXoaRong.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        // Đặt giá trị của các trường nhập liệu về rỗng hoặc giá trị mặc định
+		        txtMaNV.setText("");
+		        txtHoTen.setText("");
+		        txtCMND.setText("");
+		        dateChooser.setDate(null);
+		        cmbGioiTinh.setSelectedIndex(0); // Đặt lại giá trị mặc định
+		        txtDiaChi.setText("");
+		        txtSoDienThoai.setText("");
+		        txtLuongCoBan.setText("");
+		        txtPhuCap.setText("");
+		        cmbPhongBan.setSelectedIndex(0); // Đặt lại giá trị mặc định
+		        cmbHeSoLuong.setSelectedIndex(0); // Đặt lại giá trị mặc định
+		    }
+		});
 //		//THOÁT
-//		btnThoat.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				setVisible(false);
-//			}
-//		});
-//		// Đưa dữ liệu từ bảng lên các trường nhập liệu khi click vào một dòng trong bảng
-//		table.addMouseListener(new MouseAdapter() {
-//		    @Override
-//		    public void mouseClicked(MouseEvent e) {
-//		        int row = table.getSelectedRow();
-//		        if (row >= 0) {
-//		            String ma = (String) table.getValueAt(row, 0);
-//		            String ten = (String) table.getValueAt(row, 1);
-//		            String cmnd = (String) table.getValueAt(row, 2);
-//		            String ngaySinhStr = (String) table.getValueAt(row, 3);
-//		            String gioiTinh = (String) table.getValueAt(row, 4);
-//		            String diaChi = (String) table.getValueAt(row, 5);
-//		            String soDienThoai = (String) table.getValueAt(row, 6);
-//		            String luongCoBan = (String) table.getValueAt(row, 7).toString();
-//		            String phuCap = (String) table.getValueAt(row, 8).toString();
-//		            String phongBan = (String) table.getValueAt(row, 9);
-//		            String heSoLuong = (String) table.getValueAt(row, 10).toString();
-//
-//		            txtMaNV.setText(ma);
-//		            txtHoTen.setText(ten);
-//		            txtCMND.setText(cmnd);
-//		            try {
-//		                Date ngaySinhDate = new SimpleDateFormat("yyyy-MM-dd").parse(ngaySinhStr);
-//		                dateChooser.setDate(ngaySinhDate);
-//		            } catch (ParseException ex) {
-//		                ex.printStackTrace();
-//		            }
-//		            cmbGioiTinh.setSelectedItem(gioiTinh);
-//		            txtDiaChi.setText(diaChi);
-//		            txtSoDienThoai.setText(soDienThoai);
-//		            txtLuongCoBan.setText(luongCoBan);
-//		            txtPhuCap.setText(phuCap);
-//		            cmbPhongBan.setSelectedItem(phongBan);
-//		            cmbHeSoLuong.setSelectedItem(heSoLuong);
-//		        }
-//		    }
-//		});
+		btnThoat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		// Đưa dữ liệu từ bảng lên các trường nhập liệu khi click vào một dòng trong bảng
+		table.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        int row = table.getSelectedRow();
+		        if (row >= 0) {
+		            String ma = (String) table.getValueAt(row, 0);
+		            String ten = (String) table.getValueAt(row, 1);
+		            String cmnd = (String) table.getValueAt(row, 2);
+		            String ngaySinhStr = (String) table.getValueAt(row, 3);
+		            String gioiTinh = (String) table.getValueAt(row, 4);
+		            String diaChi = (String) table.getValueAt(row, 5);
+		            String soDienThoai = (String) table.getValueAt(row, 6);
+		            String luongCoBan = (String) table.getValueAt(row, 7).toString();
+		            String phuCap = (String) table.getValueAt(row, 8).toString();
+		            String phongBan = (String) table.getValueAt(row, 9);
+		            String heSoLuong = (String) table.getValueAt(row, 10).toString();
+
+		            txtMaNV.setText(ma);
+		            txtHoTen.setText(ten);
+		            txtCMND.setText(cmnd);
+		            try {
+		                Date ngaySinhDate = new SimpleDateFormat("yyyy-MM-dd").parse(ngaySinhStr);
+		                dateChooser.setDate(ngaySinhDate);
+		            } catch (ParseException ex) {
+		                ex.printStackTrace();
+		            }
+		            cmbGioiTinh.setSelectedItem(gioiTinh);
+		            txtDiaChi.setText(diaChi);
+		            txtSoDienThoai.setText(soDienThoai);
+		            txtLuongCoBan.setText(luongCoBan);
+		            txtPhuCap.setText(phuCap);
+		            cmbPhongBan.setSelectedItem(phongBan);
+		            cmbHeSoLuong.setSelectedItem(heSoLuong);
+		        }
+		    }
+		});
 //
 //		/////////////////
-//	}
+	}
 //	 //////////
-//	public void DocDuLieuDBVaoTable() {
-//		List<NhanVien> list = DAO_NhanVien.getAlltbNhanVien();
-//		for (NhanVien nv : list) {
-//			tableModel.addRow(new Object[] {nv.getMaNhanVien(),nv.getHoTen(),nv.getcCCD(),nv.getNgaySinh(),nv.getGioiTinh()
-//					,nv.getDiaChi(),nv.getSoDienThoai(),nv.getLuongCoBan(),nv.getPhuCap(),nv.getPhongBan(),nv.getHeSoLuong()});
-//		}
+	public void DocDuLieuDBVaoTable() {
+		List<NhanVien> list = nv_dao.getDanhSachNhanVien();
+		for (NhanVien nv : list) {
+			tableModel.addRow(new Object[] {nv.getMaNhanVien(),nv.getHoTen(),nv.getCCCD(),nv.getNgaySinh(),nv.getGioiTinh()
+					,nv.getDiaChi(),nv.getSoDienThoai(),nv.getLuongCoBan(),nv.getPhuCap(),nv.getPhongban(),nv.getHeSoLuong()});
+		}
 	}
 	public boolean valid() {
-//	    if (txtHoTen.getText().equals("") 
-//	        || txtCMND.getText().equals("") || dateChooser.getDate() == null 
-//	        || cmbGioiTinh.getSelectedItem() == null || txtDiaChi.getText().equals("") 
-//	        || txtSoDienThoai.getText().equals("") || txtLuongCoBan.getText().equals("") 
-//	        || txtPhuCap.getText().equals("") || cmbPhongBan.getSelectedItem() == null 
-//	        || cmbHeSoLuong.getSelectedItem() == null) 
-//	    {
-//	        JOptionPane.showMessageDialog(null, "Không được rỗng !!!");
+	    if (txtHoTen.getText().equals("") 
+	        || txtCMND.getText().equals("") || dateChooser.getDate() == null 
+	        || cmbGioiTinh.getSelectedItem() == null || txtDiaChi.getText().equals("") 
+	        || txtSoDienThoai.getText().equals("") || txtLuongCoBan.getText().equals("") 
+	        || txtPhuCap.getText().equals("") || cmbPhongBan.getSelectedItem() == null 
+	        || cmbHeSoLuong.getSelectedItem() == null) 
+	    {
+	        JOptionPane.showMessageDialog(null, "Không được rỗng !!!");
+	        return false;
+	    }
+	    
+	    if (!(txtHoTen.getText().matches("[\\p{L}' ]+"))) {
+	        JOptionPane.showMessageDialog(null, "Tên theo mẫu: Ho Nguyen Cong Hieu");
+	        txtHoTen.requestFocus();
+	        return false;
+	    }
+	    
+	    if (!(txtCMND.getText().matches("0\\d{11}"))) {
+	        JOptionPane.showMessageDialog(null, "CMND/CCCD theo mẫu: bắt đầu bằng số 0 và theo sau là 11 số khác");
+	        txtCMND.requestFocus();
+	        return false;
+	    }
+	    
+	    if (!(cmbGioiTinh.getSelectedItem().toString().matches("[A-Za-z' ]+"))) {
+	        JOptionPane.showMessageDialog(null, "Giới tính theo mẫu: Nam hoặc Nữ");
+	        cmbGioiTinh.requestFocus();
+	        return false;
+	    }
+	    
+	    // Kiểm tra ngày sinh theo định dạng ngày/tháng/năm
+//	    String ngaySinhPattern = "\\d{2}/\\d{2}/\\d{4}";
+//	    if (!txtDiaChi.getText().matches(ngaySinhPattern)) {
+//	        JOptionPane.showMessageDialog(null, "Ngày sinh theo mẫu: 16/09/2003");
+//	        txtDiaChi.requestFocus();
 //	        return false;
 //	    }
-//	    
-//	    if (!(txtHoTen.getText().matches("[\\p{L}' ]+"))) {
-//	        JOptionPane.showMessageDialog(null, "Tên theo mẫu: Ho Nguyen Cong Hieu");
-//	        txtHoTen.requestFocus();
-//	        return false;
-//	    }
-//	    
-//	    if (!(txtCMND.getText().matches("0\\d{11}"))) {
-//	        JOptionPane.showMessageDialog(null, "CMND/CCCD theo mẫu: bắt đầu bằng số 0 và theo sau là 11 số khác");
-//	        txtCMND.requestFocus();
-//	        return false;
-//	    }
-//	    
-//	    if (!(cmbGioiTinh.getSelectedItem().toString().matches("[A-Za-z' ]+"))) {
-//	        JOptionPane.showMessageDialog(null, "Giới tính theo mẫu: Nam hoặc Nữ");
-//	        cmbGioiTinh.requestFocus();
-//	        return false;
-//	    }
-//	    
-//	    // Kiểm tra ngày sinh theo định dạng ngày/tháng/năm
-////	    String ngaySinhPattern = "\\d{2}/\\d{2}/\\d{4}";
-////	    if (!txtDiaChi.getText().matches(ngaySinhPattern)) {
-////	        JOptionPane.showMessageDialog(null, "Ngày sinh theo mẫu: 16/09/2003");
-////	        txtDiaChi.requestFocus();
-////	        return false;
-////	    }
-//	    
-//	    
-//	        if (dateChooser.getDate() != null) {
-//	            Calendar dob = Calendar.getInstance();
-//	            dob.setTime(dateChooser.getDate());
-//
-//	            Calendar now = Calendar.getInstance();
-//	            now.setTime(new Date());
-//
-//	            int age = now.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
-//
-//	            if (now.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
-//	                age--;
-//	            }
-//
-//	            if (age < 18) {
-//	                JOptionPane.showMessageDialog(null, "Nhân viên phải trên 18 tuổi.");
-//	                return false;
-//	            }
-//	        } else {
-//	            JOptionPane.showMessageDialog(null, "Ngày sinh không được để trống.");
-//	            return false;
-//	        }
-//
-//
-//	        if (!(txtDiaChi.getText().matches("[\\p{L}0-9'/, ]+"))) {
-//	            JOptionPane.showMessageDialog(null, "Địa chỉ theo mẫu: 79/12/21 Bùi Quang Là, Gò Vấp");
-//	            txtDiaChi.requestFocus();
-//	            return false;
-//	        }
-//
-//	    
-//	    // Kiểm tra số điện thoại theo mẫu
-//	    String soDienThoaiPattern = "^\\d{10,11}$";
-//	    if (!txtSoDienThoai.getText().matches(soDienThoaiPattern)) {
-//	        JOptionPane.showMessageDialog(null, "Số điện thoại theo mẫu: 0366228041");
-//	        txtSoDienThoai.requestFocus();
-//	        return false;
-//	    }
-//	    
-//	    try {
-//		    double luong = Double.parseDouble(txtLuongCoBan.getText());
-//	        if (luong <= 0) {
-//	            JOptionPane.showMessageDialog(null, "Lương phải lớn hơn 0");
-//	            txtLuongCoBan.requestFocus();
-//	            return false;
-//	        }
-//		    
-//		} catch (NumberFormatException e) {
-//			JOptionPane.showMessageDialog(null, "Lương không hợp lệ");
-//			return false;
-//		}
-//	    
-//	    try {
-//		    double phuCap = Double.parseDouble(txtPhuCap.getText());
-//	        if (phuCap <= 0) {
-//	            JOptionPane.showMessageDialog(null, "Phụ cấp phải lớn hơn 0");
-//	            txtPhuCap.requestFocus();
-//	            return false;
-//	        }
-//		} catch (NumberFormatException e) {
-//			JOptionPane.showMessageDialog(null, "Phụ cấp không hợp lệ");
-//			return false;
-//		}
-//        
-//	    try {
-//	        double heSoLuong = Double.parseDouble(cmbHeSoLuong.getSelectedItem().toString());
-//	        if (heSoLuong <= 0) {
-//	            JOptionPane.showMessageDialog(null, "Hệ số lương phải lớn hơn 0");
-//	            cmbHeSoLuong.requestFocus();
-//	            return false;
-//	        }
-//		} catch (NumberFormatException e) {
-//			JOptionPane.showMessageDialog(null, "Hệ số lương không hợp lệ");
-//			return false;
-//		}
+	    
+	    
+	        if (dateChooser.getDate() != null) {
+	            Calendar dob = Calendar.getInstance();
+	            dob.setTime(dateChooser.getDate());
+
+	            Calendar now = Calendar.getInstance();
+	            now.setTime(new Date());
+
+	            int age = now.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+
+	            if (now.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
+	                age--;
+	            }
+
+	            if (age < 18) {
+	                JOptionPane.showMessageDialog(null, "Nhân viên phải trên 18 tuổi.");
+	                return false;
+	            }
+	        } else {
+	            JOptionPane.showMessageDialog(null, "Ngày sinh không được để trống.");
+	            return false;
+	        }
+
+
+	        if (!(txtDiaChi.getText().matches("[\\p{L}0-9'/, ]+"))) {
+	            JOptionPane.showMessageDialog(null, "Địa chỉ theo mẫu: 79/12/21 Bùi Quang Là, Gò Vấp");
+	            txtDiaChi.requestFocus();
+	            return false;
+	        }
+
+	    
+	    // Kiểm tra số điện thoại theo mẫu
+	    String soDienThoaiPattern = "^\\d{10,11}$";
+	    if (!txtSoDienThoai.getText().matches(soDienThoaiPattern)) {
+	        JOptionPane.showMessageDialog(null, "Số điện thoại theo mẫu: 0366228041");
+	        txtSoDienThoai.requestFocus();
+	        return false;
+	    }
+	    
+	    try {
+		    double luong = Double.parseDouble(txtLuongCoBan.getText());
+	        if (luong <= 0) {
+	            JOptionPane.showMessageDialog(null, "Lương phải lớn hơn 0");
+	            txtLuongCoBan.requestFocus();
+	            return false;
+	        }
+		    
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Lương không hợp lệ");
+			return false;
+		}
+	    
+	    try {
+		    double phuCap = Double.parseDouble(txtPhuCap.getText());
+	        if (phuCap <= 0) {
+	            JOptionPane.showMessageDialog(null, "Phụ cấp phải lớn hơn 0");
+	            txtPhuCap.requestFocus();
+	            return false;
+	        }
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Phụ cấp không hợp lệ");
+			return false;
+		}
+        
+	    try {
+	        double heSoLuong = Double.parseDouble(cmbHeSoLuong.getSelectedItem().toString());
+	        if (heSoLuong <= 0) {
+	            JOptionPane.showMessageDialog(null, "Hệ số lương phải lớn hơn 0");
+	            cmbHeSoLuong.requestFocus();
+	            return false;
+	        }
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Hệ số lương không hợp lệ");
+			return false;
+		}
         return true;  
 	}
 }

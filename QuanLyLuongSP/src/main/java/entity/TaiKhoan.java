@@ -6,7 +6,11 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TaiKhoan")
-public class TaiKhoan {
+public class TaiKhoan implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5216257311351101482L;
 	@Id
 	private String taiKhoan;
 	private String matKhau;

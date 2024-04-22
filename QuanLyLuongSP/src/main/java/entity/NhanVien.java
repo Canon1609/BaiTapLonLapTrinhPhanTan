@@ -1,7 +1,7 @@
 package entity;
 
-import java.time.LocalDate;
-import java.util.Set;
+import java.io.Serializable;
+
 
 import lombok.*;
 import jakarta.persistence.*;
@@ -12,7 +12,11 @@ import jakarta.persistence.*;
 @ToString
 @Entity
 @Table(name = "NhanVien")
-public class NhanVien {
+public class NhanVien implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8614112716853544884L;
 	@Id
 	@Column(name = "maNhanVien", nullable = false, columnDefinition = "nvarchar(255)")
 	private String maNhanVien;
@@ -22,7 +26,7 @@ public class NhanVien {
 	private String CCCD;
 	@Column(name = "ngaySinh", columnDefinition = "date")
 	private String ngaySinh;
-	@Column(name = "gioiTinh", columnDefinition = "nvarchar(255)",nullable = false)
+	@Column(name = "gioiTinh", columnDefinition = "nvarchar(255)")
 	private String gioiTinh;
 	@Column(name = "diaChi", columnDefinition = "nvarchar(255)")
 	private String diaChi;
@@ -30,12 +34,18 @@ public class NhanVien {
 	private String soDienThoai;
 	@Column(name ="luongCoBan",columnDefinition = "float")
 	private double luongCoBan;
-	@Column(name = "phuCap", columnDefinition = "float",nullable = false)
+	@Column(name = "phuCap", columnDefinition = "float")
 	private double phuCap;
 	@Column(name = "phongban", columnDefinition = "nvarchar(255)")
 	private String phongban;
-	@Column(name = "heSoLuong", columnDefinition = "float",nullable = false)
+	@Column(name = "heSoLuong", columnDefinition = "float")
 	private double heSoLuong;
+	public NhanVien(String maNhanVien) {
+		super();
+		this.maNhanVien = maNhanVien;
+	}
+	
+	
 
 	
 }

@@ -6,24 +6,29 @@ import jakarta.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Entity
 @Table(name = "PhanCong")
-public class PhanCong {
+public class PhanCong implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1788043444672364325L;
 	@Id
 	@Column(name = "maPhanCong", nullable = false, columnDefinition = "nvarchar(255)")
 	private String maPhanCong;
 	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-	@JoinColumn(name = "maCongNhan" , columnDefinition = "nvarchar(255)")
+	@JoinColumn(name = "maCongNhan" , referencedColumnName = "maCongNhan")
 	private CongNhan maCongNhan;
 	@Column(name = "tenCongNhan", columnDefinition = "nvarchar(255)")
 	private String tenCongNhan;
 	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-	@JoinColumn(name = "maCongDoan" , columnDefinition = "nvarchar(255)")
+	@JoinColumn(name = "maCongDoan" , referencedColumnName = "maCongDoan")
 	private CongDoan CongDoan;
 	@Column(name = "tenCongDoan", columnDefinition = "nvarchar(255)")
 	private String tenCongDoan;
-	@Column(name = "soLuongSanPhamCanLam", columnDefinition = "int", nullable = false)
+	@Column(name = "soLuongSanPhamCanLam", columnDefinition = "int")
 	private int soLuongSanPhamCanLam;
 	
 }

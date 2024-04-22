@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,7 +28,14 @@ import javax.swing.JCheckBox;
 import java.awt.Component;
 import com.toedter.calendar.JDateChooser;
 
-
+import dao.Impl.ChamCongNhanVienDaoImpl;
+import dao.Impl.NhanVienDaoImpl;
+import entity.CongCuaNhanVien;
+import entity.NhanVien;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -47,11 +55,17 @@ public class Form_NV_ChamCong extends JPanel {
 	private DefaultTableModel tableModel;
 	private DefaultTableModel tableModelDSChamCong;
 	private JDateChooser dateChooser;
+	private EntityManagerFactory emf;
+	private EntityManager em;
+	private EntityTransaction tx;
+	private ChamCongNhanVienDaoImpl cnv_dao;
+	private NhanVienDaoImpl nv_dao;
 
 	/**
 	 * Create the panel.
+	 * @throws RemoteException 
 	 */
-	public Form_NV_ChamCong() {
+	public Form_NV_ChamCong() throws RemoteException {
 		setLayout(new BorderLayout(0, 0));
 
 		JPanel pnNorth = new JPanel();
@@ -334,40 +348,38 @@ public class Form_NV_ChamCong extends JPanel {
 		String[] columnNames = { "Mã Nhân Viên", "Họ Tên", "CMND/CCCD", "Ngày Sinh", "Giới Tính", "Địa Chỉ",
 				"Số Điện Thoại", "Lương Cơ bản", "Phụ Cấp", "Phòng Ban", "Hệ Số Lương" };
 		tableModel.setColumnIdentifiers(columnNames);
-//		// khởi tạo kết nối đến CSDL
-//		try {
-//			Conection_DB.getInstance().connect();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		nv_dao = new DAO_NhanVien();
+		//EntityManager và EntityTransaction được khởi tạo ở đây
+        emf = Persistence.createEntityManagerFactory("jpa-mssql");
+        em = emf.createEntityManager();
+        tx = em.getTransaction();
+        cnv_dao = new ChamCongNhanVienDaoImpl();
+        nv_dao = new NhanVienDaoImpl();
 //		// Đưa dữ liệu từ bảng lên các trường nhập liệu khi click vào một dòng trong
 //		// bảng
-//		tblDanhSachNV.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				int row = tblDanhSachNV.getSelectedRow();
-//				if (row >= 0) {
-//					String ma = (String) tblDanhSachNV.getValueAt(row, 0);
-//					String ten = (String) tblDanhSachNV.getValueAt(row, 1);
-//					String cmnd = (String) tblDanhSachNV.getValueAt(row, 2);
-//					String ngaySinhStr = (String) tblDanhSachNV.getValueAt(row, 3);
-//					String gioiTinh = (String) tblDanhSachNV.getValueAt(row, 4);
-//					String diaChi = (String) tblDanhSachNV.getValueAt(row, 5);
-//					String soDienThoai = (String) tblDanhSachNV.getValueAt(row, 6);
-//					String luongCoBan = (String) tblDanhSachNV.getValueAt(row, 7).toString();
-//					String phuCap = (String) tblDanhSachNV.getValueAt(row, 8).toString();
-//					String phongBan = (String) tblDanhSachNV.getValueAt(row, 9);
-//					String heSoLuong = (String) tblDanhSachNV.getValueAt(row, 10).toString();
+		tblDanhSachNV.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int row = tblDanhSachNV.getSelectedRow();
+				if (row >= 0) {
+					String ma = (String) tblDanhSachNV.getValueAt(row, 0);
+					String ten = (String) tblDanhSachNV.getValueAt(row, 1);
+					String cmnd = (String) tblDanhSachNV.getValueAt(row, 2);
+					String ngaySinhStr = (String) tblDanhSachNV.getValueAt(row, 3);
+					String gioiTinh = (String) tblDanhSachNV.getValueAt(row, 4);
+					String diaChi = (String) tblDanhSachNV.getValueAt(row, 5);
+					String soDienThoai = (String) tblDanhSachNV.getValueAt(row, 6);
+					String luongCoBan = (String) tblDanhSachNV.getValueAt(row, 7).toString();
+					String phuCap = (String) tblDanhSachNV.getValueAt(row, 8).toString();
+					String phongBan = (String) tblDanhSachNV.getValueAt(row, 9);
+					String heSoLuong = (String) tblDanhSachNV.getValueAt(row, 10).toString();
+
+					txtPhongBan.setText(phongBan);
+					txtNhanVien.setText(ma);
+				}
+			}
+		});
 //
-//					txtPhongBan.setText(phongBan);
-//					txtNhanVien.setText(ma);
-//				}
-//			}
-//		});
-//
-//		DocDuLieuDBVaoTable();
+		DocDuLieuDBVaoTable();
 		JPanel pnChucNang = new JPanel();
 		pnChucNang.setPreferredSize(new Dimension(1000, 50));
 		pnCenter.add(pnChucNang);
@@ -430,122 +442,124 @@ public class Form_NV_ChamCong extends JPanel {
 		String[] columnNames1 = { "Mã Công", "Mã Nhân Viên", "Ngày Chấm", "Ca Làm", "Giờ Làm", "Lương Ca Làm",
 				"Trạng Thái", "Nghỉ Phép" };
 		tableModelDSChamCong.setColumnIdentifiers(columnNames1);
-//		DocDLDanhSachChamCong();
-//		dao_congNV = new DAO_ChamCongNhanVIen();
+		DocDLDanhSachChamCong();
 //		// Cham Cong
-//		btnChamCongNV.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if(tblDanhSachNV.getSelectedRow()<0) {
-//					JOptionPane.showMessageDialog(null, "Chua chon nhan vien de cham cong");
-//					return;
-//				}
-//				if (valid()) {
-//					int maxMaCongNV = dao_congNV.getMaxMaCongNV();
-//					int nextMaCongNV = maxMaCongNV + 1;
-//					String ma = String.format("C%02d", nextMaCongNV);
-//					String maNV = txtNhanVien.getText();
-//					String caLam = cmbCaLam.getSelectedItem().toString();
-//					String gioLam = txtGioLam.getText();
-//					Double luongCa = Double.parseDouble(txtLuongCa.getText());
-//					String trangThai = "";
-//					if (chkCoMat.isSelected()) {
-//						trangThai = "Có mặt";
-//					} else {
-//						trangThai = "Nghỉ";
-//					}
-//					String nghiPhep = "";
-//					if (chkCoPhep.isSelected()) {
-//						nghiPhep = "Có";
-//					} else {
-//						nghiPhep = "Không";
-//					}
-//
-//					Date ngayCham = (Date) dateChooser.getDate();
-//					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//					String ngayChamStr = dateFormat.format(ngayCham);
-//
-//					NhanVien nv = new NhanVien(maNV);
+		btnChamCongNV.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(tblDanhSachNV.getSelectedRow()<0) {
+					JOptionPane.showMessageDialog(null, "Chua chon nhan vien de cham cong");
+					return;
+				}
+				if (valid()) {
+					int maxMaCongNV = cnv_dao.getMaxMaCongNV();
+					int nextMaCongNV = maxMaCongNV + 1;
+					String ma = String.format("C%02d", nextMaCongNV);
+					String maNV = txtNhanVien.getText();
+					String caLam = cmbCaLam.getSelectedItem().toString();
+					String gioLam = txtGioLam.getText();
+					float luongCa = Float.parseFloat(txtLuongCa.getText());
+					String trangThai = "";
+					if (chkCoMat.isSelected()) {
+						trangThai = "Có mặt";
+					} else {
+						trangThai = "Nghỉ";
+					}
+					String nghiPhep = "";
+					if (chkCoPhep.isSelected()) {
+						nghiPhep = "Có";
+					} else {
+						nghiPhep = "Không";
+					}
+
+					Date ngayCham = (Date) dateChooser.getDate();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					String ngayChamStr = dateFormat.format(ngayCham);
+
+					NhanVien nv = new NhanVien(maNV);
 //					CongCuaNhanVien congNV = new CongCuaNhanVien(ma, nv, ngayChamStr, caLam, gioLam, luongCa, trangThai,
-//							nghiPhep);
-//					dao_congNV.create(congNV);
-//					tableModelDSChamCong.addRow(new Object[] { congNV.getMaCongNV(),
-//							congNV.getNhanVien().getMaNhanVien(), congNV.getNgayChamCong(), congNV.getCaLam(),
-//							congNV.getGioLam(), congNV.getLuongCaLam(), congNV.getTrangThai(), congNV.getNghiPhep() });
-//					txtNhanVien.setText("");
-//					txtGioLam.setText("");
-//					txtLuongCa.setText("");
-//					txtPhongBan.setText("");
-//					dateChooser.setDate(null);
-//					cmbCaLam.setSelectedIndex(0);
-//					JOptionPane.showMessageDialog(null, "Chấm công thành công");
-//				} else {
-//					JOptionPane.showMessageDialog(null, "Chấm công không thành công");
-//				}
-//			}
-//		});
-//		btnXoaChamCongNV.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				int row = tblDanhSachChamCong.getSelectedRow();
-//				if (row < 0) {
-//					JOptionPane.showMessageDialog(null, "Chọn công cần xóa");
-//				} else {
-//					String maCongNV = (String) tblDanhSachChamCong.getValueAt(row, 0);
-//					dao_congNV.delete(maCongNV);
-//					tableModelDSChamCong.removeRow(row);
-//					JOptionPane.showMessageDialog(null, "Xóa chấm công thành công");
-//				}
-//
-//			}
-//		});
+//                            nghiPhep);
+					CongCuaNhanVien congNV = new CongCuaNhanVien(ma, nv, ngayChamStr, caLam, gioLam, luongCa, trangThai, nghiPhep);
+				
+					cnv_dao.ChamCongNhanVien(congNV);
+					
+					tableModelDSChamCong.addRow(new Object[] { congNV.getMaCongCuaNhanVien(),
+							congNV.getMaNhanVien().getMaNhanVien(), congNV.getNgayChamCong(), congNV.getCaLam(),
+							congNV.getGioLam(), congNV.getLuongCaLam(), congNV.getTrangThai(), congNV.getNghiPhep() });
+					txtNhanVien.setText("");
+					txtGioLam.setText("");
+					txtLuongCa.setText("");
+					txtPhongBan.setText("");
+					dateChooser.setDate(null);
+					cmbCaLam.setSelectedIndex(0);
+					JOptionPane.showMessageDialog(null, "Chấm công thành công");
+				} else {
+					JOptionPane.showMessageDialog(null, "Chấm công không thành công");
+				}
+			}
+		});
+		btnXoaChamCongNV.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row = tblDanhSachChamCong.getSelectedRow();
+				if (row < 0) {
+					JOptionPane.showMessageDialog(null, "Chọn công cần xóa");
+				} else {
+					String maCongNV = (String) tblDanhSachChamCong.getValueAt(row, 0);
+						cnv_dao.deleteCongNV(maCongNV);
+					tableModelDSChamCong.removeRow(row);
+					JOptionPane.showMessageDialog(null, "Xóa chấm công thành công");
+				}
+
+			}
+		});
 //		// THOÁT
-//		btnThoat.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				setVisible(false);
-//			}
-//		});
-//
+		btnThoat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+
 	}
 //
-//	public void DocDuLieuDBVaoTable() {
-//		List<NhanVien> list = DAO_NhanVien.getAlltbNhanVien();
-//		for (NhanVien nv : list) {
-//			tableModel.addRow(new Object[] { nv.getMaNhanVien(), nv.getHoTen(), nv.getcCCD(), nv.getNgaySinh(),
-//					nv.getGioiTinh(), nv.getDiaChi(), nv.getSoDienThoai(), nv.getLuongCoBan(), nv.getPhuCap(),
-//					nv.getPhongBan(), nv.getHeSoLuong() });
-//		}
+	public void DocDuLieuDBVaoTable() {
+		List<NhanVien> list = nv_dao.getDanhSachNhanVien();
+		for (NhanVien nv : list) {
+			tableModel.addRow(new Object[] { nv.getMaNhanVien(), nv.getHoTen(), nv.getCCCD(), nv.getNgaySinh(),
+					nv.getGioiTinh(), nv.getDiaChi(), nv.getSoDienThoai(), nv.getLuongCoBan(), nv.getPhuCap(),
+					nv.getPhongban(), nv.getHeSoLuong() });
+		}
+
+	}
 //
-//	}
+	public void DocDLDanhSachChamCong() throws RemoteException {
+		List<CongCuaNhanVien> list = cnv_dao.getAllCongNV();
+		for (CongCuaNhanVien congNV : list) {
+			tableModelDSChamCong.addRow(new Object[] { congNV.getMaCongCuaNhanVien(), congNV.getMaNhanVien().getMaNhanVien(),
+					congNV.getNgayChamCong(), congNV.getCaLam(), congNV.getGioLam(), congNV.getLuongCaLam(),
+					congNV.getTrangThai(), congNV.getNghiPhep() });
+
+		}
+	}
 //
-//	public void DocDLDanhSachChamCong() {
-//		List<CongCuaNhanVien> list = DAO_ChamCongNhanVIen.getAlltbCongCuaNhanVien();
-//		for (CongCuaNhanVien congNV : list) {
-//			tableModelDSChamCong.addRow(new Object[] { congNV.getMaCongNV(), congNV.getNhanVien().getMaNhanVien(),
-//					congNV.getNgayChamCong(), congNV.getCaLam(), congNV.getGioLam(), congNV.getLuongCaLam(),
-//					congNV.getTrangThai(), congNV.getNghiPhep() });
-//
-//		}
-//	}
-//
-//	public boolean valid() {
-//		Date ngayCham = (Date) dateChooser.getDate();
-//		if (ngayCham == null) {
-//			JOptionPane.showMessageDialog(null, "Vui lòng chọn ngày chấm công.");
-//			return false;
-//		}
-//
-//		// Kiểm tra xem ngày chấm có nhỏ hơn hoặc bằng ngày hiện tại hay không
-//		Date ngayHienTai = new Date(); // Ngày hiện tại
-//		if (ngayCham.after(ngayHienTai)) {
-//			JOptionPane.showMessageDialog(null, "Ngày chấm công phải nhỏ hơn hoặc bằng ngày hiện tại.");
-//			return false;
-//		}
-//		return true;
-//	}
+	public boolean valid() {
+		Date ngayCham = (Date) dateChooser.getDate();
+		if (ngayCham == null) {
+			JOptionPane.showMessageDialog(null, "Vui lòng chọn ngày chấm công.");
+			return false;
+		}
+
+		// Kiểm tra xem ngày chấm có nhỏ hơn hoặc bằng ngày hiện tại hay không
+		Date ngayHienTai = new Date(); // Ngày hiện tại
+		if (ngayCham.after(ngayHienTai)) {
+			JOptionPane.showMessageDialog(null, "Ngày chấm công phải nhỏ hơn hoặc bằng ngày hiện tại.");
+			return false;
+		}
+		return true;
+	}
 
 	// tinh tong ngay cong
 	public int tinhTongNgayCong(String maNhanVien, int thang) {

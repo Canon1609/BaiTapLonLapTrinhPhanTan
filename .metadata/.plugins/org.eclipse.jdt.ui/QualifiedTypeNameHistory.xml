@@ -9,4 +9,8 @@
     <fullyQualifiedTypeName name="java.rmi.server.UnicastRemoteObject"/>
     <fullyQualifiedTypeName name="dao.NhanVienDao"/>
     <fullyQualifiedTypeName name="entity.NhanVien"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="dao.ChamCongNhanVienDao"/>
+    <fullyQualifiedTypeName name="dao.Impl.ChamCongNhanVienDaoImpl"/>
+    <fullyQualifiedTypeName name="entity.CongCuaNhanVien"/>
 </qualifiedTypeNameHistroy>
