@@ -27,8 +27,8 @@ public class CongDoan implements Serializable {
 	private String tenCongDoan;
 	@Column(name = "GiaCongDoan",columnDefinition ="float" )
 	private double giaCongDoan;
-	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
-	@JoinColumn(name = "maSanPham", referencedColumnName = "maSanPham")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "maSanPham", referencedColumnName = "maSanPham" )
 	private SanPham sanPham;
 	@Column(name = "tenSanPham", columnDefinition = "nvarchar(255)")
 	private String tenSanPham;
@@ -36,6 +36,5 @@ public class CongDoan implements Serializable {
 	private int soLuong;
 	@Column(name = "congDoanYeuCau" , columnDefinition = "nvarchar(255)")
 	private String congDoanYeuCau;
-	
-	
+
 }

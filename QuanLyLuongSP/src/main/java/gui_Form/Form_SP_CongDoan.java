@@ -19,6 +19,7 @@ import javax.swing.table.TableModel;
 
 import dao.Impl.CongDoanDaoImpl;
 import entity.CongDoan;
+import entity.SanPham;
 
 import javax.swing.JScrollPane;
 import java.awt.Component;
@@ -30,7 +31,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -50,13 +54,14 @@ public class Form_SP_CongDoan extends JPanel {
 
 	private JComboBox<String> cmbCongDoanYeuCau;
 	private JComboBox<Comparable> cmbSoLuong;
-
+	private CongDoanDaoImpl cd_dao;
+	
 	/**
 	 * Create the panel.
 	 * @throws RemoteException 
 	 */
 	public Form_SP_CongDoan() throws RemoteException {
-		CongDoanDaoImpl cd_dao = new CongDoanDaoImpl();
+		cd_dao = new CongDoanDaoImpl();
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel pnNorth = new JPanel();
@@ -245,13 +250,7 @@ public class Form_SP_CongDoan extends JPanel {
 		tableModelSP = table.getModel(); 
 		String [] columName = {"Mã Sản Phẩm","Tên Sản Phẩm","Kiểu Dáng","Chất Liệu","Số Lượng"};
 		((DefaultTableModel) tableModelSP).setColumnIdentifiers(columName);
-		// khởi tạo kết nối đến CSDL
-//		try {
-//			Conection_DB.getInstance().connect();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		DocDuLieuDBVaoTableSanPham();
 //		dao_SP = new DAO_SanPham();
 //		DocDuLieuDBVaoTable();
 		table.addMouseListener(new MouseAdapter() {
@@ -353,69 +352,75 @@ public class Form_SP_CongDoan extends JPanel {
 					txtGiaCongDoan.setText(giaCD);
 					txtMaSanPham.setText(maSP);
 					txtTenSanPham.setText(tenSP);
+					cmbCongDoanYeuCau.setSelectedItem(congDoanYC);
 
 				}
 			}
 		});
-		// khởi tạo kết nối đến CSDL
-//		try {
-//			Conection_DB.getInstance().connect();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		
-//		cd_dao = new DAO_CongDoan();
 		DocDuLieuDBVaoTableCD(); // Huy đẩy dữ liệu công đoạn vào bảng
-//		updateCongDoanYeuCauComboBox();
-//		btnThemCongDoan.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				int row = table.getSelectedRow();
-//				if(row<0) {
-//					JOptionPane.showMessageDialog(null, "Can chon san phan de phan cong doan");
-//					return;
-//				}
-//				else if(valid()) {
-//					String maSP = txtMaSanPham.getText().trim();
-//					int maxMACD = cd_dao.getMaxMaCongDoan();
-//					int nextMaCD = maxMACD +1;
-//					String ma = String.format(maSP+"CD%02d", nextMaCD);
-//					txtMaCongDoan.setText(ma);
-//					
-//					String tenCD = txtTenCongDoan.getText().trim();
-//					double giaCD = Double.parseDouble(txtGiaCongDoan.getText().trim());
-//					String tenSP = txtTenSanPham.getText().trim();
-//					int soLuong = Integer.parseInt(cmbSoLuong.getSelectedItem().toString());
-//					String congDoanYC =null;
-//					if (chkCongDoanYeuCau.isSelected() && cmbCongDoanYeuCau.getSelectedItem() != null) {
-//					    congDoanYC = cmbCongDoanYeuCau.getSelectedItem().toString();
-//					} else {
-//					    congDoanYC = null;
-//					}
-//
-//					SanPham sp = new SanPham(maSP);
-//					CongDoan cd = new CongDoan(ma, tenCD, giaCD, sp, tenSP, soLuong, congDoanYC);
-//					cd_dao.create(cd);
-//					((DefaultTableModel) tableModelCD).addRow(new Object[] {cd.getMaCongDoan(),cd.getTenCongDoan(),cd.getGiaCongDoan()
-//							,cd.getSanPham().getMaSanPham(),cd.getTenSanPham(),cd.getSoLuong(),cd.getCongDoanYC()});
-//					JOptionPane.showMessageDialog(null, "Thêm Công Đoạn Thành Công");
-//					
-//					
-//					updateCongDoanYeuCauComboBox();
-//					txtMaCongDoan.setText("");
-//					txtTenCongDoan.setText("");
-//					txtGiaCongDoan.setText("");
-//					txtMaSanPham.setText("");
-//					txtTenSanPham.setText("");
-//					cmbSoLuong.setSelectedIndex(0);
-//					cmbCongDoanYeuCau.setSelectedIndex(0);
-//				}else {
-//					JOptionPane.showMessageDialog(null, "Thêm Công Đoạn Không Thành Công");
-//				}
-//			}
-//		});
+		updateCongDoanYeuCauComboBox();
+		btnThemCongDoan.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row = table.getSelectedRow();
+				if(row<0) {
+					JOptionPane.showMessageDialog(null, "Cần chọn sản phẩm trước khi thêm công đoạn");
+					return;
+				}
+				else if(valid()) {
+					String maSP = txtMaSanPham.getText().trim();
+					int maxMACD = cd_dao.getMaxCongDoanNumber();
+					int nextMaCD = maxMACD +1;
+					String ma = String.format("CD%02d", nextMaCD);
+					txtMaCongDoan.setText(ma);
+					String tenCD = txtTenCongDoan.getText().trim();
+					double giaCD = Double.parseDouble(txtGiaCongDoan.getText().trim());
+					String tenSP = txtTenSanPham.getText().trim();
+					int soLuong = Integer.parseInt(cmbSoLuong.getSelectedItem().toString());
+					String congDoanYC =null;
+					if (chkCongDoanYeuCau.isSelected() && cmbCongDoanYeuCau.getSelectedItem() != null) {
+					    congDoanYC = cmbCongDoanYeuCau.getSelectedItem().toString();
+					} else {
+					    congDoanYC = null;
+					}
+
+					SanPham sp = new SanPham();
+					sp.setMaSanPham(maSP);
+					CongDoan cd = new CongDoan(ma, tenCD, giaCD, sp, tenSP, soLuong, congDoanYC);
+					boolean add =  cd_dao.themCongDoan(cd);
+					if(add)
+					{
+						((DefaultTableModel) tableModelCD).addRow(new Object[] {cd.getMaCongDoan(),cd.getTenCongDoan(),cd.getGiaCongDoan()
+								,cd.getSanPham().getMaSanPham(),cd.getTenSanPham(),cd.getSoLuong(),cd.getCongDoanYeuCau()});
+						JOptionPane.showMessageDialog(null, "Thêm Công Đoạn Thành Công");
+						
+						
+						try {
+							updateCongDoanYeuCauComboBox();
+						} catch (RemoteException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						txtMaCongDoan.setText("");
+						txtTenCongDoan.setText("");
+						txtGiaCongDoan.setText("");
+						txtMaSanPham.setText("");
+						txtTenSanPham.setText("");
+						cmbSoLuong.setSelectedIndex(0);
+						cmbCongDoanYeuCau.setSelectedIndex(0);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Thêm Công Đoạn Không Thành Công");
+					}
+				
+				}else {
+					JOptionPane.showMessageDialog(null, "Thêm Công Đoạn Không Thành Công");
+				}
+			}
+		});
 //		btnXoaCongDoan.addActionListener(new ActionListener() {
 //			
 //			@Override
@@ -491,16 +496,33 @@ public class Form_SP_CongDoan extends JPanel {
 //				});
 //		//
 	}
-//	
-//	//
-//	public void DocDuLieuDBVaoTable() {
-//		List<SanPham> list = DAO_SanPham.getAlltbSanPham();
-//		for (SanPham sp : list) {
-//			((DefaultTableModel) tableModelSP).addRow(new Object[] {sp.getMaSanPham(),sp.getTenSanPham(),sp.getKieuDang(),sp.getChatLieu(),sp.getSoLuong()});
-//		}
-//	}
-	public void DocDuLieuDBVaoTableCD() throws RemoteException {
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// Huy đẩy dữ liệu sản phẩm vào bảng
+	public void DocDuLieuDBVaoTableSanPham() throws RemoteException{
 		CongDoanDaoImpl cd_dao = new CongDoanDaoImpl();
+		List<SanPham> list = cd_dao.getDanhSachSanPham();
+		for (SanPham sp : list) {
+			((DefaultTableModel) tableModelSP).addRow(new Object[] { sp.getMaSanPham(), sp.getTenSanPham(),
+					sp.getKieuDang(), sp.getChatLieu(), sp.getSoLuong() });
+		}
+	}
+	
+	
+	// Huy đẩy dữ liệu công đoạn vào bảng
+	public void DocDuLieuDBVaoTableCD() throws RemoteException {
+		
 		List<CongDoan> list = cd_dao.getDanhSachCongDoan();
 		for(CongDoan cd  : list)
 		{
@@ -510,24 +532,29 @@ public class Form_SP_CongDoan extends JPanel {
 		}
 	}
 //	}
-//	public boolean valid() {
-//		if(txtGiaCongDoan.getText().equals("")||txtTenCongDoan.getText().equals("")) {
-//			JOptionPane.showMessageDialog(null, "Không được rỗng !!!");
-//	        return false;
-//		}
-//		return true;
-//	}
-//	private void updateCongDoanYeuCauComboBox() {
-//	    // Xóa toàn bộ mục trong cmbCongDoanYeuCau
-//	    cmbCongDoanYeuCau.removeAllItems();
-//
-//	    // Lấy danh sách tên công đoạn yêu cầu từ cơ sở dữ liệu
-//	    List<String> congDoanYeuCauList = cd_dao.getAllCongDoanYeuCau();
-//
-//	    // Thêm danh sách mới vào cmbCongDoanYeuCau
-//	    for (String congDoan : congDoanYeuCauList) {
-//	        cmbCongDoanYeuCau.addItem(congDoan);
-//	    }
-//	}
+	public boolean valid() {
+		if(txtGiaCongDoan.getText().equals("")||txtTenCongDoan.getText().equals("")) {
+			JOptionPane.showMessageDialog(null, "Không được rỗng !!!");
+	        return false;
+		}
+		return true;
+	}
+	// Hàm cập nhật  ComboBox Công Đoạn Yêu Cầu
+	private void updateCongDoanYeuCauComboBox() throws RemoteException {
+	    // Xóa toàn bộ mục trong cmbCongDoanYeuCau
+	    cmbCongDoanYeuCau.removeAllItems();
+
+	    // Lấy danh sách tên công đoạn yêu cầu từ cơ sở dữ liệu
+	    
+	    List<String> congDoanYeuCauList = cd_dao.getCongDoanYeuCau();
+	    Set<String> uniqueCongDoanSet = new HashSet<>();
+	    // Thêm danh sách mới vào cmbCongDoanYeuCau
+	    for (String congDoan : congDoanYeuCauList) {
+	    	if (!uniqueCongDoanSet.contains(congDoan)) {
+	            uniqueCongDoanSet.add(congDoan);
+	            cmbCongDoanYeuCau.addItem(congDoan);
+	        }
+	    }
+	}
 //
 }

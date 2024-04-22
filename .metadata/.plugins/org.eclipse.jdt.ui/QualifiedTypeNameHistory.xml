@@ -5,14 +5,24 @@
     <fullyQualifiedTypeName name="jakarta.persistence.Id"/>
     <fullyQualifiedTypeName name="dao.Impl.DangNhapDaoImpl"/>
     <fullyQualifiedTypeName name="dao.DangNhapDao"/>
-    <fullyQualifiedTypeName name="java.rmi.Remote"/>
     <fullyQualifiedTypeName name="java.rmi.server.UnicastRemoteObject"/>
     <fullyQualifiedTypeName name="dao.NhanVienDao"/>
     <fullyQualifiedTypeName name="entity.NhanVien"/>
     <fullyQualifiedTypeName name="dao.ChamCongNhanVienDao"/>
     <fullyQualifiedTypeName name="dao.Impl.ChamCongNhanVienDaoImpl"/>
     <fullyQualifiedTypeName name="entity.CongCuaNhanVien"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="entity.PhanCong"/>
     <fullyQualifiedTypeName name="dao.PhanCongDao"/>
+    <fullyQualifiedTypeName name="dao.CongDoanDao"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.EntityManager"/>
+    <fullyQualifiedTypeName name="dao.Impl.CongDoanDaoImpl"/>
+    <fullyQualifiedTypeName name="java.rmi.Remote"/>
+    <fullyQualifiedTypeName name="java.rmi.RemoteException"/>
+    <fullyQualifiedTypeName name="entity.SanPham"/>
+    <fullyQualifiedTypeName name="java.lang.Object"/>
+    <fullyQualifiedTypeName name="entity.CongDoan"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.Set"/>
+    <fullyQualifiedTypeName name="java.util.HashSet"/>
 </qualifiedTypeNameHistroy>

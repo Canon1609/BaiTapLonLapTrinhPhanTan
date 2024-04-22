@@ -1,6 +1,8 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
@@ -25,7 +27,7 @@ public class SanPham implements Serializable{
 	 */
 	private static final long serialVersionUID = 3480137035395910224L;
 	@Id
-	@Column(name = "maSanPham" , nullable = false , columnDefinition = "nvarchar(255)")
+	@Column(name = "maSanPham" , nullable = false , columnDefinition = "nvarchar(255)" , unique = false)
 	private String  maSanPham;
 	@Column(name = "tenSanPham" , columnDefinition = "nvarchar(255)")
 	private String tenSanPham;
