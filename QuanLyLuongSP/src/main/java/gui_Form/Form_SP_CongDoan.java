@@ -17,7 +17,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-
+import dao.Impl.CongDoanDaoImpl;
+import entity.CongDoan;
 
 import javax.swing.JScrollPane;
 import java.awt.Component;
@@ -27,6 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -51,8 +53,10 @@ public class Form_SP_CongDoan extends JPanel {
 
 	/**
 	 * Create the panel.
+	 * @throws RemoteException 
 	 */
-	public Form_SP_CongDoan() {
+	public Form_SP_CongDoan() throws RemoteException {
+		CongDoanDaoImpl cd_dao = new CongDoanDaoImpl();
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel pnNorth = new JPanel();
@@ -360,8 +364,9 @@ public class Form_SP_CongDoan extends JPanel {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+		
 //		cd_dao = new DAO_CongDoan();
-//		DocDuLieuDBVaoTableCD();
+		DocDuLieuDBVaoTableCD(); // Huy đẩy dữ liệu công đoạn vào bảng
 //		updateCongDoanYeuCauComboBox();
 //		btnThemCongDoan.addActionListener(new ActionListener() {
 //			
@@ -463,20 +468,20 @@ public class Form_SP_CongDoan extends JPanel {
 //				
 //			}
 //		});
-//		btnXoaRong.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				txtMaCongDoan.setText("");
-//				txtTenCongDoan.setText("");
-//				txtGiaCongDoan.setText("");
-//				txtMaSanPham.setText("");
-//				txtTenSanPham.setText("");
-//				cmbSoLuong.removeAll();
-//				cmbCongDoanYeuCau.removeAll();
-//				
-//			}
-//		});
+		btnXoaRong.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				txtMaCongDoan.setText("");
+				txtTenCongDoan.setText("");
+				txtGiaCongDoan.setText("");
+				txtMaSanPham.setText("");
+				txtTenSanPham.setText("");
+				cmbSoLuong.removeAll();
+				cmbCongDoanYeuCau.removeAll();
+				
+			}
+		});
 //		//THOÁT
 //				btnThoat.addActionListener(new ActionListener() {
 //					@Override
@@ -494,12 +499,16 @@ public class Form_SP_CongDoan extends JPanel {
 //			((DefaultTableModel) tableModelSP).addRow(new Object[] {sp.getMaSanPham(),sp.getTenSanPham(),sp.getKieuDang(),sp.getChatLieu(),sp.getSoLuong()});
 //		}
 //	}
-//	public void DocDuLieuDBVaoTableCD() {
-//		List<CongDoan> list = DAO_CongDoan.getAlltbCongDoan();
-//		for (CongDoan cd : list) {
-//			((DefaultTableModel) tableModelCD).addRow(new Object[] {cd.getMaCongDoan(),cd.getTenCongDoan(),cd.getGiaCongDoan()
-//					,cd.getSanPham().getMaSanPham(),cd.getTenSanPham(),cd.getSoLuong(),cd.getCongDoanYC()});
-//		}
+	public void DocDuLieuDBVaoTableCD() throws RemoteException {
+		CongDoanDaoImpl cd_dao = new CongDoanDaoImpl();
+		List<CongDoan> list = cd_dao.getDanhSachCongDoan();
+		for(CongDoan cd  : list)
+		{
+			((DefaultTableModel) tableModelCD)
+					.addRow(new Object[] { cd.getMaCongDoan(), cd.getTenCongDoan(), cd.getGiaCongDoan(),
+							cd.getSanPham().getMaSanPham(), cd.getTenSanPham(), cd.getSoLuong(), cd.getCongDoanYeuCau() });
+		}
+	}
 //	}
 //	public boolean valid() {
 //		if(txtGiaCongDoan.getText().equals("")||txtTenCongDoan.getText().equals("")) {

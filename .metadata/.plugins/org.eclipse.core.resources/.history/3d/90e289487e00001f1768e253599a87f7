@@ -1,0 +1,7 @@
+package dao.Impl;
+
+import dao.CongDoanDao;
+
+public class CongDoanImpl implements CongDoanDao{
+
+}

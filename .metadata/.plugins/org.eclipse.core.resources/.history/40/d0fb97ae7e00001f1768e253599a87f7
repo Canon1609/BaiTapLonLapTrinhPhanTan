@@ -1,0 +1,12 @@
+package dao;
+
+import java.util.List;
+
+import entity.CongDoan;
+
+public interface CongDoanDao {
+	boolean themCongDoan(CongDoan cd);
+	boolean xoaCongDoan(String maCongDoan);
+	boolean capNhatCongDoan(CongDoan cd);
+	List<CongDoan> getDanhSachCongDoan();
+}

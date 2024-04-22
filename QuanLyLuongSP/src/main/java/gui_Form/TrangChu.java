@@ -392,11 +392,16 @@ public class TrangChu extends JFrame {
 		});
 		
 		mniCongDoanSanPham.addActionListener(new ActionListener() {
-
+			//Huy
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pnCenter.removeAll();
-				pnCenter.add(new Form_SP_CongDoan());
+				try {
+					pnCenter.add(new Form_SP_CongDoan());
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				pnCenter.revalidate();
 				pnCenter.repaint();
 

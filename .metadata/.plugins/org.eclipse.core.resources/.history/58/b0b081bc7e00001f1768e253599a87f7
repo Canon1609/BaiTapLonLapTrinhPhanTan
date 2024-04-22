@@ -1,0 +1,14 @@
+package dao;
+
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.util.List;
+
+import entity.CongDoan;
+
+public interface CongDoanDao extends Remote {
+	boolean themCongDoan(CongDoan cd) throws RemoteException;
+	boolean xoaCongDoan(String maCongDoan);
+	boolean capNhatCongDoan(CongDoan cd);
+	List<CongDoan> getDanhSachCongDoan();
+}

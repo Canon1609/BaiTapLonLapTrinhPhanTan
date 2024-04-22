@@ -1,0 +1,74 @@
+package dao.Impl;
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
+
+import dao.CongDoanDao;
+import entity.CongDoan;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
+
+public class CongDoanImpl extends UnicastRemoteObject  implements CongDoanDao{
+
+	private EntityManagerFactory emf;
+
+	protected CongDoanImpl() throws RemoteException {
+		// Khởi tạo EntityManagerFactory
+		 emf = Persistence.createEntityManagerFactory("jpa-mssql");
+	}
+	public int getMax() {
+		EntityManager em = emf.createEntityManager(); // Mở EntityManager
+		try {
+			// Sử dụng JPQL để truy vấn mã nhân viên lớn nhất
+			TypedQuery<Integer> query = em.createQuery(
+					"SELECT MAX(CAST(SUBSTRING(nv.maNhanVien, 3, LENGTH(nv.maNhanVien) - 2) AS int)) FROM NhanVien nv",
+					Integer.class);
+
+			Integer maxEmployeeNumber = query.getSingleResult(); // Thực hiện truy vấn và lấy kết quả
+
+			// Nếu không có kết quả, trả về 0
+			if (maxEmployeeNumber == null) {
+				return 0;
+			}
+
+			return maxEmployeeNumber;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			em.close(); // Đóng EntityManager sau khi sử dụng
+		}
+
+		return 0; // Trả về giá trị mặc định nếu có lỗi
+	}
+
+	
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	public boolean themCongDoan(CongDoan cd) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean xoaCongDoan(String maCongDoan) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean capNhatCongDoan(CongDoan cd) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<CongDoan> getDanhSachCongDoan() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

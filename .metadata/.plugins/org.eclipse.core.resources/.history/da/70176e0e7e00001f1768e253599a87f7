@@ -1,0 +1,7 @@
+package dao;
+
+import entity.CongDoan;
+
+public interface CongDoanDao {
+	boolean themCongDoan(CongDoan cd);
+}

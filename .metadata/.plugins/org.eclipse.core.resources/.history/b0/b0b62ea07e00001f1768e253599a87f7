@@ -1,0 +1,35 @@
+package dao.Impl;
+
+import java.rmi.server.UnicastRemoteObject;
+import java.util.List;
+
+import dao.CongDoanDao;
+import entity.CongDoan;
+
+public class CongDoanImpl extends UnicastRemoteObject  implements CongDoanDao{
+
+	@Override
+	public boolean themCongDoan(CongDoan cd) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean xoaCongDoan(String maCongDoan) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean capNhatCongDoan(CongDoan cd) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<CongDoan> getDanhSachCongDoan() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
