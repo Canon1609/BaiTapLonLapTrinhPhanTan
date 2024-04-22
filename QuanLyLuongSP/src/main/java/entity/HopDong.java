@@ -20,14 +20,14 @@ public class HopDong implements java.io.Serializable{
 	@Id
 	@Column(name = "maHopDong", nullable = false, columnDefinition = "nvarchar(255)")
 	private String maHopDong;
-	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY )
 	@JoinColumn(name = "maSanPham",referencedColumnName = "maSanPham")
 	private SanPham maSanPham;
 	@Column(name = "tenSanPham", columnDefinition = "nvarchar(255)")
 	private String tenSanPham;
 	@Column(name = "tenKhachHang", columnDefinition = "nvarchar(255)")
 	private String tenKhachHang;
-	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY )
 	@JoinColumn(name = "maNhanVien" ,referencedColumnName = "maNhanVien")
 	private NhanVien maNhanVien;
 	@Column(columnDefinition = "nvarchar(255)")

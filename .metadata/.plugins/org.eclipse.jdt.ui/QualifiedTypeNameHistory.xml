@@ -5,12 +5,13 @@
     <fullyQualifiedTypeName name="jakarta.persistence.Id"/>
     <fullyQualifiedTypeName name="dao.Impl.DangNhapDaoImpl"/>
     <fullyQualifiedTypeName name="dao.DangNhapDao"/>
-    <fullyQualifiedTypeName name="java.rmi.Remote"/>
-    <fullyQualifiedTypeName name="java.rmi.server.UnicastRemoteObject"/>
     <fullyQualifiedTypeName name="dao.NhanVienDao"/>
     <fullyQualifiedTypeName name="entity.NhanVien"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="dao.ChamCongNhanVienDao"/>
     <fullyQualifiedTypeName name="dao.Impl.ChamCongNhanVienDaoImpl"/>
     <fullyQualifiedTypeName name="entity.CongCuaNhanVien"/>
+    <fullyQualifiedTypeName name="java.rmi.Remote"/>
+    <fullyQualifiedTypeName name="dao.LuongNhanVienDao"/>
+    <fullyQualifiedTypeName name="java.rmi.server.UnicastRemoteObject"/>
 </qualifiedTypeNameHistroy>

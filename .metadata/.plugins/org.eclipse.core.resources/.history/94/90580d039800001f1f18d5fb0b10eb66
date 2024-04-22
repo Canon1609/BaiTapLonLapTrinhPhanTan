@@ -1,0 +1,16 @@
+package dao.Impl;
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+import dao.LuongNhanVienDao;
+import jakarta.persistence.Persistence;
+
+public class LuongNhanVienDaoImpl extends UnicastRemoteObject implements LuongNhanVienDao{
+
+	protected LuongNhanVienDaoImpl() throws RemoteException {
+		// Khởi tạo EntityManagerFactory
+				emf = Persistence.createEntityManagerFactory("jpa-mssql");
+	}
+
+}

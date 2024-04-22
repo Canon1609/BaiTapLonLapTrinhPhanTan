@@ -15,5 +15,9 @@ public interface NhanVienDao extends Remote{
 	boolean XoaNhanVien(String maNhanVien) throws RemoteException;
 
 	boolean CapNhatNhanVien(NhanVien nv)throws RemoteException;
+
+	List<NhanVien> getNhanVienTheoTen(String tenNhanVien)throws RemoteException;
+
+	List<NhanVien> getNhanVienTheoGioiTinh(String gioiTinh)throws RemoteException;
 	
 }

@@ -20,15 +20,15 @@ public class CongCuaCongNhan implements java.io.Serializable {
 	@Id
 	@Column(name = "maCongCuaCongNhan" , nullable = false,columnDefinition = "nvarchar(255)")
 	private String maCongCN;
-	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY )
 	@JoinColumn(name = "maCongNhan" , referencedColumnName = "maCongNhan")
 	private CongNhan congNhan;
 	@Column(columnDefinition = "nvarchar(255)")
 	private String tenCongNhan;
-	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY )
 	@JoinColumn(name = "maPhanCong",referencedColumnName = "maPhanCong")
 	private PhanCong maPhanCong;
-	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY )
 	@JoinColumn( name = "maCongDoan",referencedColumnName = "maCongDoan")
 	private CongDoan maCongDoan;
 	@Column(columnDefinition = "nvarchar(255)")

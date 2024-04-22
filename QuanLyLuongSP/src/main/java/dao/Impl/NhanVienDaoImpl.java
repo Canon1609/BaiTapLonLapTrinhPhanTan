@@ -142,5 +142,49 @@ public class NhanVienDaoImpl extends UnicastRemoteObject implements NhanVienDao 
 
 		return null; // Trả về giá trị mặc định nếu có lỗi
 	}
+	
+	// Viết phương thức trả về thông tin nhân viên theo tên nhân viên trả về list
+	@Override
+	public List<NhanVien> getNhanVienTheoTen(String tenNhanVien) {
+		EntityManager em = emf.createEntityManager(); // Mở EntityManager
+		try {
+			// Sử dụng JPQL để truy vấn nhân viên theo tên nhân viên
+			TypedQuery<NhanVien> query = em
+					.createQuery("SELECT nv FROM NhanVien nv WHERE nv.hoTen = :hoTen", NhanVien.class);
+			query.setParameter("hoTen", tenNhanVien);
+
+			List<NhanVien> list = query.getResultList(); // Thực hiện truy vấn và lấy kết quả
+
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			em.close(); // Đóng EntityManager sau khi sử dụng
+		}
+
+		return null; // Trả về giá trị mặc định nếu có lỗi
+	}
+	
+	// Viết phương thức trả về thông tin nhân viên theo giới tính
+	@Override
+	public List<NhanVien> getNhanVienTheoGioiTinh(String gioiTinh) {
+		EntityManager em = emf.createEntityManager(); // Mở EntityManager
+		try {
+			// Sử dụng JPQL để truy vấn nhân viên theo giới tính
+			TypedQuery<NhanVien> query = em.createQuery("SELECT nv FROM NhanVien nv WHERE nv.gioiTinh = :gioiTinh",
+					NhanVien.class);
+			query.setParameter("gioiTinh", gioiTinh);
+
+			List<NhanVien> list = query.getResultList(); // Thực hiện truy vấn và lấy kết quả
+
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			em.close(); // Đóng EntityManager sau khi sử dụng
+		}
+
+		return null; // Trả về giá trị mặc định nếu có lỗi
+	}
 
 }

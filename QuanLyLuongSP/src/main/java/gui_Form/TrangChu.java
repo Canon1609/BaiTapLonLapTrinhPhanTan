@@ -310,7 +310,12 @@ public class TrangChu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pnCenter.removeAll();
-				pnCenter.add(new Form_NV_TimKiem());
+				try {
+					pnCenter.add(new Form_NV_TimKiem());
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				pnCenter.revalidate();
 				pnCenter.repaint();
 
@@ -396,7 +401,12 @@ public class TrangChu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pnCenter.removeAll();
-				pnCenter.add(new Form_SP_CongDoan());
+				try {
+					pnCenter.add(new Form_SP_CongDoan());
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				pnCenter.revalidate();
 				pnCenter.repaint();
 

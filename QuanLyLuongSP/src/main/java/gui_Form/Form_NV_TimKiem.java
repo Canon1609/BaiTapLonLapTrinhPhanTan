@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,12 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
-
+import dao.Impl.NhanVienDaoImpl;
+import entity.NhanVien;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 
 import java.awt.Component;
 import javax.swing.border.TitledBorder;
@@ -42,11 +48,16 @@ public class Form_NV_TimKiem extends JPanel {
 	private JComboBox<Object> cmbGT;
 
 	private DefaultTableModel tableModel;
+	private NhanVienDaoImpl nv_dao;
+	private EntityManagerFactory emf;
+	private EntityManager em;
+	private EntityTransaction tx;
 
 	/**
 	 * Create the panel.
+	 * @throws RemoteException 
 	 */
-	public Form_NV_TimKiem() {
+	public Form_NV_TimKiem() throws RemoteException {
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel pnNorth = new JPanel();
@@ -207,75 +218,72 @@ public class Form_NV_TimKiem extends JPanel {
 				"Số Điện Thoại", "Lương Cơ bản", "Phụ Cấp", "Phòng Ban", "Hệ Số Lương" };
 		tableModel.setColumnIdentifiers(columnNames);
 //		// khởi tạo kết nối đến CSDL
-//				try {
-//					Conection_DB.getInstance().connect();
-//				} catch (SQLException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//		nv_dao = new DAO_NhanVien();
-//		btnTimKiem.addActionListener(new ActionListener() {
-//		    @Override
-//		    public void actionPerformed(ActionEvent e) {
-//		        String loaiTimKiem = cmbMaNV.getSelectedItem().toString();
-//		        String timKiemTen = txtTen.getText().trim();
-//		        String timKiemGT = cmbGT.getSelectedItem().toString();
-//
-//		        if (loaiTimKiem.equals("Tên")) {
-//		            // Tìm kiếm theo tên và lấy danh sách nhân viên
-//		            ArrayList<NhanVien> danhSachNhanVien = (ArrayList<NhanVien>) nv_dao.timKiemTen(timKiemTen);
-//		            
-//		            // Kiểm tra xem danh sách có dữ liệu không
-//		            if (danhSachNhanVien.isEmpty()) {
-//		                txtThongBao.setText("Không tìm thấy nhân viên!");
-//		                updateTableData(danhSachNhanVien);
-//		            } else {
-//		                txtThongBao.setText("Tìm thành công!");
-//		                updateTableData(danhSachNhanVien);
-//		            }
-//		        } else if (loaiTimKiem.equals("Giới Tính")) {
-//		            // Tìm kiếm theo giới tính và lấy danh sách nhân viên
-//		            ArrayList<NhanVien> danhSachNhanVien = (ArrayList<NhanVien>) nv_dao.timKiemGT(timKiemGT);
-//		            
-//		            // Kiểm tra xem danh sách có dữ liệu không
-//		            if (danhSachNhanVien.isEmpty()) {
-//		                txtThongBao.setText("Không tìm thấy nhân viên!");
-//		                updateTableData(danhSachNhanVien);
-//		            } else {
-//		                txtThongBao.setText("Tìm thành công theo giới tính!");
-//		                updateTableData(danhSachNhanVien);
-//		            }
-//		        }
-//		    }
-//		});
-//		btnThoat.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				setVisible(false);
-//			}
-//		});
-//	}
+		emf = Persistence.createEntityManagerFactory("jpa-mssql");
+        em = emf.createEntityManager();
+        tx = em.getTransaction();
+        nv_dao = new NhanVienDaoImpl();
+		btnTimKiem.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        String loaiTimKiem = cmbMaNV.getSelectedItem().toString();
+		        String timKiemTen = txtTen.getText().trim();
+		        String timKiemGT = cmbGT.getSelectedItem().toString();
+
+		        if (loaiTimKiem.equals("Tên")) {
+		            // Tìm kiếm theo tên và lấy danh sách nhân viên
+		            ArrayList<NhanVien> danhSachNhanVien = (ArrayList<NhanVien>) nv_dao.getNhanVienTheoTen(timKiemTen);
+		            
+		            // Kiểm tra xem danh sách có dữ liệu không
+		            if (danhSachNhanVien.isEmpty()) {
+		                txtThongBao.setText("Không tìm thấy nhân viên!");
+		                updateTableData(danhSachNhanVien);
+		            } else {
+		                txtThongBao.setText("Tìm thành công!");
+		                updateTableData(danhSachNhanVien);
+		            }
+		        } else if (loaiTimKiem.equals("Giới Tính")) {
+		            // Tìm kiếm theo giới tính và lấy danh sách nhân viên
+		            ArrayList<NhanVien> danhSachNhanVien = (ArrayList<NhanVien>) nv_dao.getNhanVienTheoGioiTinh(timKiemGT);
+		            
+		            // Kiểm tra xem danh sách có dữ liệu không
+		            if (danhSachNhanVien.isEmpty()) {
+		                txtThongBao.setText("Không tìm thấy nhân viên!");
+		                updateTableData(danhSachNhanVien);
+		            } else {
+		                txtThongBao.setText("Tìm thành công theo giới tính!");
+		                updateTableData(danhSachNhanVien);
+		            }
+		        }
+		    }
+		});
+		btnThoat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+	}
 //		
 //		//
 //		
 //		// Phương thức cập nhật dữ liệu trong bảng
-//		private void updateTableData(ArrayList<NhanVien> danhSachNhanVien) {
-//		    DefaultTableModel model = (DefaultTableModel) tblDanhSachNhanVien.getModel();
-//		    model.setRowCount(0); // Xóa dữ liệu cũ
-//
-//		    for (NhanVien nv : danhSachNhanVien) {
-//		        model.addRow(new Object[] {
-//		            nv.getMaNhanVien(),
-//		            nv.getHoTen(),
-//		            nv.getcCCD(),
-//		            nv.getNgaySinh(),
-//		            nv.getGioiTinh(),
-//		            nv.getDiaChi(),
-//		            nv.getSoDienThoai(),
-//		            nv.getLuongCoBan(),
-//		            nv.getPhuCap(),
-//		            nv.getPhongBan(),
-//		            nv.getHeSoLuong()
-//		        });
-//		    }
+		private void updateTableData(ArrayList<NhanVien> danhSachNhanVien) {
+		    DefaultTableModel model = (DefaultTableModel) tblDanhSachNhanVien.getModel();
+		    model.setRowCount(0); // Xóa dữ liệu cũ
+
+		    for (NhanVien nv : danhSachNhanVien) {
+		        model.addRow(new Object[] {
+		            nv.getMaNhanVien(),
+		            nv.getHoTen(),
+		            nv.getCCCD(),
+		            nv.getNgaySinh(),
+		            nv.getGioiTinh(),
+		            nv.getDiaChi(),
+		            nv.getSoDienThoai(),
+		            nv.getLuongCoBan(),
+		            nv.getPhuCap(),
+		            nv.getPhongban(),
+		            nv.getHeSoLuong()
+		        });
+		    }
 		}}

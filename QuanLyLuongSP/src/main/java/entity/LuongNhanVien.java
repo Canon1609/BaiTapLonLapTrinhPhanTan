@@ -17,7 +17,7 @@ public class LuongNhanVien implements java.io.Serializable{
 	@Id
 	@Column(name = "maLuongNhanVien", nullable = false, columnDefinition = "nvarchar(255)")
 	private String maLuongNhanVien;
-	@ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY )
 	@JoinColumn(name = "maNhanVien", referencedColumnName = "maNhanVien")
 	private NhanVien maNhanVien;
 	@Column(name = "tenNhanVien", columnDefinition = "nvarchar(255)")

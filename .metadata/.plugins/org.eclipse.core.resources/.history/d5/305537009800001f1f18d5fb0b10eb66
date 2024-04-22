@@ -1,0 +1,15 @@
+package dao.Impl;
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+import dao.LuongNhanVienDao;
+
+public class LuongNhanVienDaoImpl extends UnicastRemoteObject implements LuongNhanVienDao{
+
+	protected LuongNhanVienDaoImpl() throws RemoteException {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+}
