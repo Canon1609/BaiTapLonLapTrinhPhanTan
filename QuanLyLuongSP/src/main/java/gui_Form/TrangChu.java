@@ -352,7 +352,12 @@ public class TrangChu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				pnCenter.removeAll();
-				pnCenter.add(new Form_CN_PhanCong());
+				try {
+					pnCenter.add(new Form_CN_PhanCong());
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				pnCenter.revalidate();
 				pnCenter.repaint();
 

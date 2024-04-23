@@ -19,7 +19,12 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-
+import dao.Impl.PhanCongDaoImpl;
+import dao.Impl.SanPhamDAOImpl;
+import entity.CongDoan;
+import entity.CongNhan;
+import entity.PhanCong;
+import entity.SanPham;
 
 import javax.swing.JScrollPane;
 import java.awt.Component;
@@ -31,6 +36,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,11 +58,13 @@ public class Form_CN_PhanCong extends JPanel {
 	private JTextField txtSoLuongConLai;
 	private int soLuongCanLam;
 	private int soLuongConLai;
-
+	private PhanCongDaoImpl pc_dao = new PhanCongDaoImpl();
+	private SanPhamDAOImpl sp_dao;
 	/**
 	 * Create the panel.
+	 * @throws RemoteException 
 	 */
-	public Form_CN_PhanCong() {
+	public Form_CN_PhanCong() throws RemoteException {
 		setLayout(new BorderLayout(0, 0));
 
 		JPanel pnNorth = new JPanel();
@@ -224,113 +232,120 @@ public class Form_CN_PhanCong extends JPanel {
 		tableModelSP = table.getModel();
 		String[] columName = { "Mã Sản Phẩm", "Tên Sản Phẩm", "Kiểu Dáng", "Chất Liệu", "Số Lượng" };
 		((DefaultTableModel) tableModelSP).setColumnIdentifiers(columName);
-		// khởi tạo kết nối đến CSDL
-//		try {
-//			Conection_DB.getInstance().connect();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		dao_SP = new DAO_SanPham();
-//		DocDuLieuDBVaoTable();
-//		updateMaCongNhanComboBox();
-//		updateMaCongDoanComboBox();
-//		
-//		// Sự kiện cho combobox mã công nhân
-//		cmbMaCongNhan.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseReleased(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			@Override
-//			public void mousePressed(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			@Override
-//			public void mouseExited(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			@Override
-//			public void mouseEntered(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//		    public void mouseClicked(MouseEvent e) {
-//		        // Khi người dùng chọn một mã công nhân
-//		        String selectedMaCongNhan = cmbMaCongNhan.getSelectedItem().toString();
-//
-//		        // Lấy tên công nhân tương ứng và hiển thị lên combobox tên công nhân
-//		        String tenCongNhan = DAO_PhanCong.getTenCongNhan(selectedMaCongNhan);
-//		        cmbTenCongNhan.setSelectedItem(tenCongNhan);
-//		    }
-//		});
-//
-//		// Sự kiện cho combobox mã công đoạn
-//		cmbCongDoanYC.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseReleased(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			@Override
-//			public void mousePressed(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			@Override
-//			public void mouseExited(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//			
-//			@Override
-//			public void mouseEntered(MouseEvent e) {
-//				// TODO Auto-generated method stub
-//				
-//			}
-//		    public void mouseClicked(MouseEvent e) {  	
-//		        // Khi người dùng chọn một mã công đoạn
-//		        String selectedMaCongDoan = cmbCongDoanYC.getSelectedItem().toString();
-//
-//		        // Lấy tên công đoạn tương ứng và hiển thị lên combobox tên công đoạn
-//		        String tenCongDoan = DAO_PhanCong.getTenCongDoan(selectedMaCongDoan);
-//		        cmbTenCongDoan.setSelectedItem(tenCongDoan);
-//		    }
-//		});
-//		
-//		table.addMouseListener((MouseListener) new MouseAdapter() {
-//		    public void mouseClicked(MouseEvent e) {
-//		        int selectedRow = table.getSelectedRow();
-//
-//		        if (selectedRow >= 0 && selectedRow < table.getRowCount()) {
-//		            String maSanPham = table.getValueAt(selectedRow, 0).toString();
-//		            
-//
-//		            if (tblPhanCong.getRowCount() > 0) {
-//		            	String maCD = tblPhanCong.getValueAt(selectedRow, 3).toString();
-//		                int soLuongDaPhanCong = pc_dao.getSoLuongDaPhanCong(maCD);
-//		                int soLuongTonKho = dao_SP.getSoLuong(maSanPham);
-//		                int soLuongConLai = soLuongTonKho - soLuongDaPhanCong;
-//
-//		                txtSoLuongConLai.setText(String.valueOf(soLuongConLai));
-//
-//		            } else {
-//		                int soLuongBanDau = dao_SP.getSoLuong(maSanPham);
-//		                txtSoLuongConLai.setText(String.valueOf(soLuongBanDau));
-//		            }
-//		        } else {
-//		            txtSoLuongConLai.setText("");
-//		        }
-//		    }
-//		});
+
+		updateMaCongNhanComboBox();
+		updateMaCongDoanComboBox();
+		
+		// Sự kiện cho combobox mã công nhân
+		cmbMaCongNhan.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		    public void mouseClicked(MouseEvent e) {
+		        // Khi người dùng chọn một mã công nhân
+		        String selectedMaCongNhan = cmbMaCongNhan.getSelectedItem().toString();
+
+		        // Lấy tên công nhân tương ứng và hiển thị lên combobox tên công nhân
+		        String tenCongNhan = null;
+				try {
+					tenCongNhan = pc_dao.GetTenCongNhanTheoMa(selectedMaCongNhan);
+					cmbTenCongNhan.setSelectedItem(tenCongNhan);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		        
+		    }
+		});
+
+		// Sự kiện cho combobox mã công đoạn
+		cmbCongDoanYC.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		    public void mouseClicked(MouseEvent e) {  	
+		        // Khi người dùng chọn một mã công đoạn
+		        String selectedMaCongDoan = cmbCongDoanYC.getSelectedItem().toString();
+
+		        // Lấy tên công đoạn tương ứng và hiển thị lên combobox tên công đoạn
+		        String tenCongDoan = null;
+				try {
+					tenCongDoan = pc_dao.GetTenCongDoanTheoMa(selectedMaCongDoan);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		        cmbTenCongDoan.setSelectedItem(tenCongDoan);
+		    }
+	
+		});
+		sp_dao = new SanPhamDAOImpl();
+		
+		table.addMouseListener((MouseListener) new MouseAdapter() {
+		    public void mouseClicked(MouseEvent e) {
+		        int selectedRow = table.getSelectedRow();
+
+		        if (selectedRow >= 0 && selectedRow < table.getRowCount()) {
+		            String maSanPham = table.getValueAt(selectedRow, 0).toString();
+		            
+
+		            if (tblPhanCong.getRowCount() > 0) {
+		            	String maCD = tblPhanCong.getValueAt(selectedRow, 3).toString();
+		                int soLuongDaPhanCong = pc_dao.getSoLuongDaPhanCong(maCD);
+		                int soLuongTonKho = sp_dao.getSoLuong(maSanPham);
+		                int soLuongConLai = soLuongTonKho - soLuongDaPhanCong;
+
+		                txtSoLuongConLai.setText(String.valueOf(soLuongConLai));
+
+		            } else {
+		                int soLuongBanDau = sp_dao.getSoLuong(maSanPham);
+		                txtSoLuongConLai.setText(String.valueOf(soLuongBanDau));
+		            }
+		        } else {
+		            txtSoLuongConLai.setText("");
+		        }
+		    }
+		});
 
 
 
@@ -431,105 +446,126 @@ public class Form_CN_PhanCong extends JPanel {
 			}
 		});
 //		pc_dao = new DAO_PhanCong();
-//		docDLPhanCongvaoTB();
-//		btnThemPhanCong.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if(table.getSelectedRow()<0) {
-//					JOptionPane.showMessageDialog(null, "Chua chon san pham");
-//					return;
-//				}
-//				if(valid()) {
-//					int maxMaPC = pc_dao.getPCNumber();
-//					int nextMaPC = maxMaPC+1;
-//					String maPC = String.format("PC%02d", nextMaPC);
-//					String maCN = cmbMaCongNhan.getSelectedItem().toString();
-//					String tenCN = cmbTenCongNhan.getSelectedItem().toString();
-//					String maCD = cmbCongDoanYC.getSelectedItem().toString();
-//					String tenCD = cmbTenCongDoan.getSelectedItem().toString();
-//					int soLuongCanLam = Integer.parseInt(txtSLCanLam.getText().trim());
-//					CongNhan cn = new CongNhan(maCN);
-//					CongDoan cd = new CongDoan(maCD);
-//					PhanCong pc = new PhanCong(maPC, cn, tenCN, cd, tenCD, soLuongCanLam);
-//					pc_dao.create(pc);
-//					tableModelPC.addRow(new Object[] {pc.getMaPhanCong(),pc.getCongNhan().getMaCongNhan(),pc.getTenCongNhan()
-//					,pc.getCongDoan().getMaCongDoan(),pc.getTenCongDoan(),pc.getsLSPCanLam()});
-//					
-//					txtMaPhanCong.setText("");
-//					txtSLCanLam.setText("");
-//					cmbCongDoanYC.setSelectedIndex(0);
-//					//cmbTenCongDoan.setSelectedIndex(0);
-//					cmbMaCongNhan.setSelectedIndex(0);
-//					//cmbTenCongNhan.setSelectedIndex(0);
-//					
-//					JOptionPane.showMessageDialog(null, "Phân công thành công");
-//				}else {
-//					JOptionPane.showMessageDialog(null, "Phân công không thành công");
-//				}
-//				
-//			}
-//		});
-//		btnXoaPhanCong.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				int row = tblPhanCong.getSelectedRow();
-//				if(row < 0) {
-//					JOptionPane.showMessageDialog(null, "Chọn phân công cần xóa");
-//				}else {
-//					String maPC = (String) tblPhanCong.getValueAt(row, 0);
-//					pc_dao.deletePC(maPC);
-//					tableModelPC.removeRow(row);
-//					JOptionPane.showMessageDialog(null, "Xóa phân công thành công");
-//				}
-//				
-//			}
-//		});
-//		btnSuaPhanCong.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				int row = tblPhanCong.getSelectedRow();
-//				if(row<0) {
-//					JOptionPane.showMessageDialog(null, "Chọn một Phan cong trong bảng để sửa.");
-//		            return;
-//				}
-//				String maPC = txtMaPhanCong.getText().trim();
-//				String maCN = cmbMaCongNhan.getSelectedItem().toString();
-//				String tenCN = cmbTenCongNhan.getSelectedItem().toString();
-//				String maCD = cmbCongDoanYC.getSelectedItem().toString();
-//				String tenCD = cmbTenCongDoan.getSelectedItem().toString();
-//				int soLuongCanLam = Integer.parseInt(txtSLCanLam.getText().trim());
-//				CongNhan cn = new CongNhan(maCN);
-//				CongDoan cd = new CongDoan(maCD);
-//				PhanCong pc = new PhanCong(maPC, cn, tenCN, cd, tenCD, soLuongCanLam);
-//				boolean updated = pc_dao.update(pc);
-//				 if (updated) {
-//			            // Cập nhật lại thông tin trong bảng
-//			            tableModelPC.setValueAt(maCN, row, 1);
-//			            tableModelPC.setValueAt(tenCN, row, 2);
-//			            tableModelPC.setValueAt(maCD, row, 3);
-//			            tableModelPC.setValueAt(tenCD, row, 4);
-//			            tableModelPC.setValueAt(soLuongCanLam, row, 5);
-//
-//			            JOptionPane.showMessageDialog(null, "Cập nhật thông tin Phan cong thành công");
-//			        } else {
-//			            JOptionPane.showMessageDialog(null, "Cập nhật thông tin Phan cong thất bại");
-//			        }
-//				
-//			}
-//		});
+		DocDuLieuSanPhamDBVaoTable();
+		docDLPhanCongvaoTB();
+		btnThemPhanCong.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(table.getSelectedRow()<0) {
+					JOptionPane.showMessageDialog(null, "Chua chon san pham");
+					return;
+				}
+				if(valid()) {
+					int maxMaPC = pc_dao.getMaxPhanCongNumber();
+					int nextMaPC = maxMaPC+1;
+					String maPC = String.format("PC%02d", nextMaPC);
+					String maCN = cmbMaCongNhan.getSelectedItem().toString();
+					String tenCN = cmbTenCongNhan.getSelectedItem().toString();
+					String maCD = cmbCongDoanYC.getSelectedItem().toString();
+					String tenCD = cmbTenCongDoan.getSelectedItem().toString();
+					int soLuongCanLam = Integer.parseInt(txtSLCanLam.getText().trim());
+					CongNhan cn = new CongNhan(maCN);
+					CongDoan cd = new CongDoan(maCD);
+					PhanCong pc = new PhanCong(maPC, cn, tenCN, cd, tenCD, soLuongCanLam);
+					try {
+					  boolean add = 	pc_dao.themPhanCong(pc);
+					  if(add)
+					  {
+						  JOptionPane.showMessageDialog(null, "Thêm phân công thành công");
+					  }
+						else {
+							JOptionPane.showMessageDialog(null, "Thêm phân công không thành công");
+						}
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					tableModelPC.addRow(new Object[] {pc.getMaPhanCong(),pc.getMaCongNhan().getMaCongNhan(),pc.getTenCongNhan()
+					,pc.getCongDoan().getMaCongDoan(),pc.getTenCongDoan(),pc.getSoLuongSanPhamCanLam()});
+					
+					txtMaPhanCong.setText("");
+					txtSLCanLam.setText("");
+					cmbCongDoanYC.setSelectedIndex(0);
+					//cmbTenCongDoan.setSelectedIndex(0);
+					cmbMaCongNhan.setSelectedIndex(0);
+					//cmbTenCongNhan.setSelectedIndex(0);
+				
+				}
+				
+			}
+		});
+		btnXoaPhanCong.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row = tblPhanCong.getSelectedRow();
+				if(row < 0) {
+					JOptionPane.showMessageDialog(null, "Chọn phân công cần xóa");
+				}else {
+					String maPC = (String) tblPhanCong.getValueAt(row, 0);
+					try {
+						pc_dao.xoaPhanCong(maPC);
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					tableModelPC.removeRow(row);
+					JOptionPane.showMessageDialog(null, "Xóa phân công thành công");
+				}
+				
+			}
+		});
+		btnSuaPhanCong.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row = tblPhanCong.getSelectedRow();
+				if(row<0) {
+					JOptionPane.showMessageDialog(null, "Chọn một Phan cong trong bảng để sửa.");
+		            return;
+				}
+				String maPC = txtMaPhanCong.getText().trim();
+				String maCN = cmbMaCongNhan.getSelectedItem().toString();
+				String tenCN = cmbTenCongNhan.getSelectedItem().toString();
+				String maCD = cmbCongDoanYC.getSelectedItem().toString();
+				String tenCD = cmbTenCongDoan.getSelectedItem().toString();
+				int soLuongCanLam = Integer.parseInt(txtSLCanLam.getText().trim());
+				CongNhan cn = new CongNhan(maCN);
+				CongDoan cd = new CongDoan(maCD);
+				PhanCong pc = new PhanCong(maPC, cn, tenCN, cd, tenCD, soLuongCanLam);
+				boolean updated = false;
+				try {
+					updated = pc_dao.suaPhanCong(pc);
+				} catch (RemoteException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				 if (updated) {
+			            // Cập nhật lại thông tin trong bảng
+			            tableModelPC.setValueAt(maCN, row, 1);
+			            tableModelPC.setValueAt(tenCN, row, 2);
+			            tableModelPC.setValueAt(maCD, row, 3);
+			            tableModelPC.setValueAt(tenCD, row, 4);
+			            tableModelPC.setValueAt(soLuongCanLam, row, 5);
+
+			            JOptionPane.showMessageDialog(null, "Cập nhật thông tin Phan cong thành công");
+			        } else {
+			            JOptionPane.showMessageDialog(null, "Cập nhật thông tin Phan cong thất bại");
+			        }
+				
+			}
+		});
 		btnXoaRong.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				txtMaPhanCong.setText("");
+				txtMaPhanCong.setText("");
 				txtSLCanLam.setText("");
-//				cmbMaCongNhan.setSelectedIndex(0);
-//				cmbTenCongNhan.setSelectedIndex(0);
-//				cmbCongDoanYC.setSelectedIndex(0);
-//				cmbTenCongDoan.setSelectedIndex(0);
+				cmbMaCongNhan.setSelectedIndex(-1);
+				cmbTenCongNhan.setSelectedIndex(-1);
+				cmbCongDoanYC.setSelectedIndex(-1);
+				cmbTenCongDoan.setSelectedIndex(-1);
 				
 			}
 		});
@@ -543,70 +579,84 @@ public class Form_CN_PhanCong extends JPanel {
 //
 	}
 
-//	public void DocDuLieuDBVaoTable() {
-//		List<SanPham> list = DAO_SanPham.getAlltbSanPham();
-//		for (SanPham sp : list) {
-//			((DefaultTableModel) tableModelSP).addRow(new Object[] { sp.getMaSanPham(), sp.getTenSanPham(),
-//					sp.getKieuDang(), sp.getChatLieu(), sp.getSoLuong() });
-//		}
-//	}
-//	public void docDLPhanCongvaoTB() {
-//		List<PhanCong> list = DAO_PhanCong.getAlltbPhanCong();
-//		for(PhanCong pc : list) {
-//			tableModelPC.addRow(new Object[] {pc.getMaPhanCong(),pc.getCongNhan().getMaCongNhan(),pc.getTenCongNhan()
-//					,pc.getCongDoan().getMaCongDoan(),pc.getTenCongDoan(),pc.getsLSPCanLam()});
-//		}
-//	}
-//	public boolean valid() {
-//		    
-//		    if(txtSoLuongConLai.getText().trim().equals("")) {
-//		    	JOptionPane.showMessageDialog(null, "Bạn cần chọn sản phẩm để biết số sản phẩm chưa được phân công");
-//		    	return false;
-//		    }else {
-//		    	soLuongCanLam = Integer.parseInt(txtSLCanLam.getText().trim());
-//			    soLuongConLai = Integer.parseInt(txtSoLuongConLai.getText().trim());
-//		    }
-//		    if (soLuongCanLam > soLuongConLai) {
-//		        JOptionPane.showMessageDialog(null, "Số lượng cần làm không hợp lệ");
-//		        return false;
-//		    }
+	public void DocDuLieuSanPhamDBVaoTable() throws RemoteException {
+	
+		List<SanPham> list = pc_dao.getDSSanPham();
+		((DefaultTableModel) tableModelSP).setRowCount(0);
+		for (SanPham sp : list) {
+			((DefaultTableModel) tableModelSP).addRow(new Object[] { sp.getMaSanPham(), sp.getTenSanPham(),
+					sp.getKieuDang(), sp.getChatLieu(), sp.getSoLuong() });
+		}
+	}
+	public void docDLPhanCongvaoTB() throws RemoteException {
+		List<PhanCong> list = pc_dao.getDSPhanCong();
+		for(PhanCong pc : list) {
+			tableModelPC.addRow(new Object[] {pc.getMaPhanCong(),pc.getMaCongNhan().getMaCongNhan(),pc.getTenCongNhan()
+					,pc.getCongDoan().getMaCongDoan(),pc.getTenCongDoan(),pc.getSoLuongSanPhamCanLam()});
+		}
+	}
+	public boolean valid() {
+		    
+		    if(txtSoLuongConLai.getText().trim().equals("")) {
+		    	JOptionPane.showMessageDialog(null, "Bạn cần chọn sản phẩm để biết số sản phẩm chưa được phân công");
+		    	return false;
+		    }else {
+		    	soLuongCanLam = Integer.parseInt(txtSLCanLam.getText().trim());
+			    soLuongConLai = Integer.parseInt(txtSoLuongConLai.getText().trim());
+		    }
+		    if (soLuongCanLam > soLuongConLai) {
+		        JOptionPane.showMessageDialog(null, "Số lượng cần làm không hợp lệ, đã vượt quá số lượng còn lại");
+		        return false;
+		    }
+		    if (txtSLCanLam.getText().trim().equals("")) {
+				JOptionPane.showMessageDialog(null, "Số lượng cần làm không được để trống");
+				txtSLCanLam.requestFocus();
+				return false;
+			}
 //		    String maCD = cmbCongDoanYC.getSelectedItem().toString();
-////		    System.out.println("Mã công đoạn: " + maCD);
+//		    System.out.println("Mã công đoạn: " + maCD);
 //		    boolean cdyc = DAO_CongDoan.coCongDoanYeuCau(maCD);
-////		    if(cdyc==true) {
-////		    	System.out.println("co");
-////		    }
+//		    if(cdyc==true) {
+//		    	System.out.println("co");
+//		    }
 //		    if(soLuongConLai>0 && cdyc ) {
 //		    	JOptionPane.showMessageDialog(null, "Công đoạn truoc chưa hoàn thành cần phân công tiếp");
 //		        return false;
 //		    }
+		return true;
+	}
+//	public boolean valid() {
+//		if (txtSLCanLam.getText().trim().equals("")) {
+//			JOptionPane.showMessageDialog(null, "Số lượng cần làm không được để trống");
+//			txtSLCanLam.requestFocus();
+//			return false;
+//		}
 //		return true;
 //	}
-//	 private void updateMaCongNhanComboBox() {
-//	        // Xóa dữ liệu cũ
-//	        cmbMaCongNhan.removeAllItems();
-//
-//	        // Lấy danh sách mã công nhân từ CSDL
-//	        ArrayList<String> maCongNhanList = DAO_PhanCong.getAllMaCongNhan();
-//
-//	        // Thêm vào JComboBox
-//	        for (String maCongNhan : maCongNhanList) {
-//	            cmbMaCongNhan.addItem(maCongNhan);
-//	        }
-//	    }
-//
-//	    private void updateMaCongDoanComboBox() {
-//	        // Xóa dữ liệu cũ
-//	        cmbCongDoanYC.removeAllItems();
-//
-//	        // Lấy danh sách mã công đoạn từ CSDL
-//	        ArrayList<String> maCongDoanList = DAO_PhanCong.getAllMaCongDoan();
-//
-//	        // Thêm vào JComboBox
-//	        for (String maCongDoan : maCongDoanList) {
-//	            cmbCongDoanYC.addItem(maCongDoan);
-//	        }
-//	    }
+	 private void updateMaCongNhanComboBox() throws RemoteException {
+	        // Xóa dữ liệu cũ
+	        cmbMaCongNhan.removeAllItems();
+
+	        // Lấy danh sách mã công nhân từ CSDL
+	        List<String> maCongNhanList = pc_dao.getDSMaCongNhan();
+	        
+	        // Thêm vào JComboBox
+	        for (String maCongNhan : maCongNhanList) {
+	            cmbMaCongNhan.addItem(maCongNhan);
+	        }
+	    }
+
+	    private void updateMaCongDoanComboBox() throws RemoteException {
+	        // Xóa dữ liệu cũ
+	        cmbCongDoanYC.removeAllItems();
+
+	        // Lấy danh sách mã công đoạn từ CSDL
+	        List<CongDoan> CongDoanList = pc_dao.getDSCongDoan();
+	        // Thêm vào JComboBox
+	        for (CongDoan cd : CongDoanList) {
+	            cmbCongDoanYC.addItem(cd.getMaCongDoan().toString());
+	        }
+	    }
 	    
 	//
 }

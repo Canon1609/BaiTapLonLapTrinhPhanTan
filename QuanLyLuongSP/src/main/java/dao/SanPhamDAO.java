@@ -19,4 +19,6 @@ public interface SanPhamDAO extends Remote{
 
 	List<SanPham> TimSanPhamTheoKieuDang(String kieuDang) throws RemoteException;
 
+	int getSoLuong(String maSanPham) throws RemoteException;
+
 }

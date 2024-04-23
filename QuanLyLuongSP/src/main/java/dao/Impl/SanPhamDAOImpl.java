@@ -189,5 +189,28 @@ public class SanPhamDAOImpl extends UnicastRemoteObject implements SanPhamDAO {
 
 		return null; // Trả về giá trị mặc định nếu có lỗi
 	}
+	@Override
+	public int getSoLuong(String maSanPham) {
+	    int soLuong = 0;
+	    EntityManager em = emf.createEntityManager(); // Mở EntityManager
+	    try {
+	        // Sử dụng JPQL để truy vấn số lượng của sản phẩm có mã là maSanPham
+	        TypedQuery<Integer> query = em.createQuery("SELECT sp.soLuong FROM SanPham sp WHERE sp.maSanPham = :maSanPham", Integer.class);
+	        query.setParameter("maSanPham", maSanPham);
+
+	        Integer result = query.getSingleResult(); // Thực hiện truy vấn và lấy kết quả
+
+	        if (result != null) {
+	            soLuong = result;
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        em.close(); // Đóng EntityManager sau khi sử dụng
+	    }
+
+	    return soLuong;
+	}
+
 
 }

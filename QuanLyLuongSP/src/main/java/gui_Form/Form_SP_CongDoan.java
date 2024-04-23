@@ -419,58 +419,57 @@ public class Form_SP_CongDoan extends JPanel {
 				}
 			}
 		});
-//		btnXoaCongDoan.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				int row = tblCongDoan.getSelectedRow();
-//				if(row < 0) {
-//					JOptionPane.showMessageDialog(null, "Chọn Công Đoạn cần xóa");
-//				}else {
-//					String macd = (String) tblCongDoan.getValueAt(row, 0);
-//					cd_dao.delete(macd);
-//					((DefaultTableModel) tableModelCD).removeRow(row);
-//					JOptionPane.showMessageDialog(null, "Xóa Công Đoạn thành công");
-//				}
-//				
-//			}
-//		});
-//		btnSuaThongTin.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				int selectedRow = tblCongDoan.getSelectedRow();
-//		        if (selectedRow < 0) {
-//		            JOptionPane.showMessageDialog(null, "Chọn một công đoạn trong bảng để sửa.");
-//		            return;
-//		        }
-//		        String maCD = txtMaCongDoan.getText().trim();
-//		        String tenCD = txtTenCongDoan.getText().trim();
-//		        double giaCD = Double.parseDouble(txtGiaCongDoan.getText().trim());
-//		        String maSP = txtMaSanPham.getText().trim();
-//		        String tenSP = txtTenSanPham.getText().trim();
-//		        int soLuong = Integer.parseInt(cmbSoLuong.getSelectedItem().toString());
-//		        String congDoanYC = cmbCongDoanYeuCau.getSelectedItem().toString();
-//		        SanPham sp = new SanPham(maSP);
-//		        CongDoan cd = new CongDoan(maCD, tenCD, giaCD, sp, tenSP, soLuong, congDoanYC);
-//		        boolean updated = cd_dao.update(cd);
-//		        if(updated) {
-//		        	
-//		        	tblCongDoan.setValueAt(tenCD, selectedRow, 1);
-//		        	tblCongDoan.setValueAt(giaCD, selectedRow, 2);
-//		        	tblCongDoan.setValueAt(maSP, selectedRow, 3);
-//		        	tblCongDoan.setValueAt(tenSP, selectedRow, 4);
-//		        	tblCongDoan.setValueAt(soLuong, selectedRow, 5);
-//		        	tblCongDoan.setValueAt(congDoanYC, selectedRow, 6);
-//		        	
-//		        	JOptionPane.showMessageDialog(null, "Cập nhật thông tin công đoạn thành công");
-//		        }else {
-//		        	JOptionPane.showMessageDialog(null, "Cập nhật thông tin công đoạn thất bại");
-//		        }
-//		        
-//				
-//			}
-//		});
+		btnXoaCongDoan.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row = tblCongDoan.getSelectedRow();
+				if(row < 0) {
+					JOptionPane.showMessageDialog(null, "Chọn Công Đoạn cần xóa");
+				}else {
+					String macd = (String) tblCongDoan.getValueAt(row, 0);
+					cd_dao.xoaCongDoan(macd);
+					((DefaultTableModel) tableModelCD).removeRow(row);
+					JOptionPane.showMessageDialog(null, "Xóa Công Đoạn thành công");
+				}
+				
+			}
+		});
+		btnSuaThongTin.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int selectedRow = tblCongDoan.getSelectedRow();
+		        if (selectedRow < 0) {
+		            JOptionPane.showMessageDialog(null, "Chọn một công đoạn trong bảng để sửa.");
+		            return;
+		        }
+		        String maCD = txtMaCongDoan.getText().trim();
+		        String tenCD = txtTenCongDoan.getText().trim();
+		        double giaCD = Double.parseDouble(txtGiaCongDoan.getText().trim());
+		        String maSP = txtMaSanPham.getText().trim();
+		        String tenSP = txtTenSanPham.getText().trim();
+		        int soLuong = Integer.parseInt(cmbSoLuong.getSelectedItem().toString());
+		        String congDoanYC = cmbCongDoanYeuCau.getSelectedItem().toString();
+		        SanPham sp = new SanPham(maSP);
+		        CongDoan cd = new CongDoan(maCD, tenCD, giaCD, sp, tenSP, soLuong, congDoanYC);
+		        boolean updated = cd_dao.capNhatCongDoan(cd);
+		        if(updated) {
+		        	tblCongDoan.setValueAt(tenCD, selectedRow, 1);
+		        	tblCongDoan.setValueAt(giaCD, selectedRow, 2);
+		        	tblCongDoan.setValueAt(maSP, selectedRow, 3);
+		        	tblCongDoan.setValueAt(tenSP, selectedRow, 4);
+		        	tblCongDoan.setValueAt(soLuong, selectedRow, 5);
+		        	tblCongDoan.setValueAt(congDoanYC, selectedRow, 6);
+		        	
+		        	JOptionPane.showMessageDialog(null, "Cập nhật thông tin công đoạn thành công");
+		        }else {
+		        	JOptionPane.showMessageDialog(null, "Cập nhật thông tin công đoạn thất bại");
+		        }
+		        
+				
+			}
+		});
 		btnXoaRong.addActionListener(new ActionListener() {
 			
 			@Override

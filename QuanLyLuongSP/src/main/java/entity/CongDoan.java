@@ -36,6 +36,12 @@ public class CongDoan implements Serializable {
 	private int soLuong;
 	@Column(name = "congDoanYeuCau" , columnDefinition = "nvarchar(255)")
 	private String congDoanYeuCau;
+	public CongDoan(String maCongDoan) {
+		super();
+		this.maCongDoan = maCongDoan;
+	}
+	
+	
 	
 	
 }
