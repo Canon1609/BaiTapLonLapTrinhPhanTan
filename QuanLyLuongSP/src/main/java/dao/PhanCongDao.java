@@ -19,4 +19,7 @@ public interface PhanCongDao extends Remote {
 	String GetTenCongDoanTheoMa(String maCongDoan) throws RemoteException;
 	String GetTenCongNhanTheoMa(String maCongNhan) throws RemoteException;
 	int getSoLuongDaPhanCong(String maCongDoan)throws RemoteException;
+	List<PhanCong> getAlltbPhanCong()throws RemoteException;
+	String getMaCongDoanDaLamTheoMaCongNhan(String maCN)throws RemoteException;
+	int getTongSoLuongSanPhamDaPhanCong(String maCongNhan, String maCongDoan)throws RemoteException;
 }

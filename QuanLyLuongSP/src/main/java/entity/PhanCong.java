@@ -30,5 +30,10 @@ public class PhanCong implements java.io.Serializable{
 	private String tenCongDoan;
 	@Column(name = "soLuongSanPhamCanLam", columnDefinition = "int")
 	private int soLuongSanPhamCanLam;
+	public PhanCong(String maPhanCong) {
+		super();
+		this.maPhanCong = maPhanCong;
+	}
+	
 	
 }

@@ -265,6 +265,75 @@ public class PhanCongDaoImpl extends UnicastRemoteObject  implements PhanCongDao
 
 	    return (int) soLuongDaPhanCong; // Chuyển đổi từ Long sang int
 	}
+	@Override
+	public List<PhanCong> getAlltbPhanCong() {
+		EntityManager em = emf.createEntityManager(); 
+		
+		try {
+			// Sử dụng JPQL để truy vấn danh sách nhân viên
+			TypedQuery<PhanCong> query = em.createQuery("SELECT pc FROM PhanCong pc", PhanCong.class);
+
+			List<PhanCong> list = query.getResultList(); // Thực hiện truy vấn và lấy kết quả
+
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			em.close(); // Đóng EntityManager sau khi sử dụng
+		}
+
+		return null; // Trả về giá trị mặc định nếu có lỗi
+	}
+	
+	public int getTongSoLuongSanPhamDaPhanCong(String maCongNhan, String maCongDoan) {
+	    EntityManager em = emf.createEntityManager(); 
+	    int tongSoLuong = 0;
+
+	    try {
+	        // Sử dụng JPQL để tính tổng số lượng sản phẩm đã phân công cho cặp mã công nhân và mã công đoạn
+	        TypedQuery<Long> query = em.createQuery("SELECT SUM(pc.soLuongSanPhamCanLam) FROM PhanCong pc WHERE pc.maCongNhan.maCongNhan = :maCongNhan AND pc.CongDoan.maCongDoan = :maCongDoan", Long.class);
+	        query.setParameter("maCongNhan", maCongNhan);
+	        query.setParameter("maCongDoan", maCongDoan);
+
+	        Long result = query.getSingleResult(); // Lấy kết quả tổng số lượng
+
+	        if (result != null) {
+	            tongSoLuong = result.intValue(); // Chuyển đổi Long thành int
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        em.close(); // Đóng EntityManager sau khi sử dụng
+	    }
+
+	    return tongSoLuong;
+	}
+
+
+	public  String getMaCongDoanDaLamTheoMaCongNhan(String maCongNhan) {
+	    EntityManager em = emf.createEntityManager(); 
+	    String maCongDoan = null;
+
+	    try {
+	        // Sử dụng JPQL để truy vấn mã công đoàn đã làm dựa trên mã công nhân
+	        TypedQuery<String> query = em.createQuery("SELECT DISTINCT pc.CongDoan.maCongDoan FROM PhanCong pc WHERE pc.maCongNhan.maCongNhan = :maCongNhan", String.class);
+	        query.setParameter("maCongNhan", maCongNhan);
+
+	        List<String> results = query.getResultList(); // Lấy danh sách mã công đoàn đã làm
+
+	        if (!results.isEmpty()) {
+	            maCongDoan = results.get(0); // Lấy mã công đoàn đầu tiên trong danh sách kết quả
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        em.close(); // Đóng EntityManager sau khi sử dụng
+	    }
+
+	    return maCongDoan;
+	}
+
+	
+
 
 
 	

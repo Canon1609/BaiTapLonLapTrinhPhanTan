@@ -14,4 +14,5 @@ public interface CongDoanDao extends Remote {
 	List<CongDoan> getDanhSachCongDoan()  throws RemoteException;
 	List<SanPham> getDanhSachSanPham()  throws RemoteException;
 	List<String> getCongDoanYeuCau() throws RemoteException;
+	double getGiaCongDoanByMaCongDoan(String maCongDoanTheoCongNhan) throws RemoteException;
 }

@@ -10,7 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
+import java.rmi.RemoteException;
+
 import java.util.Calendar;
 import java.util.List;
 import java.awt.Color;
@@ -23,6 +24,15 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import dao.Impl.CongDoanDaoImpl;
+import dao.Impl.CongNhanlmpl;
+import dao.Impl.LuongCongNhanlmpl;
+import dao.Impl.PhanCongDaoImpl;
+import entity.CongNhan;
+import entity.LuongCongNhan;
+import entity.PhanCong;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 
 
 import javax.swing.JScrollPane;
@@ -42,7 +52,7 @@ public class Form_CN_TinhLuong extends JPanel {
 	private JTable tblLuongCN;
 	private DefaultTableModel tableModelTinhLuong;
 
-	private Form_CN_ChamCong chamCongCN;
+	
 	private DefaultTableModel tableModel;
 
 	private JTextField txtTenCongNhan;
@@ -50,12 +60,19 @@ public class Form_CN_TinhLuong extends JPanel {
 	private int tongNgayCong;
 	private double tbLuongCa;
 	private double thucNhan;
-
+	private EntityManagerFactory emf;
+	private EntityManager em;
+	private CongNhanlmpl cn_dao;
+	private LuongCongNhanlmpl luongCN_dao;
+	private CongDoanDaoImpl cd_dao;
+	private Form_CN_ChamCong chamCongCN;
+	private PhanCongDaoImpl pc_dao;
 
 	/**
 	 * Create the panel.
+	 * @throws RemoteException 
 	 */
-	public Form_CN_TinhLuong() {
+	public Form_CN_TinhLuong() throws RemoteException {
 		setLayout(new BorderLayout(0, 0));
 
 		JPanel pnNorth = new JPanel();
@@ -201,8 +218,8 @@ public class Form_CN_TinhLuong extends JPanel {
 		// Lấy năm hiện tại
 		int namHienTai = Calendar.getInstance().get(Calendar.YEAR);
 
-		// Thêm các năm từ 2020 đến năm hiện tại vào JComboBox
-		for (int nam = 2023; nam <= namHienTai; nam++) {
+		// Thêm các năm từ 2024 đến năm hiện tại vào JComboBox
+		for (int nam = 2024; nam <= namHienTai; nam++) {
 			cmbNam.addItem(nam);
 		}
 		boxNam.add(cmbNam);
@@ -236,13 +253,9 @@ public class Form_CN_TinhLuong extends JPanel {
 		String[] columnNames = { "Mã Công Nhân", "Họ Tên", "CMND/CCCD", "Ngày Sinh", "Giới Tính", "Địa Chỉ",
 				"Số Điện Thoại", "Phụ Cấp", "Tay Nghề", "Phòng Ban" };
 		// khởi tạo kết nối đến CSDL
-//		try {
-//			Conection_DB.getInstance().connect();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		DocDLVaoTable();
+	        cn_dao =new CongNhanlmpl();
+	        luongCN_dao =new LuongCongNhanlmpl();
+	        DocDLVaoTable();
 		tblDSCongNhan.addMouseListener(new MouseAdapter() {
 
 			@Override
@@ -317,154 +330,155 @@ public class Form_CN_TinhLuong extends JPanel {
 		String[] columnNames1 = { "Mã Lương", "Mã Nhân Viên", "Họ Tên", "Số Ngày Đi Làm", "Tháng Nhận", "Năm Nhận",
 				"Thực Nhận" };
 		tableModelTinhLuong.setColumnIdentifiers(columnNames1);
-//		docDLLuongCN();
-//		congNhan_dao = new DAO_CongNhan();
-//		LuongCN_dao = new DAO_LuongCongNhan();
-//		chamCongCN = new Form_CN_ChamCong();
-//
-//		cmbThang.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				tongNgayCong = chamCongCN.tinhTongNgayCong(txtMaCongNhan.getText().trim(),
-//						Integer.parseInt(cmbThang.getSelectedItem().toString()));
-//				tbLuongCa = chamCongCN.tinhTrungBinhLuongCa(txtMaCongNhan.getText().trim(),
-//						Integer.parseInt(cmbThang.getSelectedItem().toString()));
-//				String maCongDoanTheoCongNhan = DAO_PhanCong
-//						.getMaCongDoanDaLamTheoMaCongNhan(txtMaCongNhan.getText().trim());
-//				double giaCongDoanTheoMaCongDoan = DAO_CongDoan.getGiaCongDoanByMaCongDoan(maCongDoanTheoCongNhan);
-//				int tongSPCuaCongNhanTheoMaCongDoan = DAO_PhanCong
-//						.getTongSoLuongSanPhamDaPhanCong(txtMaCongNhan.getText().trim(), maCongDoanTheoCongNhan);
-//
-//				thucNhan = (((giaCongDoanTheoMaCongDoan * tongSPCuaCongNhanTheoMaCongDoan * tbLuongCa) / 26)
-//						* tongNgayCong) + phuCap;
-//				String thucNhanStr = Double.toString(thucNhan);
-//				txtThucLanh.setText(thucNhanStr);
-//			}
-//		});
-//
-//		// String maCongDoanCanTim = "SP01CD01";
-//		// double giaCong = DAO_CongDoan.getGiaCongDoanByMaCongDoan(maCongDoanCanTim);
-//		// System.out.println("Giá công đoạn là: " + giaCong);
-//		// String maCongNhan = "CN001"; // Thay thế bằng mã nhân viên thực tế
-//		// String maCongDoan = "CD001"; // Thay thế bằng mã công đoạn thực tế
-//
-//		// int tongSoLuong = DAO_PhanCong.getTongSoLuongSanPhamDaPhanCong(maCongNhan,
-//		// maCongDoan);
-//		// System.out.println("Tổng số lượng sản phẩm đã phân công: " + tongSoLuong);
-//		// String maCongNhan = "CN001"; // Thay thế bằng mã nhân viên thực tế
-//
-//		// String maCongDoan =
-//		// DAO_PhanCong.getMaCongDoanDaLamTheoMaCongNhan(maCongNhan);
-//		// System.out.println("Mã công đoạn đã làm: " + maCongDoan);
-//
-//		// THOÁT
-//		btnThoat.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				setVisible(false);
-//			}
-//		});
-//		btnTinhLuong.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if(tblDSCongNhan.getSelectedRow()<0) {
-//					JOptionPane.showMessageDialog(null, "Chua chon cong nhan de tinh luong");
-//					return;
-//				}
-//				if(valid()) {
-//					int maxLuongNumber = LuongCN_dao.getMaxMaLuongCN();
-//					int nextLuongNumber = maxLuongNumber+1;
-//					String maLuong = String.format("L%02d", nextLuongNumber);
-//					String maCN = txtMaCongNhan.getText().trim();
-//					String tenCN = txtTenCongNhan.getText();
-//					int ngayDiLam = tongNgayCong;
-//					int thangNhan = Integer.parseInt(cmbThang.getSelectedItem().toString());
-//					int namNhan = Integer.parseInt(cmbNam.getSelectedItem().toString());
-//					double thucNhan = Double.parseDouble(txtThucLanh.getText().trim());
-//					CongNhan cn = new CongNhan(maCN);
-//					LuongCongNhan luongCN = new LuongCongNhan(maLuong, cn, tenCN, ngayDiLam, thangNhan, namNhan, thucNhan);
-//					LuongCN_dao.create(luongCN);
-//					tableModelTinhLuong.addRow(new Object[] { luongCN.getMaLuongCongNhan(),
-//							luongCN.getCongNhan().getMaCongNhan(), luongCN.getTenCongNhan(), luongCN.getSoNgayDiLam(),
-//							luongCN.getThangNhan(), luongCN.getNamNhan(), luongCN.getThucNhan() });
-//					txtMaLuong.setText("");
-//					txtMaCongNhan.setText("");
-//					txtTenCongNhan.setText("");
-//					txtThucLanh.setText("");
-//					cmbNam.setSelectedIndex(0);
-//					cmbThang.setSelectedIndex(0);
-//					JOptionPane.showMessageDialog(null, "Tính lương thành công");
-//				}else {
-//					JOptionPane.showMessageDialog(null, "Tính lương không thành công");
-//				}
-//			}
-//		});
-//		btnXoaLuong.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				int row = tblLuongCN.getSelectedRow();
-//				if (row < 0) {
-//					JOptionPane.showMessageDialog(null, "Chọn Lương cần xóa");
-//				} else {
-//					String maLuongCN = (String) tblLuongCN.getValueAt(row, 0);
-//					LuongCN_dao.delete(maLuongCN);
-//					tableModelTinhLuong.removeRow(row);
-//					JOptionPane.showMessageDialog(null, "Xóa Lương thành công");
-//				}
-//
-//			}
-//		});
-//		btnLamMoi.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				txtMaLuong.setText("");
-//				txtMaCongNhan.setText("");
-//				txtTenCongNhan.setText("");
-//				txtThucLanh.setText("");
-//				cmbNam.setSelectedIndex(0);
-//				cmbThang.setSelectedIndex(0);
-//
-//			}
-//		});
-//		btnThoat.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				setVisible(false);
-//			}
-//		});
-//	}
-//
-//	public void docDLLuongCN() {
-//		List<LuongCongNhan> list = DAO_LuongCongNhan.getAlltbLuongCuaCongNhan();
-//		for (LuongCongNhan luongCN : list) {
-//			tableModelTinhLuong.addRow(new Object[] { luongCN.getMaLuongCongNhan(),
-//					luongCN.getCongNhan().getMaCongNhan(), luongCN.getTenCongNhan(), luongCN.getSoNgayDiLam(),
-//					luongCN.getThangNhan(), luongCN.getNamNhan(), luongCN.getThucNhan() });
-//		}
-//	}
-//
-//	public void DocDLVaoTable() {
-//		List<CongNhan> list = DAO_CongNhan.getAlltbCongNhan();
-//		for (CongNhan cn : list) {
-//			tableModel.addRow(new Object[] { cn.getMaCongNhan(), cn.getHoTen(), cn.getcCCD(), cn.getNgaySinh(),
-//					cn.getGioiTinh(), cn.getDiaChi(), cn.getSoDienThoai(), cn.getPhuCap(), cn.getTrinhDoTayNghe(),
-//					cn.getPhongBan() });
-//		}
-//	}
-//	public boolean valid() {
-//		if(tblDSCongNhan.getSelectedRow()<0) {
-//			JOptionPane.showMessageDialog(null, "Cần chọn công nhân để tính lương");
-//			return false;
-//		}
-//		if(txtMaCongNhan.getText().trim().equals("")) {
-//			JOptionPane.showMessageDialog(null, "Chua chon cong nhan de tinh luong");
-//			return false;
-//		}
-//		return true;
-	}
+		docDLLuongCN();
+		
+		pc_dao =new PhanCongDaoImpl();
+		cd_dao =new CongDoanDaoImpl();
+		chamCongCN =new Form_CN_ChamCong();
+		cmbThang.addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tongNgayCong = chamCongCN.tinhTongNgayCong(txtMaCongNhan.getText().trim(),
+						Integer.parseInt(cmbThang.getSelectedItem().toString()));
+				tbLuongCa = chamCongCN.tinhTrungBinhLuongCa(txtMaCongNhan.getText().trim(),
+						Integer.parseInt(cmbThang.getSelectedItem().toString()));
+				String maCongDoanTheoCongNhan = pc_dao
+						.getMaCongDoanDaLamTheoMaCongNhan(txtMaCongNhan.getText().trim());
+				double giaCongDoanTheoMaCongDoan = cd_dao.getGiaCongDoanByMaCongDoan(maCongDoanTheoCongNhan);
+				int tongSPCuaCongNhanTheoMaCongDoan = pc_dao
+						.getTongSoLuongSanPhamDaPhanCong(txtMaCongNhan.getText().trim(), maCongDoanTheoCongNhan);
+
+				thucNhan = (((giaCongDoanTheoMaCongDoan * tongSPCuaCongNhanTheoMaCongDoan * tbLuongCa) / 26)
+						* tongNgayCong) + phuCap;
+				String thucNhanStr = Double.toString(thucNhan);
+				txtThucLanh.setText(thucNhanStr);
+			}
+		});
+
+		// String maCongDoanCanTim = "SP01CD01";
+		// double giaCong = DAO_CongDoan.getGiaCongDoanByMaCongDoan(maCongDoanCanTim);
+		// System.out.println("Giá công đoạn là: " + giaCong);
+		// String maCongNhan = "CN001"; // Thay thế bằng mã nhân viên thực tế
+		// String maCongDoan = "CD001"; // Thay thế bằng mã công đoạn thực tế
+
+		// int tongSoLuong = DAO_PhanCong.getTongSoLuongSanPhamDaPhanCong(maCongNhan,
+		// maCongDoan);
+		// System.out.println("Tổng số lượng sản phẩm đã phân công: " + tongSoLuong);
+		// String maCongNhan = "CN001"; // Thay thế bằng mã nhân viên thực tế
+
+		// String maCongDoan =
+		// DAO_PhanCong.getMaCongDoanDaLamTheoMaCongNhan(maCongNhan);
+		// System.out.println("Mã công đoạn đã làm: " + maCongDoan);
+
+		// THOÁT
+		btnThoat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		btnTinhLuong.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(tblDSCongNhan.getSelectedRow()<0) {
+					JOptionPane.showMessageDialog(null, "Chua chon cong nhan de tinh luong");
+					return;
+				}
+				if(valid()) {
+					int maxLuongNumber = luongCN_dao.getMaxMaLuongCN();
+					int nextLuongNumber = maxLuongNumber+1;
+					String maLuong = String.format("L%02d", nextLuongNumber);
+					String maCN = txtMaCongNhan.getText().trim();
+					String tenCN = txtTenCongNhan.getText();
+					int ngayDiLam = tongNgayCong;
+					int thangNhan = Integer.parseInt(cmbThang.getSelectedItem().toString());
+					int namNhan = Integer.parseInt(cmbNam.getSelectedItem().toString());
+					double thucNhan = Double.parseDouble(txtThucLanh.getText().trim());
+					CongNhan cn = new CongNhan(maCN);
+					LuongCongNhan luongCN = new LuongCongNhan(maLuong, cn, tenCN, ngayDiLam, thangNhan, namNhan, thucNhan);
+					luongCN_dao.create(luongCN);
+					tableModelTinhLuong.addRow(new Object[] { luongCN.getMaLuongCongNhan(),
+							luongCN.getMaCongNhan().getMaCongNhan(), luongCN.getTenCongNhan(), luongCN.getSoNgayDiLam(),
+							luongCN.getThangNhan(), luongCN.getNamNhan(), luongCN.getThucNhan() });
+					txtMaLuong.setText("");
+					txtMaCongNhan.setText("");
+					txtTenCongNhan.setText("");
+					txtThucLanh.setText("");
+					cmbNam.setSelectedIndex(0);
+					
+					JOptionPane.showMessageDialog(null, "Tính lương thành công");
+				}else {
+					JOptionPane.showMessageDialog(null, "Tính lương không thành công");
+				}
+			}
+		});
+		btnXoaLuong.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row = tblLuongCN.getSelectedRow();
+				if (row < 0) {
+					JOptionPane.showMessageDialog(null, "Chọn Lương cần xóa");
+				} else {
+					String maLuongCN = (String) tblLuongCN.getValueAt(row, 0);
+					luongCN_dao.delete(maLuongCN);
+					tableModelTinhLuong.removeRow(row);
+					JOptionPane.showMessageDialog(null, "Xóa Lương thành công");
+				}
+
+			}
+		});
+		btnLamMoi.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				txtMaLuong.setText("");
+				txtMaCongNhan.setText("");
+				txtTenCongNhan.setText("");
+				txtThucLanh.setText("");
+				cmbNam.setSelectedIndex(0);
+				
+
+			}
+		});
+		btnThoat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+	}
+//
+	public void docDLLuongCN() {
+		List<LuongCongNhan> list = luongCN_dao.getAlltbLuongCuaCongNhan();
+		for (LuongCongNhan luongCN : list) {
+			tableModelTinhLuong.addRow(new Object[] { luongCN.getMaLuongCongNhan(),
+					luongCN.getMaCongNhan().getMaCongNhan(), luongCN.getTenCongNhan(), luongCN.getSoNgayDiLam(),
+					luongCN.getThangNhan(), luongCN.getNamNhan(), luongCN.getThucNhan() });
+		}
+	}
+//
+	public void DocDLVaoTable() {
+		List<CongNhan> list = cn_dao.getAlltbCongNhan();
+		for (CongNhan cn : list) {
+			tableModel.addRow(new Object[] { cn.getMaCongNhan(), cn.getHoTen(), cn.getCCCD(), cn.getNgaySinh(),
+					cn.getGioiTinh(), cn.getDiaChi(), cn.getSoDienThoai(), cn.getPhuCap(), cn.getTrinhDoTayNghe(),
+					cn.getPhongBan() });
+		}
+	}
+	
+	public boolean valid() {
+		if(tblDSCongNhan.getSelectedRow()<0) {
+			JOptionPane.showMessageDialog(null, "Cần chọn công nhân để tính lương");
+			return false;
+		}
+		if(txtMaCongNhan.getText().trim().equals("")) {
+			JOptionPane.showMessageDialog(null, "Chua chon cong nhan de tinh luong");
+			return false;
+		}
+		return true;
+	}
+	
 }

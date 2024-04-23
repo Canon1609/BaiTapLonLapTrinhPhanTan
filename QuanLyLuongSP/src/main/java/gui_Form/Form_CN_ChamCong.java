@@ -13,7 +13,16 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
-
+import dao.Impl.ChamCongCongNhanlmpl;
+import dao.Impl.PhanCongDaoImpl;
+import entity.CongCuaCongNhan;
+import entity.CongDoan;
+import entity.CongNhan;
+import entity.PhanCong;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 
 import java.awt.Dimension;
 import javax.swing.JComboBox;
@@ -31,6 +40,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,11 +68,16 @@ public class Form_CN_ChamCong extends JPanel {
 	private JDateChooser dateChooser;
 	private JCheckBox chkCoMat;
 	private JCheckBox chkCoPhep;
-
+	private EntityManagerFactory emf;
+	private EntityTransaction tx;
+	private EntityManager em;
+	private ChamCongCongNhanlmpl congcn_dao;
+	private PhanCongDaoImpl pc_dao;
 	/**
 	 * Create the panel.
+	 * @throws RemoteException 
 	 */
-	public Form_CN_ChamCong() {
+	public Form_CN_ChamCong() throws RemoteException {
 		setMinimumSize(new Dimension(1222, 795));
 		setLayout(new BorderLayout(0, 0));
 
@@ -439,15 +454,12 @@ public class Form_CN_ChamCong extends JPanel {
 		});
 		
 //		// khởi tạo kết nối đến CSDL
-//		try {
-//			Conection_DB.getInstance().connect();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		pc_dao = new DAO_PhanCong();
-//		docDLPhanCongvaoTB();
-
+		emf = Persistence.createEntityManagerFactory("jpa-mssql");
+        em = emf.createEntityManager();
+        tx = em.getTransaction();
+        pc_dao =new PhanCongDaoImpl();
+		docDLPhanCongvaoTB();
+		congcn_dao =new ChamCongCongNhanlmpl();
 		JPanel pnChucNang = new JPanel();
 		pnChucNang.setPreferredSize(new Dimension(1200, 50));
 		pnCenter.add(pnChucNang);
@@ -501,111 +513,115 @@ public class Form_CN_ChamCong extends JPanel {
 				"Mã Công đoạn", " Tên C\u00F4ng \u0110o\u1EA1n", "Ng\u00E0y Ch\u1EA5m", "Ca L\u00E0m",
 				"Gi\u1EDD L\u00E0m", "Lương Ca Làm", "S\u1ED1 SP", "Tr\u1EA1ng Th\u00E1i", "Ngh\u1EC9 ph\u00E9p"};
 		tableModelDSChamCong.setColumnIdentifiers(columnNames1);
-//		congCN_dao = new DAO_ChamCongCongNhan();
+		docDLDSChamCong();
+	
+	
 //		docDLDSChamCong();
-//		btnChamCong.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				 if(valid()) {
-//					int maxMaCongCN = congCN_dao.getMaxMaCongCN();
-//					int nextMaCongCN = maxMaCongCN+1;
-//					String maCong = String.format("C%02d", nextMaCongCN);
-//					String maCN = txtMaCongNhan.getText().trim();
-//					String tenCN = txtTenCN.getText().trim();
-//					String maPC = txtMaPC.getText().trim();
-//					String maCD = txtMaCongDoan.getText().trim();
-//					String tenCD = txtTenCD.getText().trim();
-//					Date ngayCham = (Date) dateChooser.getDate();
-//					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//					String ngayChamStr = dateFormat.format(ngayCham);
-//					String caLam = cmbCaLam.getSelectedItem().toString();
-//					String gioLam = txtGioLam.getText().trim();
-//					double luongCa = Double.parseDouble(txtLuongCa.getText().toString());
-//					int soLuong = Integer.parseInt(txtSLPhanCong.getText().toString());
-//					String trangThai="";
-//					if(chkCoMat.isSelected()) {
-//						trangThai = "Có mặt";
-//					}else {
-//						trangThai = "Nghỉ";
-//					}
-//					String nghiPhep ="";
-//					if(chkCoPhep.isSelected()) {
-//						nghiPhep = "Có";
-//					}else {
-//						nghiPhep ="Không";
-//					}
-//					
-//					CongNhan cn = new CongNhan(maCN);
-//					PhanCong pc = new PhanCong(maPC);
-//					CongDoan cd = new CongDoan(maCD);
-//					
-//					CongCuaCongNhan congCN = new CongCuaCongNhan(maCong, cn, tenCN, pc, cd, tenCD, ngayChamStr, caLam, gioLam, luongCa, soLuong, trangThai, nghiPhep);
-//					congCN_dao.create(congCN);
-//					tableModelDSChamCong.addRow(new Object[] {congCN.getMaCongCN(),congCN.getCongNhan().getMaCongNhan(),congCN.getTenCongNhan(),
-//							congCN.getPhanCong().getMaPhanCong(),congCN.getCongDoan().getMaCongDoan(),congCN.getTenCongDoan(),
-//							congCN.getNgayChamCong(),congCN.getCaLam(),congCN.getGiolam(),congCN.getLuongCaLam(),congCN.getSlSPDaLam(),congCN.getTrangThai(),
-//							congCN.getNghiPhep()});
-//					txtMaCong.setText("");
-//					txtMaCongNhan.setText("");
-//					txtTenCN.setText("");
-//					txtMaPC.setText("");
-//					txtMaCongDoan.setText("");
-//					txtTenCD.setText("");
-//					dateChooser.setDate(null);
-//					txtGioLam.setText("");
-//					cmbCaLam.setSelectedIndex(0);
-//					txtGioLam.setText("");
-//					txtLuongCa.setText("");
-//					txtSLPhanCong.setText("");
-//					JOptionPane.showMessageDialog(null, "Cham Cong Thanh Cong");
-//				}else {
-//					JOptionPane.showMessageDialog(null, "Cham Cong Khong Thanh Cong");
-//				}
-//				
-//			}
-//		});
-//		btnXoaChamCong.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				int row = tblDanhSachCongCN.getSelectedRow();
-//				if(row<0) {
-//					JOptionPane.showMessageDialog(null, "Chọn công cần xóa");
-//				}else {
-//					String maCongCN = (String) tblDanhSachCongCN.getValueAt(row, 0);
-//					congCN_dao.delete(maCongCN);
-//					tableModelDSChamCong.removeRow(row);
-//					JOptionPane.showMessageDialog(null, "Xóa chấm công thành công");
-//				}
-//				
-//			}
-//		});
-//		//THOÁT
-//				btnThoat.addActionListener(new ActionListener() {
-//					@Override
-//					public void actionPerformed(ActionEvent e) {
-//						setVisible(false);
-//					}
-//				});
+		btnChamCong.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				 if(valid()) {
+					int maxMaCongCN = congcn_dao.getMaxMaCongCN();
+					int nextMaCongCN = maxMaCongCN+1;
+					JOptionPane.showMessageDialog(null, nextMaCongCN);
+					String maCong = String.format("C%02d", nextMaCongCN);
+					String maCN = txtMaCongNhan.getText().trim();
+					String tenCN = txtTenCN.getText().trim();
+					String maPC = txtMaPC.getText().trim();
+					String maCD = txtMaCongDoan.getText().trim();
+					String tenCD = txtTenCD.getText().trim();
+					Date ngayCham = (Date) dateChooser.getDate();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					String ngayChamStr = dateFormat.format(ngayCham);
+					String caLam = cmbCaLam.getSelectedItem().toString();
+					String gioLam = txtGioLam.getText().trim();
+					double luongCa = Double.parseDouble(txtLuongCa.getText().toString());
+					int soLuong = Integer.parseInt(txtSLPhanCong.getText().toString());
+					String trangThai="";
+					if(chkCoMat.isSelected()) {
+						trangThai = "Có mặt";
+					}else {
+						trangThai = "Nghỉ";
+					}
+					String nghiPhep ="";
+					if(chkCoPhep.isSelected()) {
+						nghiPhep = "Có";
+					}else {
+						nghiPhep ="Không";
+					}
+					
+					CongNhan cn = new CongNhan(maCN);
+					PhanCong pc = new PhanCong(maPC);
+					CongDoan cd = new CongDoan(maCD);
+					
+					CongCuaCongNhan congCN = new CongCuaCongNhan(maCong, cn, tenCN, pc, cd, tenCD, ngayChamStr, caLam, gioLam, luongCa, soLuong, trangThai, nghiPhep);
+					congcn_dao.create(congCN);
+					tableModelDSChamCong.addRow(new Object[] {congCN.getMaCongCN(),congCN.getCongNhan().getMaCongNhan(),congCN.getTenCongNhan(),
+							congCN.getMaPhanCong().getMaPhanCong(),congCN.getMaCongDoan().getMaCongDoan(),congCN.getTenCongDoan(),
+							congCN.getNgayChamCong(),congCN.getCaLam(),congCN.getGiolam(),congCN.getLuongCaLam(),congCN.getSoLuongSanPhamDaLam(),congCN.getTrangThai(),
+							congCN.getNghiPhep()});
+					txtMaCong.setText("");
+					txtMaCongNhan.setText("");
+					txtTenCN.setText("");
+					txtMaPC.setText("");
+					txtMaCongDoan.setText("");
+					txtTenCD.setText("");
+					dateChooser.setDate(null);
+					txtGioLam.setText("");
+					cmbCaLam.setSelectedIndex(0);
+					txtGioLam.setText("");
+					txtLuongCa.setText("");
+					txtSLPhanCong.setText("");
+					JOptionPane.showMessageDialog(null, "Cham Cong Thanh Cong");
+				}else {
+					JOptionPane.showMessageDialog(null, "Cham Cong Khong Thanh Cong");
+				}
+				
+			}
+		});
+		btnXoaChamCong.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row = tblDanhSachCongCN.getSelectedRow();
+				if(row<0) {
+					JOptionPane.showMessageDialog(null, "Chọn công cần xóa");
+				}else {
+					String maCongCN = (String) tblDanhSachCongCN.getValueAt(row, 0);
+					congcn_dao.delete(maCongCN);
+					tableModelDSChamCong.removeRow(row);
+					JOptionPane.showMessageDialog(null, "Xóa chấm công thành công");
+				}
+				
+			}
+		});
+		//THOÁT
+				btnThoat.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						setVisible(false);
+					}
+				});
+
+	}
+
 //
-//	}
-//
-//	public void docDLPhanCongvaoTB() {
-//		List<PhanCong> list = DAO_PhanCong.getAlltbPhanCong();
-//		for (PhanCong pc : list) {
-//			tableModelPC.addRow(new Object[] { pc.getMaPhanCong(), pc.getCongNhan().getMaCongNhan(),
-//					pc.getTenCongNhan(), pc.getCongDoan().getMaCongDoan(), pc.getTenCongDoan(), pc.getsLSPCanLam() });
-//		}
-//	}
-//	public void docDLDSChamCong() {
-//		List<CongCuaCongNhan> list = DAO_ChamCongCongNhan.getAlltbCongCuaCongNhan();
-//		for (CongCuaCongNhan congCN : list) {
-//			tableModelDSChamCong.addRow(new Object[] {congCN.getMaCongCN(),congCN.getCongNhan().getMaCongNhan(),congCN.getTenCongNhan(),
-//					congCN.getPhanCong().getMaPhanCong(),congCN.getCongDoan().getMaCongDoan(),congCN.getTenCongDoan(),
-//					congCN.getNgayChamCong(),congCN.getCaLam(),congCN.getGiolam(),congCN.getLuongCaLam(),congCN.getSlSPDaLam(),congCN.getTrangThai(),
-//					congCN.getNghiPhep()});
-//		}
+	public void docDLPhanCongvaoTB() {
+		List<PhanCong> list = pc_dao.getAlltbPhanCong();
+		for (PhanCong pc : list) {
+			tableModelPC.addRow(new Object[] { pc.getMaPhanCong(), pc.getMaCongNhan().getMaCongNhan(),
+					pc.getTenCongNhan(), pc.getCongDoan().getMaCongDoan(), pc.getTenCongDoan(), pc.getSoLuongSanPhamCanLam() });
+		}
+	}
+	public void docDLDSChamCong() {
+		List<CongCuaCongNhan> list = congcn_dao.getAlltbCongCuaCongNhan();
+		for (CongCuaCongNhan congCN : list) {
+			tableModelDSChamCong.addRow(new Object[] {congCN.getMaCongCN(),congCN.getCongNhan().getMaCongNhan(),congCN.getTenCongNhan(),
+					congCN.getMaCongCN(),congCN.getMaCongDoan().getMaCongDoan(),congCN.getTenCongDoan(),
+					congCN.getNgayChamCong(),congCN.getCaLam(),congCN.getGiolam(),congCN.getLuongCaLam(),congCN.getSoLuongSanPhamDaLam(),congCN.getTrangThai(),
+					congCN.getNghiPhep()});
+		}
 	}
 	public boolean valid() {
 		Date ngayCham = (Date) dateChooser.getDate();

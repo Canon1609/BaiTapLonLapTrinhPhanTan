@@ -18,4 +18,6 @@
     <fullyQualifiedTypeName name="entity.LuongNhanVien"/>
     <fullyQualifiedTypeName name="dao.Impl.NhanVienDaoImpl"/>
     <fullyQualifiedTypeName name="gui_Form.Form_NV_ChamCong"/>
+    <fullyQualifiedTypeName name="dao.Impl.PhanCongDaoImpl"/>
+    <fullyQualifiedTypeName name="dao.Impl.CongNhanlmpl"/>
 </qualifiedTypeNameHistroy>

@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,7 +27,14 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import com.toedter.calendar.JDateChooser;
 
-
+import dao.Impl.CongNhanlmpl;
+import dao.Impl.NhanVienDaoImpl;
+import entity.CongNhan;
+import entity.NhanVien;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 
 import java.awt.Component;
 import javax.swing.JButton;
@@ -47,11 +55,14 @@ public class Form_CN_CapNhat extends JPanel {
 	private DefaultTableModel tableModel;
 
 	private JDateChooser dateChooser;
+	private EntityManagerFactory emf;
+	private EntityManager em;
+	private EntityTransaction tx;
+	private CongNhanlmpl cn_dao;
+	
 
-	/**
-	 * Create the panel.
-	 */
-	public Form_CN_CapNhat() {
+	
+	public Form_CN_CapNhat() throws RemoteException {
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel pnNorth = new JPanel();
@@ -330,205 +341,219 @@ public class Form_CN_CapNhat extends JPanel {
 		    "Địa Chỉ", "Số Điện Thoại", "Phụ Cấp", "Tay Nghề", "Phòng Ban"
 		};
 		tableModel.setColumnIdentifiers(columnNames);
-		//Hien thi du lieu tu bang
 		
-//		// khởi tạo kết nối đến CSDL
-//		try {
-//			Conection_DB.getInstance().connect();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		cn_dao = new DAO_CongNhan();
-//		DocDLVaoTable();
+		/* XỬ LÝ TỪ ĐÂY*/
+		
+		  //EntityManager và EntityTransaction được khởi tạo ở đây
+        emf = Persistence.createEntityManagerFactory("jpa-mssql");
+        em = emf.createEntityManager();
+        tx = em.getTransaction();
+        cn_dao =new CongNhanlmpl();
+		DocDuLieuDBVaoTable();
+		
+		
+		
 		//Xy ly chức năng
-//		btnThemCongNhan.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				if(valiData()) {
-//					// Lấy thông tin từ các trường nhập liệu
-//					int maxCNNumber = cn_dao.getCNNumber(); 
-//					// Tăng giá trị mã CN lớn nhất lên 1
-//					int nextCNNumber = maxCNNumber + 1;
-//					// Định dạng số thứ tự thành chuỗi với độ dài 2 và tạo mã CN-
-//					String ma = String.format("CN%02d", nextCNNumber);
-//					
-//					String ten = txtHoTen.getText().trim();
-//					String cmnd = txtCMND.getText().trim();
-//
-//					// Xử lý ngày sinh
-//					Date ngaySinh = (Date) dateChooser.getDate();
-//					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//					String ngaySinhStr = dateFormat.format(ngaySinh);
-//
-//
-//					String gioiTinh = cmbGioiTinh.getSelectedItem().toString();
-//					String diaChi = txtDiaChi.getText().trim();
-//					String soDienThoai = txtSoDienThoai.getText().trim();
-//					double phuCap = Double.parseDouble(txtPhuCap.getText().trim());
-//					String tayNghe = cmbTaynghe.getSelectedItem().toString();
-//					String phongBan = cmbPhongBan.getSelectedItem().toString();
-//
-//					CongNhan cn = new CongNhan(ma, ten, gioiTinh, ngaySinhStr,cmnd, soDienThoai, phuCap, phongBan, tayNghe, diaChi);
-//					cn_dao.create(cn);
-//					tableModel.addRow(new Object[] {cn.getMaCongNhan(),cn.getHoTen(),cn.getcCCD(),cn.getNgaySinh(),cn.getGioiTinh(),
-//							cn.getDiaChi(),cn.getSoDienThoai(),cn.getPhuCap(),cn.getTrinhDoTayNghe(),cn.getPhongBan()});
-//
-//					JOptionPane.showMessageDialog(null, "Thêm công nhân thành công");
-//					// Xóa nội dung của các trường nhập liệu sau khi thêm
-//					txtMaCongNhan.setText("");
-//					txtMaCongNhan.requestFocus();
-//					txtHoTen.setText("");
-//					txtCMND.setText("");
-//					dateChooser.setDate(null);
-//					cmbGioiTinh.setSelectedIndex(0);
-//					txtDiaChi.setText("");
-//					txtSoDienThoai.setText("");
-//					txtPhuCap.setText("");
-//					cmbTaynghe.setSelectedIndex(0);
-//					cmbPhongBan.setSelectedIndex(0);
-//					
-//				}else {
-//					JOptionPane.showMessageDialog(null, "Thêm công nhân không thành công");
-//				}
+		btnThemCongNhan.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(valiData()) {
+					// Lấy thông tin từ các trường nhập liệu
+					int maxCNNumber = cn_dao.getMaxEmployeeNumber(); 
+					// Tăng giá trị mã CN lớn nhất lên 1
+					int nextCNNumber = maxCNNumber + 1;
+					// Định dạng số thứ tự thành chuỗi với độ dài 2 và tạo mã CN-
+					String ma = String.format("CN%02d", nextCNNumber);
+					
+					String ten = txtHoTen.getText().trim();
+					String cmnd = txtCMND.getText().trim();
+
+					// Xử lý ngày sinh
+					Date ngaySinh = (Date) dateChooser.getDate();
+					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+					String ngaySinhStr = dateFormat.format(ngaySinh);
+
+
+					String gioiTinh = cmbGioiTinh.getSelectedItem().toString();
+					String diaChi = txtDiaChi.getText().trim();
+					String soDienThoai = txtSoDienThoai.getText().trim();
+					double phuCap = Double.parseDouble(txtPhuCap.getText().trim());
+					String tayNghe = cmbTaynghe.getSelectedItem().toString();					
+					String phongBan = cmbPhongBan.getSelectedItem().toString();
+					
+					CongNhan cn = new CongNhan(ma, ten, gioiTinh, ngaySinhStr,cmnd, soDienThoai, phuCap, phongBan, tayNghe, diaChi);
+					boolean success =cn_dao.create(cn);
+					if(success)
+					{
+						tableModel.addRow(new Object[] {cn.getMaCongNhan(),cn.getHoTen(),cn.getCCCD(),cn.getNgaySinh(),cn.getGioiTinh(),
+								cn.getDiaChi(),cn.getSoDienThoai(),cn.getPhuCap(),cn.getTrinhDoTayNghe(),cn.getPhongBan()});
+						JOptionPane.showMessageDialog(null, "Thêm công nhân thành công");
+					}
+		
+
+					// Xóa nội dung của các trường nhập liệu sau khi thêm
+					txtMaCongNhan.setText("");
+					txtMaCongNhan.requestFocus();
+					txtHoTen.setText("");
+					txtCMND.setText("");
+					dateChooser.setDate(null);
+					cmbGioiTinh.setSelectedIndex(0);
+					txtDiaChi.setText("");
+					txtSoDienThoai.setText("");
+					txtPhuCap.setText("");
+					cmbTaynghe.setSelectedIndex(0);
+					cmbPhongBan.setSelectedIndex(0);
+					
+				}else {
+					JOptionPane.showMessageDialog(null, "Thêm công nhân không thành công");
+				}
 //	
 //				
-//			}
-//		});
-//		//XÓA NHÂN VIÊN
-//		btnXoaCongNhan.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				int row = table.getSelectedRow();
-//				if(row < 0) {
-//					JOptionPane.showMessageDialog(null, "Chọn công nhân nhân cần xóa");
-//				}else {
-//					String maCN = (String) table.getValueAt(row, 0);
-//					cn_dao.deleteCN(maCN);
-//					tableModel.removeRow(row);
-//					JOptionPane.showMessageDialog(null, "Xóa công nhân thành công");
-//				}
-//				
-//			}
-//		});
-//		//SỬA NHÂN VIÊN
-//		btnSuaThongTin.addActionListener(new ActionListener() {
-//		    @Override
-//		    public void actionPerformed(ActionEvent e) {
-//		        int selectedRow = table.getSelectedRow();
-//		        if (selectedRow < 0) {
-//		            JOptionPane.showMessageDialog(null, "Chọn một công nhân trong bảng để sửa.");
-//		            return;
-//		        }
-//
-//		        // Lấy thông tin nhân viên từ dòng được chọn trong bảng
-//		        String maCN = txtMaCongNhan.getText().trim();
-//		        String ten = txtHoTen.getText().trim();
-//		        String cmnd = txtCMND.getText().trim();
-//		        // Xử lý ngày sinh
-//		        Date ngaySinh = (Date) dateChooser.getDate();
-//		        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-//		        String ngaySinhStr = dateFormat.format(ngaySinh);		        
-//		        String gioiTinh = cmbGioiTinh.getSelectedItem().toString();
-//		        String diaChi = txtDiaChi.getText().trim();
-//		        String soDienThoai = txtSoDienThoai.getText().trim();
-//		        double phuCap = Double.parseDouble(txtPhuCap.getText().trim());
-//		        String phongBan = cmbPhongBan.getSelectedItem().toString();
-//		        String tayNghe =cmbTaynghe.getSelectedItem().toString();
-//		        // Tạo đối tượng NhanVien mới
-//		        CongNhan cn =new CongNhan(maCN, ten, gioiTinh, ngaySinhStr, gioiTinh, soDienThoai, phuCap, phongBan, tayNghe, diaChi);
-//		        // Gọi phương thức DAO để cập nhật thông tin nhân viên
-//		        boolean updated = cn_dao.update(cn);
-//
-//		        if (updated) {
-//		            // Cập nhật lại thông tin trong bảng
-//		            tableModel.setValueAt(ten, selectedRow, 1);
-//		            tableModel.setValueAt(cmnd, selectedRow, 2);
-//		            tableModel.setValueAt(ngaySinhStr, selectedRow, 3);
-//		            tableModel.setValueAt(gioiTinh, selectedRow, 4);
-//		            tableModel.setValueAt(diaChi, selectedRow, 5);
-//		            tableModel.setValueAt(soDienThoai, selectedRow, 6);
-//		            tableModel.setValueAt(phuCap, selectedRow, 7);
-//		            tableModel.setValueAt(tayNghe, selectedRow, 8);
-//		            tableModel.setValueAt(phongBan, selectedRow, 9);
-//		           
-//
-//		            JOptionPane.showMessageDialog(null, "Cập nhật thông tin công nhân thành công");
-//		        } else {
-//		            JOptionPane.showMessageDialog(null, "Cập nhật thông tin công nhân thất bại");
-//		        }
-//		    }
-//		});
-//		
-//		// XÓA RỖNG
-//		btnXoaRong.addActionListener(new ActionListener() {
-//		    @Override
-//		    public void actionPerformed(ActionEvent e) {
-//		        // Đặt giá trị của các trường nhập liệu về rỗng hoặc giá trị mặc định
-//		        txtMaCongNhan.setText("");
-//		        txtHoTen.setText("");
-//		        txtCMND.setText("");
-//		        dateChooser.setDate(null);
-//		        cmbGioiTinh.setSelectedIndex(0); // Đặt lại giá trị mặc định
-//		        cmbTaynghe.setSelectedIndex(0);
-//		        txtDiaChi.setText("");
-//		        txtSoDienThoai.setText("");
-//		        txtPhuCap.setText("");
-//		        cmbPhongBan.setSelectedIndex(0); // Đặt lại giá trị mặc định
-//		     
-//		    }
-//		});
-//		//THOÁT
-//		btnThoat.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				setVisible(false);
-//			}
-//		});
-//		// Đưa dữ liệu từ bảng lên các trường nhập liệu khi click vào một dòng trong bảng
-//		table.addMouseListener(new MouseAdapter() {
-//		    @Override
-//		    public void mouseClicked(MouseEvent e) {
-//		        int row = table.getSelectedRow();
-//		        if (row >= 0) {
-//		            String ma = (String) table.getValueAt(row, 0);
-//		            String ten = (String) table.getValueAt(row, 1);
-//		            String cmnd = (String) table.getValueAt(row, 2);
-//		            String ngaySinhStr = (String) table.getValueAt(row, 3);
-//		            String gioiTinh = (String) table.getValueAt(row, 4);
-//		            String diaChi = (String) table.getValueAt(row, 5);
-//		            String soDienThoai = (String) table.getValueAt(row, 6);
-//		            String phuCap = (String) table.getValueAt(row, 7).toString();
-//		            String tayNghe = (String) table.getValueAt(row, 8);
-//		            String phongBan = (String) table.getValueAt(row, 9);
-//		           
-//		           
-//		            txtMaCongNhan.setText(ma);
-//		            txtHoTen.setText(ten);
-//		            txtCMND.setText(cmnd);
-//		            try {
-//		                Date ngaySinhDate = new SimpleDateFormat("yyyy-MM-dd").parse(ngaySinhStr);
-//		                dateChooser.setDate(ngaySinhDate);
-//		            } catch (ParseException ex) {
-//		                ex.printStackTrace();
-//		            }
-//		            cmbGioiTinh.setSelectedItem(gioiTinh);
-//		            txtDiaChi.setText(diaChi);
-//		            txtSoDienThoai.setText(soDienThoai);
-//		        
-//		            txtPhuCap.setText(phuCap);
-//		            cmbPhongBan.setSelectedItem(phongBan);
-//		            cmbTaynghe.setSelectedItem(tayNghe);
-//		        }
-//		    }
-//		});
-//		
-//		//
-//		
+			}
+		});
+		//XÓA NHÂN VIÊN
+		btnXoaCongNhan.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row = table.getSelectedRow();
+				if(row < 0) {
+					JOptionPane.showMessageDialog(null, "Chọn công nhân nhân cần xóa");
+				}else {
+					String maCN = (String) table.getValueAt(row, 0);
+					JOptionPane.showMessageDialog(null, maCN);
+					cn_dao.deleteCN(maCN);
+					tableModel.removeRow(row);
+					JOptionPane.showMessageDialog(null, "Xóa công nhân thành công");
+				}
+				
+			}
+		});
+		//SỬA NHÂN VIÊN
+		btnSuaThongTin.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        int selectedRow = table.getSelectedRow();
+		        if (selectedRow < 0) {
+		            JOptionPane.showMessageDialog(null, "Chọn một công nhân trong bảng để sửa.");
+		            return;
+		        }
+
+		        // Lấy thông tin nhân viên từ dòng được chọn trong bảng
+		        String maCN = txtMaCongNhan.getText().trim();
+		        String ten = txtHoTen.getText().trim();
+		        String cmnd = txtCMND.getText().trim();
+		        // Xử lý ngày sinh
+		        Date ngaySinh = (Date) dateChooser.getDate();
+		        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		        String ngaySinhStr = dateFormat.format(ngaySinh);		        
+		        String gioiTinh = cmbGioiTinh.getSelectedItem().toString();
+		        String diaChi = txtDiaChi.getText().trim();
+		        String soDienThoai = txtSoDienThoai.getText().trim();
+		        double phuCap = Double.parseDouble(txtPhuCap.getText().trim());
+		        String phongBan = cmbPhongBan.getSelectedItem().toString();
+		        String tayNghe =cmbTaynghe.getSelectedItem().toString();
+		        // Tạo đối tượng NhanVien mới
+		        CongNhan cn =new CongNhan(maCN, ten, gioiTinh, ngaySinhStr, gioiTinh, soDienThoai, phuCap, phongBan, tayNghe, diaChi);
+		        // Gọi phương thức DAO để cập nhật thông tin nhân viên
+		        boolean updated = cn_dao.update(cn);
+
+		        if (updated) {
+		            // Cập nhật lại thông tin trong bảng
+		            tableModel.setValueAt(ten, selectedRow, 1);
+		            tableModel.setValueAt(cmnd, selectedRow, 2);
+		            tableModel.setValueAt(ngaySinhStr, selectedRow, 3);
+		            tableModel.setValueAt(gioiTinh, selectedRow, 4);
+		            tableModel.setValueAt(diaChi, selectedRow, 5);
+		            tableModel.setValueAt(soDienThoai, selectedRow, 6);
+		            tableModel.setValueAt(phuCap, selectedRow, 7);
+		            tableModel.setValueAt(tayNghe, selectedRow, 8);
+		            tableModel.setValueAt(phongBan, selectedRow, 9);
+		           
+
+		            JOptionPane.showMessageDialog(null, "Cập nhật thông tin công nhân thành công");
+		        } else {
+		            JOptionPane.showMessageDialog(null, "Cập nhật thông tin công nhân thất bại");
+		        }
+		    }
+		});
+		
+		// XÓA RỖNG
+		btnXoaRong.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        // Đặt giá trị của các trường nhập liệu về rỗng hoặc giá trị mặc định
+		        txtMaCongNhan.setText("");
+		        txtHoTen.setText("");
+		        txtCMND.setText("");
+		        dateChooser.setDate(null);
+		        cmbGioiTinh.setSelectedIndex(0); // Đặt lại giá trị mặc định
+		        cmbTaynghe.setSelectedIndex(0);
+		        txtDiaChi.setText("");
+		        txtSoDienThoai.setText("");
+		        txtPhuCap.setText("");
+		        cmbPhongBan.setSelectedIndex(0); // Đặt lại giá trị mặc định
+		     
+		    }
+		});
+		//THOÁT
+		btnThoat.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		// Đưa dữ liệu từ bảng lên các trường nhập liệu khi click vào một dòng trong bảng
+		table.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        int row = table.getSelectedRow();
+		        if (row >= 0) {
+		            String ma = (String) table.getValueAt(row, 0);
+		            String ten = (String) table.getValueAt(row, 1);
+		            String cmnd = (String) table.getValueAt(row, 2);
+		            String ngaySinhStr = (String) table.getValueAt(row, 3);
+		            String gioiTinh = (String) table.getValueAt(row, 4);
+		            String diaChi = (String) table.getValueAt(row, 5);
+		            String soDienThoai = (String) table.getValueAt(row, 6);
+		            String phuCap = (String) table.getValueAt(row, 7).toString();
+		            String tayNghe = (String) table.getValueAt(row, 8);
+		            String phongBan = (String) table.getValueAt(row, 9);
+		           
+		           
+		            txtMaCongNhan.setText(ma);
+		            txtHoTen.setText(ten);
+		            txtCMND.setText(cmnd);
+		            try {
+		                Date ngaySinhDate = new SimpleDateFormat("yyyy-MM-dd").parse(ngaySinhStr);
+		                dateChooser.setDate(ngaySinhDate);
+		            } catch (ParseException ex) {
+		                ex.printStackTrace();
+		            }
+		            cmbGioiTinh.setSelectedItem(gioiTinh);
+		            txtDiaChi.setText(diaChi);
+		            txtSoDienThoai.setText(soDienThoai);
+		        
+		            txtPhuCap.setText(phuCap);
+		            cmbPhongBan.setSelectedItem(phongBan);
+		            cmbTaynghe.setSelectedItem(tayNghe);
+		        }
+		    }
+		});
+		
+		//
+		
 	}
-//	
+private void DocDuLieuDBVaoTable() {
+	List<CongNhan> list = cn_dao.getAlltbCongNhan();
+	for (CongNhan nv : list) {
+		tableModel.addRow(new Object[] {nv.getMaCongNhan(),nv.getHoTen(),nv.getCCCD(),nv.getNgaySinh(),nv.getGioiTinh()
+				,nv.getDiaChi(),nv.getSoDienThoai(),nv.getPhuCap(),nv.getTrinhDoTayNghe(),nv.getPhongBan(),});
+	}
+		
+	}
+	//	
 //	public void DocDLVaoTable() {
 //		List<CongNhan> list = DAO_CongNhan.getAlltbCongNhan();
 //		for (CongNhan cn : list) {

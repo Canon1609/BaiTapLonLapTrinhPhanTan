@@ -1,0 +1,14 @@
+package dao;
+
+
+import java.util.List;
+
+import entity.CongCuaCongNhan;
+
+public interface ChamCongCongNhanDao {
+	public List<CongCuaCongNhan> getAlltbCongCuaCongNhan();
+	public boolean create(CongCuaCongNhan congCN);
+	public int getCNNumber();
+	public boolean delete(String maCongCN);
+	public int getMaxMaCongCN();
+}
