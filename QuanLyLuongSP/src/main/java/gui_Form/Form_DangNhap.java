@@ -145,7 +145,10 @@ public class Form_DangNhap extends JFrame {
 		lblAnhNen.setFont(new Font("Arial", Font.BOLD, 11));
 		lblAnhNen.setBounds(10, 60, 500, 339);
 		contentPane.add(lblAnhNen);
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-mssql");
+		EntityManager em = emf.createEntityManager();
 		
+		EntityTransaction tx = em.getTransaction();
 
         btnDangNhap.addActionListener(new ActionListener() {
             @Override

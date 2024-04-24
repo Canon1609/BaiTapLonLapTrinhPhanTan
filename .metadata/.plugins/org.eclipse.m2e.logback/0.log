@@ -5821,3 +5821,172 @@
 2024-04-23 11:44:12,436 [Worker-48: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
 2024-04-23 11:44:12,436 [Worker-48: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
 2024-04-23 11:44:12,436 [Worker-48: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\test\resources to target\test-classes
+2024-04-24 08:42:06,936 [Worker-2: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2024-04-24 08:42:15,267 [Worker-2: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - The artifact org.hibernate:hibernate-core:jar:6.4.4.Final has been relocated to org.hibernate.orm:hibernate-core:jar:6.4.4.Final
+2024-04-24 08:42:16,303 [Worker-2: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - The artifact org.hibernate:hibernate-core:jar:6.4.4.Final has been relocated to org.hibernate.orm:hibernate-core:jar:6.4.4.Final
+2024-04-24 08:42:16,882 [Worker-2: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT @ C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\pom.xml.
+2024-04-24 08:42:16,885 [Worker-2: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - The artifact org.hibernate:hibernate-core:jar:6.4.4.Final has been relocated to org.hibernate.orm:hibernate-core:jar:6.4.4.Final
+2024-04-24 08:42:19,348 [Worker-2: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:42:19,349 [Worker-2: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:42:19,357 [Worker-2: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:42:19,359 [Worker-2: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:42:27,202 [Worker-3: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT @ C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\pom.xml.
+2024-04-24 08:42:27,321 [Worker-3: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - The artifact org.hibernate:hibernate-core:jar:6.4.4.Final has been relocated to org.hibernate.orm:hibernate-core:jar:6.4.4.Final
+2024-04-24 08:42:27,972 [Worker-3: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:42:27,976 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:42:27,984 [Worker-3: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:42:27,985 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:42:28,387 [Worker-25: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - The artifact org.hibernate:hibernate-core:jar:6.4.4.Final has been relocated to org.hibernate.orm:hibernate-core:jar:6.4.4.Final
+2024-04-24 08:42:28,568 [Worker-25: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - The artifact org.hibernate:hibernate-core:jar:6.4.4.Final has been relocated to org.hibernate.orm:hibernate-core:jar:6.4.4.Final
+2024-04-24 08:42:28,626 [Worker-25: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: iuh.fit:QuanLyLuongSP_Client:0.0.1-SNAPSHOT @ C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP_Client\pom.xml.
+2024-04-24 08:42:28,627 [Worker-25: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - The artifact org.hibernate:hibernate-core:jar:6.4.4.Final has been relocated to org.hibernate.orm:hibernate-core:jar:6.4.4.Final
+2024-04-24 08:42:28,695 [Worker-25: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:42:28,696 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP_Client\src\main\resources
+2024-04-24 08:42:28,697 [Worker-25: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:42:28,698 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP_Client\src\test\resources
+2024-04-24 08:43:10,348 [Worker-17: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:43:10,349 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:43:10,351 [Worker-17: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:43:10,352 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:43:23,948 [Worker-18: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:43:23,949 [Worker-18: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:43:23,950 [Worker-18: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:43:23,951 [Worker-18: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:43:36,180 [Worker-35: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:43:36,181 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:43:36,183 [Worker-35: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:43:36,184 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:43:54,733 [Worker-12: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:43:54,733 [Worker-12: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:43:54,735 [Worker-12: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:43:54,736 [Worker-12: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:44:05,374 [Worker-9: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:44:05,376 [Worker-9: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:44:05,378 [Worker-9: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:44:05,379 [Worker-9: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:45:59,462 [Worker-21: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:45:59,465 [Worker-21: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:45:59,467 [Worker-21: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:45:59,471 [Worker-21: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:46:01,729 [Worker-14: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:46:01,729 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:46:01,731 [Worker-14: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:46:01,732 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:46:06,109 [Worker-38: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:46:06,110 [Worker-38: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:46:06,111 [Worker-38: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:46:06,111 [Worker-38: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:46:08,283 [Worker-26: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:46:08,284 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:46:08,289 [Worker-26: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:46:08,290 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:46:11,470 [Worker-25: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:46:11,471 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:46:11,472 [Worker-25: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:46:11,473 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:46:14,488 [Worker-25: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:46:14,491 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:46:14,494 [Worker-25: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:46:14,495 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:46:54,039 [Worker-38: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:46:54,041 [Worker-38: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:46:54,042 [Worker-38: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:46:54,043 [Worker-38: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:47:01,763 [Worker-4: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:47:01,764 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:47:01,765 [Worker-4: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:47:01,766 [Worker-4: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:47:15,844 [Worker-23: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:47:15,845 [Worker-23: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:47:15,846 [Worker-23: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:47:15,846 [Worker-23: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:47:18,385 [Worker-20: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:47:18,386 [Worker-20: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:47:18,387 [Worker-20: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:47:18,387 [Worker-20: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:47:24,021 [Worker-12: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:47:24,021 [Worker-12: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:47:24,023 [Worker-12: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:47:24,023 [Worker-12: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:47:35,591 [Worker-31: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:47:35,593 [Worker-31: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:47:35,594 [Worker-31: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:47:35,594 [Worker-31: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:47:40,043 [Worker-5: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:47:40,044 [Worker-5: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:47:40,045 [Worker-5: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:47:40,045 [Worker-5: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:47:44,654 [Worker-26: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:47:44,655 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:47:44,657 [Worker-26: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:47:44,658 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:48:28,411 [Worker-21: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:48:28,412 [Worker-21: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:48:28,414 [Worker-21: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:48:28,414 [Worker-21: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:48:34,667 [Worker-20: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:48:34,668 [Worker-20: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:48:34,669 [Worker-20: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:48:34,669 [Worker-20: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:48:47,743 [Worker-17: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:48:47,744 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:48:47,745 [Worker-17: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:48:47,746 [Worker-17: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:49:19,976 [Worker-10: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:49:19,977 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:49:19,979 [Worker-10: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:49:19,979 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:50:07,541 [Worker-14: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:50:07,542 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:50:07,544 [Worker-14: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:50:07,545 [Worker-14: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:50:14,387 [Worker-37: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:50:14,388 [Worker-37: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:50:14,389 [Worker-37: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:50:14,389 [Worker-37: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:50:28,961 [Worker-20: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:50:28,962 [Worker-20: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:50:28,963 [Worker-20: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:50:28,963 [Worker-20: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:50:41,035 [Worker-37: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:50:41,036 [Worker-37: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:50:41,038 [Worker-37: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:50:41,039 [Worker-37: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:50:50,639 [Worker-12: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:50:50,639 [Worker-12: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:50:50,640 [Worker-12: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:50:50,641 [Worker-12: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:53:56,850 [Worker-8: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:53:56,851 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:53:56,852 [Worker-8: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:53:56,853 [Worker-8: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:54:36,270 [Worker-10: Building] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: iuh.fit:QuanLyLuongSP_Client:0.0.1-SNAPSHOT @ C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP_Client\pom.xml.
+2024-04-24 08:54:36,394 [Worker-10: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - The artifact org.hibernate:hibernate-core:jar:6.4.4.Final has been relocated to org.hibernate.orm:hibernate-core:jar:6.4.4.Final
+2024-04-24 08:54:36,419 [Worker-10: Building] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/QuanLyLuongSP: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT with classifier  to /QuanLyLuongSP/target/classes
+2024-04-24 08:54:36,463 [Worker-10: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:54:36,475 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-04-24 08:54:36,477 [Worker-10: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:54:36,478 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\test\resources to target\test-classes
+2024-04-24 08:54:37,591 [Worker-10: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:54:37,592 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
+2024-04-24 08:54:37,593 [Worker-10: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:54:37,594 [Worker-10: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\test\resources to target\test-classes
+2024-04-24 08:54:53,282 [Worker-39: Launching Client] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/QuanLyLuongSP: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT with classifier null to /QuanLyLuongSP/target/classes
+2024-04-24 08:54:53,298 [Worker-39: Launching Client] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/QuanLyLuongSP: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT with classifier null to /QuanLyLuongSP/target/classes
+2024-04-24 08:54:53,313 [Worker-39: Launching Client] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/QuanLyLuongSP: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT with classifier null to /QuanLyLuongSP/target/classes
+2024-04-24 08:55:34,762 [Worker-25: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:55:34,763 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\main\resources
+2024-04-24 08:55:34,764 [Worker-25: Building] WARN  o.a.m.s.f.DefaultMavenResourcesFiltering - Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+2024-04-24 08:55:34,764 [Worker-25: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\BaiTapLonLapTrinhPhanTan\QuanLyLuongSP\src\test\resources
+2024-04-24 08:55:41,016 [Worker-31: Launching Client] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/QuanLyLuongSP: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT with classifier null to /QuanLyLuongSP/target/classes
+2024-04-24 08:55:41,032 [Worker-31: Launching Client] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/QuanLyLuongSP: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT with classifier null to /QuanLyLuongSP/target/classes
+2024-04-24 08:55:41,049 [Worker-31: Launching Client] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/QuanLyLuongSP: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT with classifier null to /QuanLyLuongSP/target/classes
+2024-04-24 08:55:47,661 [Worker-8: Launching Client] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/QuanLyLuongSP: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT with classifier null to /QuanLyLuongSP/target/classes
+2024-04-24 08:55:47,680 [Worker-8: Launching Client] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/QuanLyLuongSP: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT with classifier null to /QuanLyLuongSP/target/classes
+2024-04-24 08:55:47,703 [Worker-8: Launching Client] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/QuanLyLuongSP: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT with classifier null to /QuanLyLuongSP/target/classes
+2024-04-24 08:55:54,669 [Worker-25: Launching Client] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/QuanLyLuongSP: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT with classifier null to /QuanLyLuongSP/target/classes
+2024-04-24 08:55:54,683 [Worker-25: Launching Client] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/QuanLyLuongSP: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT with classifier null to /QuanLyLuongSP/target/classes
+2024-04-24 08:55:54,701 [Worker-25: Launching Client] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/QuanLyLuongSP: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT with classifier null to /QuanLyLuongSP/target/classes
+2024-04-24 08:56:39,075 [Worker-8: Launching Client] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/QuanLyLuongSP: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT with classifier null to /QuanLyLuongSP/target/classes
+2024-04-24 08:56:39,091 [Worker-8: Launching Client] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/QuanLyLuongSP: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT with classifier null to /QuanLyLuongSP/target/classes
+2024-04-24 08:56:39,105 [Worker-8: Launching Client] INFO  o.e.m.c.i.p.WorkspaceClassifierResolverManager - Resolving P/QuanLyLuongSP: iuh.fit:QuanLyLuongSP:0.0.1-SNAPSHOT with classifier null to /QuanLyLuongSP/target/classes

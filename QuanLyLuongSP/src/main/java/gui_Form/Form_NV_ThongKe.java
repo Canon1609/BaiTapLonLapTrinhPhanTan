@@ -20,15 +20,27 @@ import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.time.YearMonth;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-
+import dao.Impl.ChamCongNhanVienDaoImpl;
+import dao.Impl.LuongCongNhanlmpl;
+import dao.Impl.LuongNhanVienDaoImpl;
+import dao.Impl.NhanVienDaoImpl;
+import dao.Impl.ThongKe_NV_Daolmpl;
+import entity.LuongNhanVien;
+import entity.NhanVien;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 
 import javax.swing.DefaultComboBoxModel;
 
@@ -44,10 +56,25 @@ public class Form_NV_ThongKe extends JPanel {
 	private JLabel lbl_hienThiSoNgayNghi;
 	private JLabel lbl_hienThiLuongCaoNhat;
 
+	private EntityManagerFactory emf;
+
+	private EntityManager em;
+
+	private EntityTransaction tx;
+
+	private NhanVienDaoImpl nv_dao;
+
+	private ChamCongNhanVienDaoImpl cnv_dao;
+
+	private LuongNhanVienDaoImpl lnv;
+
+	private ThongKe_NV_Daolmpl tk_nv_dao;
+
 	/**
 	 * Create the panel.
+	 * @throws RemoteException 
 	 */
-	public Form_NV_ThongKe() {
+	public Form_NV_ThongKe() throws RemoteException {
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_Nouth = new JPanel();
@@ -99,10 +126,16 @@ public class Form_NV_ThongKe extends JPanel {
 		b1.add(horizontalStrut_2);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Tất cả", "2018", "2019", "2020", "2021", "2022", "2023"}));
+		// Lấy năm hiện tại
+		int namHienTai = Calendar.getInstance().get(Calendar.YEAR);
+		// Thêm các năm từ 2024 đến năm hiện tại vào JComboBox
+				for (int nam = 2024; nam <= namHienTai; nam++) {
+					comboBox_1.addItem(nam);
+				}
+				b1.add(comboBox_1);
+
 		comboBox_1.setPreferredSize(new Dimension(100, 30));
 		comboBox_1.setFont(new Font("Arial", Font.PLAIN, 12));
-		b1.add(comboBox_1);
 		
 		Component verticalStrut = Box.createVerticalStrut(20);
 		b.add(verticalStrut);
@@ -352,350 +385,401 @@ public class Form_NV_ThongKe extends JPanel {
 		lbl_hienThiLuongThapNhat.setPreferredSize(new Dimension(160, 30));
 		lbl_hienThiLuongThapNhat.setFont(new Font("Arial", Font.PLAIN, 14));
 		bc6_1.add(lbl_hienThiLuongThapNhat);
-//		try {
-//			Conection_DB.getInstance().connect();
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		nv_dao =new DAO_NhanVien();
-//		List<NhanVien> list =nv_dao.getAlltbNhanVien();
 //		
-//		for (NhanVien nhanVien : list) {
-//			cmb_maNV.addItem(nhanVien.getMaNhanVien());
-//		//	cmb_tenNV.addItem(nhanVien.getHoTen());
-//		}
-//		cnv_dao =new DAO_ChamCongNhanVIen();
-//		lnv =new DAO_LuongNhanVien();
-//		List<LuongNhanVien> dscnv =lnv.getAlltbCongCuaNhanVien();
-//		for (LuongNhanVien luongNhanVien : dscnv) {
-//			tableModel.addRow(new Object[] {luongNhanVien.getNhanVien().getMaNhanVien(),
-//											luongNhanVien.getTenNhanVien(),
-//											luongNhanVien.getSoNgayDiLam(),
-//											luongNhanVien.getThucNhan()  });
-//		}
-//		lnv_dao =new DAO_LuongNhanVien();
+		emf = Persistence.createEntityManagerFactory("jpa-mssql");
+        em = emf.createEntityManager();
+        tx = em.getTransaction();
+		nv_dao =new NhanVienDaoImpl();
+        
+        
+		List<NhanVien> list =nv_dao.getDanhSachNhanVien();
 //		
-//		btn_thongKe.addActionListener(new ActionListener() {
-//			
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				String ma =cmb_maNV.getSelectedItem().toString();
-//				String date =cmb_thang.getSelectedItem().toString();
-//				String year =comboBox_1.getSelectedItem().toString();
-//				tableModel.setRowCount(0);
-//				int tongNhanVien=0;
-//				int soNgayLamTrungBinh=0;
-//				int soNgayNghiTrungBinh=0;
-//				float n,m;
-//				double tongLuong =0;
-//				double luongCao =0;
-//				double luongThap =0;
-//				double max =0;
-//				double min =0;
-//				if(date.equals("Tất cả") && year.equals("Tất cả"))
-//				{
-//					List<LuongNhanVien> list_hd =lnv_dao.getmatbNhanVien(ma);
-//					for (LuongNhanVien luongNhanVien : list_hd) {
-//						tableModel.addRow(new Object[] {luongNhanVien.getNhanVien().getMaNhanVien(),
-//								luongNhanVien.getTenNhanVien(),
-//								luongNhanVien.getSoNgayDiLam(),
-//								luongNhanVien.getThucNhan()  });
-//					
-//						tongNhanVien++;
-//						soNgayLamTrungBinh+=luongNhanVien.getSoNgayDiLam();
-//						tongLuong+=luongNhanVien.getThucNhan();
-//						if(max<luongNhanVien.getThucNhan())
-//						{
-//							max=luongNhanVien.getThucNhan();
-//						}
-//						if(min>luongNhanVien.getThucNhan())
-//						{
-//							min=luongNhanVien.getThucNhan();
-//						}
-//						
-//					}
-//					lbl_hienThiTongNV.setText(tongNhanVien+"");
-//					lbl_hienThiLuongThapNhat.setText(min+"");
-//					lbl_hienThiLuongCaoNhat.setText(max+"");
-//					lbl_hienThiTongTienLuong.setText(tongLuong+"");
-//	if (tongNhanVien != 0) {
-//						
-//					    m = soNgayLamTrungBinh / tongNhanVien;
-//					    lbl_hienThuSoNgayLam.setText(String.valueOf(m));
-//					} else {
-//					    lbl_hienThuSoNgayLam.setText("0");
-//					    // Hoặc có thể xử lý khác tùy thuộc vào yêu cầu của bạn
-//					}
-//				}
-//				else if(ma.equals("Tất cả") && date.equals("Tất cả"))
-//				{
-//					List<LuongNhanVien> list_hd =lnv_dao.timKiemNgayLYear(year);
-//					for (LuongNhanVien luongNhanVien : list_hd) {
-//						tableModel.addRow(new Object[] {luongNhanVien.getNhanVien().getMaNhanVien(),
-//								luongNhanVien.getTenNhanVien(),
-//								luongNhanVien.getSoNgayDiLam(),
-//								luongNhanVien.getThucNhan()  });
-//						
-//
-//						tongNhanVien++;
-//						soNgayLamTrungBinh+=luongNhanVien.getSoNgayDiLam();
-//						tongLuong+=luongNhanVien.getThucNhan();
-//						if(max<luongNhanVien.getThucNhan())
-//						{
-//							max=luongNhanVien.getThucNhan();
-//						}
-//						if(min>luongNhanVien.getThucNhan())
-//						{
-//							min=luongNhanVien.getThucNhan();
-//						}
-//						
-//					}
-//					lbl_hienThiTongNV.setText(tongNhanVien+"");
-//					lbl_hienThiLuongThapNhat.setText(min+"");
-//					lbl_hienThiLuongCaoNhat.setText(max+"");
-//					lbl_hienThiTongTienLuong.setText(tongLuong+"");
-//	if (tongNhanVien != 0) {
-//						
-//					    m = soNgayLamTrungBinh / tongNhanVien;
-//					    lbl_hienThuSoNgayLam.setText(String.valueOf(m));
-//					} else {
-//					    lbl_hienThuSoNgayLam.setText("0");
-//					    // Hoặc có thể xử lý khác tùy thuộc vào yêu cầu của bạn
-//					}
-//				
-//				}
-//				else if(year.equals("Tất cả") && ma.equals("Tất cả"))
-//				{
-//					List<LuongNhanVien> list_hd =lnv_dao.timKiemNgayLMonth(date);
-//					for (LuongNhanVien luongNhanVien : list_hd) {
-//						tableModel.addRow(new Object[] {luongNhanVien.getNhanVien().getMaNhanVien(),
-//								luongNhanVien.getTenNhanVien(),
-//								luongNhanVien.getSoNgayDiLam(),
-//								luongNhanVien.getThucNhan()  });
-//
-//						tongNhanVien++;
-//						soNgayLamTrungBinh+=luongNhanVien.getSoNgayDiLam();
-//						tongLuong+=luongNhanVien.getThucNhan();
-//						if(max<luongNhanVien.getThucNhan())
-//						{
-//							max=luongNhanVien.getThucNhan();
-//						}
-//						if(min>luongNhanVien.getThucNhan())
-//						{
-//							min=luongNhanVien.getThucNhan();
-//						}
-//						
-//					}
-//					lbl_hienThiTongNV.setText(tongNhanVien+"");
-//					lbl_hienThiLuongThapNhat.setText(min+"");
-//					lbl_hienThiLuongCaoNhat.setText(max+"");
-//					lbl_hienThiTongTienLuong.setText(tongLuong+"");
-//	if (tongNhanVien != 0) {
-//						
-//					    m = soNgayLamTrungBinh / tongNhanVien;
-//					    lbl_hienThuSoNgayLam.setText(String.valueOf(m));
-//					} else {
-//					    lbl_hienThuSoNgayLam.setText("0");
-//					    // Hoặc có thể xử lý khác tùy thuộc vào yêu cầu của bạn
-//					}
-//					}
-//					
-//				
-//				else if(year.equals("Tất cả"))
-//				{
-//					List<LuongNhanVien> list_hd =lnv_dao.timKiemMonthMaHD(date, ma);
-//					for (LuongNhanVien luongNhanVien : list_hd) {
-//						tableModel.addRow(new Object[] {luongNhanVien.getNhanVien().getMaNhanVien(),
-//								luongNhanVien.getTenNhanVien(),
-//								luongNhanVien.getSoNgayDiLam(),
-//								luongNhanVien.getThucNhan()  });
-//
-//						tongNhanVien++;
-//						soNgayLamTrungBinh+=luongNhanVien.getSoNgayDiLam();
-//						tongLuong+=luongNhanVien.getThucNhan();
-//						if(max<luongNhanVien.getThucNhan())
-//						{
-//							max=luongNhanVien.getThucNhan();
-//						}
-//						if(min>luongNhanVien.getThucNhan())
-//						{
-//							min=luongNhanVien.getThucNhan();
-//						}
-//						
-//					}
-//					lbl_hienThiTongNV.setText(tongNhanVien+"");
-//					lbl_hienThiLuongThapNhat.setText(min+"");
-//					lbl_hienThiLuongCaoNhat.setText(max+"");
-//					lbl_hienThiTongTienLuong.setText(tongLuong+"");
-//	if (tongNhanVien != 0) {
-//						
-//					    m = soNgayLamTrungBinh / tongNhanVien;
-//					    lbl_hienThuSoNgayLam.setText(String.valueOf(m));
-//					} else {
-//					    lbl_hienThuSoNgayLam.setText("0");
-//					    // Hoặc có thể xử lý khác tùy thuộc vào yêu cầu của bạn
-//					}
-//					
-//					
-//				}
-//				else if(ma.equals("Tất cả"))
-//				{
-//					List<LuongNhanVien> list_hd =lnv_dao.timKiemMonthYear(date, year);
-//					for (LuongNhanVien luongNhanVien : list_hd) {
-//						tableModel.addRow(new Object[] {luongNhanVien.getNhanVien().getMaNhanVien(),
-//								luongNhanVien.getTenNhanVien(),
-//								luongNhanVien.getSoNgayDiLam(),
-//								luongNhanVien.getThucNhan()  });
-//
-//						tongNhanVien++;
-//						soNgayLamTrungBinh+=luongNhanVien.getSoNgayDiLam();
-//						tongLuong+=luongNhanVien.getThucNhan();
-//						if(max<luongNhanVien.getThucNhan())
-//						{
-//							max=luongNhanVien.getThucNhan();
-//						}
-//						if(min>luongNhanVien.getThucNhan())
-//						{
-//							min=luongNhanVien.getThucNhan();
-//						}
-//						
-//					}
-//					lbl_hienThiTongNV.setText(tongNhanVien+"");
-//					lbl_hienThiLuongThapNhat.setText(min+"");
-//					lbl_hienThiLuongCaoNhat.setText(max+"");
-//					lbl_hienThiTongTienLuong.setText(tongLuong+"");
-//	if (tongNhanVien != 0) {
-//						
-//					    m = soNgayLamTrungBinh / tongNhanVien;
-//					    lbl_hienThuSoNgayLam.setText(String.valueOf(m));
-//					} else {
-//					    lbl_hienThuSoNgayLam.setText("0");
-//					    // Hoặc có thể xử lý khác tùy thuộc vào yêu cầu của bạn
-//					}
-//					
-//					
-//				}
-//				else if(date.equals("Tất cả"))
-//				{
-//					List<LuongNhanVien> list_hd =lnv_dao.timKiemYearMaHD(year, ma);
-//					for (LuongNhanVien luongNhanVien : list_hd) {
-//						tableModel.addRow(new Object[] {luongNhanVien.getNhanVien().getMaNhanVien(),
-//								luongNhanVien.getTenNhanVien(),
-//								luongNhanVien.getSoNgayDiLam(),
-//								luongNhanVien.getThucNhan()  });
-//
-//						tongNhanVien++;
-//						soNgayLamTrungBinh+=luongNhanVien.getSoNgayDiLam();
-//						tongLuong+=luongNhanVien.getThucNhan();
-//						if(max<luongNhanVien.getThucNhan())
-//						{
-//							max=luongNhanVien.getThucNhan();
-//						}
-//						if(min>luongNhanVien.getThucNhan())
-//						{
-//							min=luongNhanVien.getThucNhan();
-//						}
-//						
-//					}
-//	if (tongNhanVien != 0) {
-//						
-//					    m = soNgayLamTrungBinh / tongNhanVien;
-//					    lbl_hienThuSoNgayLam.setText(String.valueOf(m));
-//					} else {
-//					    lbl_hienThuSoNgayLam.setText("0");
-//					    // Hoặc có thể xử lý khác tùy thuộc vào yêu cầu của bạn
-//					}
-//					lbl_hienThiTongNV.setText(tongNhanVien+"");
-//					lbl_hienThiLuongThapNhat.setText(min+"");
-//					lbl_hienThiLuongCaoNhat.setText(max+"");
-//					lbl_hienThiTongTienLuong.setText(tongLuong+"");
-//				
-//					
-//					
-//				}
-//			
-//					
-//				else
-//					{
-//						List<LuongNhanVien> list_hd =lnv_dao.timKiem(date,year,ma);
-//						for (LuongNhanVien luongNhanVien : list_hd) {
-//							tableModel.addRow(new Object[] {luongNhanVien.getNhanVien().getMaNhanVien(),
-//									luongNhanVien.getTenNhanVien(),
-//									luongNhanVien.getSoNgayDiLam(),
-//									luongNhanVien.getThucNhan()  });
-//
-//							tongNhanVien++;
-//							soNgayLamTrungBinh+=luongNhanVien.getSoNgayDiLam();
-//							tongLuong+=luongNhanVien.getThucNhan();
-//							if(max<luongNhanVien.getThucNhan())
-//							{
-//								max=luongNhanVien.getThucNhan();
-//							}
-//							if(min>luongNhanVien.getThucNhan())
-//							{
-//								min=luongNhanVien.getThucNhan();
-//							}
-//							
-//						}
-//						if (tongNhanVien != 0) {
-//							
-//						    m = soNgayLamTrungBinh / tongNhanVien;
-//						    lbl_hienThuSoNgayLam.setText(String.valueOf(m));
-//						} else {
-//						    lbl_hienThuSoNgayLam.setText("0");
-//						    // Hoặc có thể xử lý khác tùy thuộc vào yêu cầu của bạn
-//						}
-//						lbl_hienThiTongNV.setText(tongNhanVien+"");
-//						lbl_hienThiLuongThapNhat.setText(min+"");
-//						lbl_hienThiLuongCaoNhat.setText(max+"");
-//						lbl_hienThiTongTienLuong.setText(tongLuong+"");
-//						
-//											
-//						
-//					}
-//				 if(date.equals("Tất cả") && year.equals("Tất cả") && ma.equals("Tất cả"))
-//				{
-//					
-//					List<LuongNhanVien> list_hd =lnv_dao.getAlltbCongCuaNhanVien();
-//					for (LuongNhanVien luongNhanVien : list_hd) {
-//						tableModel.addRow(new Object[] {luongNhanVien.getNhanVien().getMaNhanVien(),
-//								luongNhanVien.getTenNhanVien(),
-//								luongNhanVien.getSoNgayDiLam(),
-//								luongNhanVien.getThucNhan()  });
-//
-//						tongNhanVien++;
-//						soNgayLamTrungBinh+=luongNhanVien.getSoNgayDiLam();
-//						tongLuong+=luongNhanVien.getThucNhan();
-//						if(max<luongNhanVien.getThucNhan())
-//						{
-//							max=luongNhanVien.getThucNhan();
-//						}
-//						if(min>luongNhanVien.getThucNhan())
-//						{
-//							min=luongNhanVien.getThucNhan();
-//						}
-//						
-//					}
-//					if (tongNhanVien != 0) {
-//						
-//					    m = soNgayLamTrungBinh / tongNhanVien;
-//					    lbl_hienThuSoNgayLam.setText(String.valueOf(m));
-//					} else {
-//					    lbl_hienThuSoNgayLam.setText("0");
-//					    // Hoặc có thể xử lý khác tùy thuộc vào yêu cầu của bạn
-//					}
-//					lbl_hienThiTongNV.setText(tongNhanVien+"");
-//					lbl_hienThiLuongThapNhat.setText(min+"");
-//					lbl_hienThiLuongCaoNhat.setText(max+"");
-//					lbl_hienThiTongTienLuong.setText(tongLuong+"");
-//					
-//					
-//
-//				}
-//				
-//			}
-//		});
+		for (NhanVien nhanVien : list) {
+			cmb_maNV.addItem(nhanVien.getMaNhanVien());
+		//	cmb_tenNV.addItem(nhanVien.getHoTen());
+		}
+		cnv_dao =new ChamCongNhanVienDaoImpl();
+		lnv =new LuongNhanVienDaoImpl();
+		List<LuongNhanVien> dscnv =lnv.getDanhSachLuongNhanVien();
+		for (LuongNhanVien luongNhanVien : dscnv) {
+			tableModel.addRow(new Object[] {luongNhanVien.getMaNhanVien().getMaNhanVien(),
+											luongNhanVien.getTenNhanVien(),
+											luongNhanVien.getSoNgayDiLam(),
+											luongNhanVien.getThucNhan()  });
+		}
+		tk_nv_dao =new ThongKe_NV_Daolmpl();
+		
+		btn_thongKe.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String ma =cmb_maNV.getSelectedItem().toString();
+				String date =cmb_thang.getSelectedItem().toString();
+				String year =comboBox_1.getSelectedItem().toString();
+				tableModel.setRowCount(0);
+				int tongNhanVien=0;
+				int soNgayLamTrungBinh=0;
+				int soNgayNghiTrungBinh=0;
+				float n,m;
+				double tongLuong =0;
+				double luongCao =0;
+				double luongThap =0;
+				double max =0;
+				double min =0;
+				if(date.equals("Tất cả") && year.equals("Tất cả"))
+				{
+					List<LuongNhanVien> list_hd;
+					try {
+						list_hd = tk_nv_dao.getmatbLuongNhanVien(ma);
+						for (LuongNhanVien luongNhanVien : list_hd) {
+							tableModel.addRow(new Object[] {luongNhanVien.getMaNhanVien().getMaNhanVien(),
+									luongNhanVien.getTenNhanVien(),
+									luongNhanVien.getSoNgayDiLam(),
+									luongNhanVien.getThucNhan()  });
+						
+							tongNhanVien++;
+							soNgayLamTrungBinh+=luongNhanVien.getSoNgayDiLam();
+							tongLuong+=luongNhanVien.getThucNhan();
+							if(max<luongNhanVien.getThucNhan())
+							{
+								max=luongNhanVien.getThucNhan();
+							}
+							if(min>luongNhanVien.getThucNhan())
+							{
+								min=luongNhanVien.getThucNhan();
+							}
+
+							lbl_hienThiTongNV.setText(tongNhanVien+"");
+							lbl_hienThiLuongThapNhat.setText(min+"");
+							lbl_hienThiLuongCaoNhat.setText(max+"");
+							lbl_hienThiTongTienLuong.setText(tongLuong+"");
+			if (tongNhanVien != 0) {
+								
+							    m = soNgayLamTrungBinh / tongNhanVien;
+							    lbl_hienThuSoNgayLam.setText(String.valueOf(m));
+							} else {
+							    lbl_hienThuSoNgayLam.setText("0");
+							    // Hoặc có thể xử lý khác tùy thuộc vào yêu cầu của bạn
+							}
+					}
+					}catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+						
+						
+					
+				}
+				else if(ma.equals("Tất cả") && date.equals("Tất cả"))
+				{
+					List<LuongNhanVien> list_hd;
+					try {
+						list_hd = tk_nv_dao.timKiemNgayLYear(year);
+						for (LuongNhanVien luongNhanVien : list_hd) {
+							tableModel.addRow(new Object[] {luongNhanVien.getMaNhanVien().getMaNhanVien(),
+									luongNhanVien.getTenNhanVien(),
+									luongNhanVien.getSoNgayDiLam(),
+									luongNhanVien.getThucNhan()  });
+							
+
+							tongNhanVien++;
+							soNgayLamTrungBinh+=luongNhanVien.getSoNgayDiLam();
+							tongLuong+=luongNhanVien.getThucNhan();
+							if(max<luongNhanVien.getThucNhan())
+							{
+								max=luongNhanVien.getThucNhan();
+							}
+							if(min>luongNhanVien.getThucNhan())
+							{
+								min=luongNhanVien.getThucNhan();
+							}
+							
+						}
+						lbl_hienThiTongNV.setText(tongNhanVien+"");
+						lbl_hienThiLuongThapNhat.setText(min+"");
+						lbl_hienThiLuongCaoNhat.setText(max+"");
+						lbl_hienThiTongTienLuong.setText(tongLuong+"");
+		if (tongNhanVien != 0) {
+							
+						    m = soNgayLamTrungBinh / tongNhanVien;
+						    lbl_hienThuSoNgayLam.setText(String.valueOf(m));
+						} else {
+						    lbl_hienThuSoNgayLam.setText("0");
+						    // Hoặc có thể xử lý khác tùy thuộc vào yêu cầu của bạn
+						}
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+				
+				}
+				else if(year.equals("Tất cả") && ma.equals("Tất cả"))
+				{
+					List<LuongNhanVien> list_hd;
+					try {
+						list_hd = tk_nv_dao.timKiemNgayLMonth(date);
+						for (LuongNhanVien luongNhanVien : list_hd) {
+							tableModel.addRow(new Object[] {luongNhanVien.getMaNhanVien().getMaNhanVien(),
+									luongNhanVien.getTenNhanVien(),
+									luongNhanVien.getSoNgayDiLam(),
+									luongNhanVien.getThucNhan()  });
+
+							tongNhanVien++;
+							soNgayLamTrungBinh+=luongNhanVien.getSoNgayDiLam();
+							tongLuong+=luongNhanVien.getThucNhan();
+							if(max<luongNhanVien.getThucNhan())
+							{
+								max=luongNhanVien.getThucNhan();
+							}
+							if(min>luongNhanVien.getThucNhan())
+							{
+								min=luongNhanVien.getThucNhan();
+							}
+							
+						}
+						lbl_hienThiTongNV.setText(tongNhanVien+"");
+						lbl_hienThiLuongThapNhat.setText(min+"");
+						lbl_hienThiLuongCaoNhat.setText(max+"");
+						lbl_hienThiTongTienLuong.setText(tongLuong+"");
+		if (tongNhanVien != 0) {
+							
+						    m = soNgayLamTrungBinh / tongNhanVien;
+						    lbl_hienThuSoNgayLam.setText(String.valueOf(m));
+						} else {
+						    lbl_hienThuSoNgayLam.setText("0");
+						    // Hoặc có thể xử lý khác tùy thuộc vào yêu cầu của bạn
+						}
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				
+					}
+					
+				
+				else if(year.equals("Tất cả"))
+				{
+					List<LuongNhanVien> list_hd;
+					try {
+						list_hd = tk_nv_dao.timKiemMonthMaHD(date, ma);
+						for (LuongNhanVien luongNhanVien : list_hd) {
+							tableModel.addRow(new Object[] {luongNhanVien.getMaNhanVien().getMaNhanVien(),
+									luongNhanVien.getTenNhanVien(),
+									luongNhanVien.getSoNgayDiLam(),
+									luongNhanVien.getThucNhan()  });
+
+							tongNhanVien++;
+							soNgayLamTrungBinh+=luongNhanVien.getSoNgayDiLam();
+							tongLuong+=luongNhanVien.getThucNhan();
+							if(max<luongNhanVien.getThucNhan())
+							{
+								max=luongNhanVien.getThucNhan();
+							}
+							if(min>luongNhanVien.getThucNhan())
+							{
+								min=luongNhanVien.getThucNhan();
+							}
+							
+						}
+						lbl_hienThiTongNV.setText(tongNhanVien+"");
+						lbl_hienThiLuongThapNhat.setText(min+"");
+						lbl_hienThiLuongCaoNhat.setText(max+"");
+						lbl_hienThiTongTienLuong.setText(tongLuong+"");
+		if (tongNhanVien != 0) {
+							
+						    m = soNgayLamTrungBinh / tongNhanVien;
+						    lbl_hienThuSoNgayLam.setText(String.valueOf(m));
+						} else {
+						    lbl_hienThuSoNgayLam.setText("0");
+						    // Hoặc có thể xử lý khác tùy thuộc vào yêu cầu của bạn
+						}
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+					
+					
+				}
+				else if(ma.equals("Tất cả"))
+				{
+					List<LuongNhanVien> list_hd;
+					try {
+						list_hd = tk_nv_dao.timKiemMonthYear(date, year);
+						for (LuongNhanVien luongNhanVien : list_hd) {
+							tableModel.addRow(new Object[] {luongNhanVien.getMaNhanVien().getMaNhanVien(),
+									luongNhanVien.getTenNhanVien(),
+									luongNhanVien.getSoNgayDiLam(),
+									luongNhanVien.getThucNhan()  });
+
+							tongNhanVien++;
+							soNgayLamTrungBinh+=luongNhanVien.getSoNgayDiLam();
+							tongLuong+=luongNhanVien.getThucNhan();
+							if(max<luongNhanVien.getThucNhan())
+							{
+								max=luongNhanVien.getThucNhan();
+							}
+							if(min>luongNhanVien.getThucNhan())
+							{
+								min=luongNhanVien.getThucNhan();
+							}
+							
+						}
+						lbl_hienThiTongNV.setText(tongNhanVien+"");
+						lbl_hienThiLuongThapNhat.setText(min+"");
+						lbl_hienThiLuongCaoNhat.setText(max+"");
+						lbl_hienThiTongTienLuong.setText(tongLuong+"");
+		if (tongNhanVien != 0) {
+							
+						    m = soNgayLamTrungBinh / tongNhanVien;
+						    lbl_hienThuSoNgayLam.setText(String.valueOf(m));
+						} else {
+						    lbl_hienThuSoNgayLam.setText("0");
+						    // Hoặc có thể xử lý khác tùy thuộc vào yêu cầu của bạn
+						}
+						
+						
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				
+				}
+				else if(date.equals("Tất cả"))
+				{
+					List<LuongNhanVien> list_hd;
+					try {
+						list_hd = tk_nv_dao.timKiemYearMaHD(year, ma);
+						for (LuongNhanVien luongNhanVien : list_hd) {
+							tableModel.addRow(new Object[] {luongNhanVien.getMaNhanVien().getMaNhanVien(),
+									luongNhanVien.getTenNhanVien(),
+									luongNhanVien.getSoNgayDiLam(),
+									luongNhanVien.getThucNhan()  });
+
+							tongNhanVien++;
+							soNgayLamTrungBinh+=luongNhanVien.getSoNgayDiLam();
+							tongLuong+=luongNhanVien.getThucNhan();
+							if(max<luongNhanVien.getThucNhan())
+							{
+								max=luongNhanVien.getThucNhan();
+							}
+							if(min>luongNhanVien.getThucNhan())
+							{
+								min=luongNhanVien.getThucNhan();
+							}
+							
+						}
+		if (tongNhanVien != 0) {
+							
+						    m = soNgayLamTrungBinh / tongNhanVien;
+						    lbl_hienThuSoNgayLam.setText(String.valueOf(m));
+						} else {
+						    lbl_hienThuSoNgayLam.setText("0");
+						    // Hoặc có thể xử lý khác tùy thuộc vào yêu cầu của bạn
+						}
+						lbl_hienThiTongNV.setText(tongNhanVien+"");
+						lbl_hienThiLuongThapNhat.setText(min+"");
+						lbl_hienThiLuongCaoNhat.setText(max+"");
+						lbl_hienThiTongTienLuong.setText(tongLuong+"");
+					} catch (RemoteException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+				
+					
+					
+				}
+			
+					
+				else
+					{
+						List<LuongNhanVien> list_hd;
+						try {
+							list_hd = tk_nv_dao.timKiem(date,year,ma);
+							for (LuongNhanVien luongNhanVien : list_hd) {
+								tableModel.addRow(new Object[] {luongNhanVien.getMaNhanVien().getMaNhanVien(),
+										luongNhanVien.getTenNhanVien(),
+										luongNhanVien.getSoNgayDiLam(),
+										luongNhanVien.getThucNhan()  });
+
+								tongNhanVien++;
+								soNgayLamTrungBinh+=luongNhanVien.getSoNgayDiLam();
+								tongLuong+=luongNhanVien.getThucNhan();
+								if(max<luongNhanVien.getThucNhan())
+								{
+									max=luongNhanVien.getThucNhan();
+								}
+								if(min>luongNhanVien.getThucNhan())
+								{
+									min=luongNhanVien.getThucNhan();
+								}
+								
+							}
+							if (tongNhanVien != 0) {
+								
+							    m = soNgayLamTrungBinh / tongNhanVien;
+							    lbl_hienThuSoNgayLam.setText(String.valueOf(m));
+							} else {
+							    lbl_hienThuSoNgayLam.setText("0");
+							    // Hoặc có thể xử lý khác tùy thuộc vào yêu cầu của bạn
+							}
+							lbl_hienThiTongNV.setText(tongNhanVien+"");
+							lbl_hienThiLuongThapNhat.setText(min+"");
+							lbl_hienThiLuongCaoNhat.setText(max+"");
+							lbl_hienThiTongTienLuong.setText(tongLuong+"");
+							
+												
+						} catch (RemoteException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						
+						
+					}
+				 if(date.equals("Tất cả") && year.equals("Tất cả") && ma.equals("Tất cả"))
+				{
+					
+					List<LuongNhanVien> list_hd =lnv.getDanhSachLuongNhanVien();
+					for (LuongNhanVien luongNhanVien : list_hd) {
+						tableModel.addRow(new Object[] {luongNhanVien.getMaNhanVien().getMaNhanVien(),
+								luongNhanVien.getTenNhanVien(),
+								luongNhanVien.getSoNgayDiLam(),
+								luongNhanVien.getThucNhan()  });
+
+						tongNhanVien++;
+						soNgayLamTrungBinh+=luongNhanVien.getSoNgayDiLam();
+						tongLuong+=luongNhanVien.getThucNhan();
+						if(max<luongNhanVien.getThucNhan())
+						{
+							max=luongNhanVien.getThucNhan();
+						}
+						if(min>luongNhanVien.getThucNhan())
+						{
+							min=luongNhanVien.getThucNhan();
+						}
+						
+					}
+					if (tongNhanVien != 0) {
+						
+					    m = soNgayLamTrungBinh / tongNhanVien;
+					    lbl_hienThuSoNgayLam.setText(String.valueOf(m));
+					} else {
+					    lbl_hienThuSoNgayLam.setText("0");
+					    // Hoặc có thể xử lý khác tùy thuộc vào yêu cầu của bạn
+					}
+					lbl_hienThiTongNV.setText(tongNhanVien+"");
+					lbl_hienThiLuongThapNhat.setText(min+"");
+					lbl_hienThiLuongCaoNhat.setText(max+"");
+					lbl_hienThiTongTienLuong.setText(tongLuong+"");
+					
+					
+
+				}
+				
+			}
+		});
 	}
 //	public static int laySoNgayTrongThang(int nam, int thang) {
 //        YearMonth thangCuThe = YearMonth.of(nam, thang);
