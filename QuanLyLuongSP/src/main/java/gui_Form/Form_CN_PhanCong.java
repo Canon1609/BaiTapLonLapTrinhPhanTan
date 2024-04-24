@@ -600,10 +600,10 @@ public class Form_CN_PhanCong extends JPanel {
 		    if(txtSoLuongConLai.getText().trim().equals("")) {
 		    	JOptionPane.showMessageDialog(null, "Bạn cần chọn sản phẩm để biết số sản phẩm chưa được phân công");
 		    	return false;
-		    }else {
+		    }else 
 		    	soLuongCanLam = Integer.parseInt(txtSLCanLam.getText().trim());
 			    soLuongConLai = Integer.parseInt(txtSoLuongConLai.getText().trim());
-		    }
+		
 		    if (soLuongCanLam > soLuongConLai) {
 		        JOptionPane.showMessageDialog(null, "Số lượng cần làm không hợp lệ, đã vượt quá số lượng còn lại");
 		        return false;
