@@ -2,7 +2,6 @@ package server;
 
 import java.io.*;
 import java.net.*;
-import gui_Form.Form_DangNhap;
 
 public class Server {
     public static void main(String[] args) {
@@ -16,11 +15,22 @@ public class Server {
                 System.out.println("Client connected: " + socket);
 
                 new Thread(() -> {
-                    Form_DangNhap formDangNhap = new Form_DangNhap();
+                    try {
+                        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
-                    formDangNhap.setLocationRelativeTo(null);
+                        String request = in.readLine();
+                        if (request.equals("SHOW_INTERFACE")) {
+                            System.out.println("Client requested to show the interface.");
 
-                    formDangNhap.setVisible(true);
+                            // Gửi phản hồi cho client để yêu cầu hiển thị giao diện
+                            out.println("DISPLAY_INTERFACE");
+                        } else {
+                            System.out.println("Unexpected request from client: " + request);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }).start();
             }
         } catch (IOException e) {
