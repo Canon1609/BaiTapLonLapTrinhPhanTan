@@ -360,9 +360,10 @@ public class Form_NV_TinhLuong extends JPanel {
 				// Hiển thị tổng ngày công (ví dụ: bằng cách đặt nó vào một JLabel hoặc
 				// JTextField)
 
+
 				System.out.println("Tổng ngày công: " + tongNgayCong); // Thay thế
 				// lblTongNgayCong bằng thành phần hiển thị thực tế của bạn
-				// System.out.println("\nTB lương ca: " + tbLuongCa);
+				System.out.println("\nTB lương ca: " + tbLuongCa);
 				thucNhan = ((((luongCB * tbLuongCa) * heSoLuong) / 26) * tongNgayCong) + phuCap;
 				// Chuyển giá trị double thành chuỗi
 				String thucNhanStr = Double.toString(thucNhan);

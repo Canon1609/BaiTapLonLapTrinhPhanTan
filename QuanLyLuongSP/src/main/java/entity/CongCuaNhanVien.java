@@ -41,7 +41,7 @@ public class CongCuaNhanVien implements java.io.Serializable{
 	@Column(name = "gioLam", columnDefinition = "nvarchar(255)")
 	private String gioLam;
 	@Column(name = "luongCaLam", columnDefinition = "float")
-	private float luongCaLam;
+	private double luongCaLam;
 	@Column(name = "trangThai", columnDefinition = "nvarchar(255)")
 	private String trangThai;
 	@Column(name = "nghiPhep", columnDefinition = "nvarchar(255)")
