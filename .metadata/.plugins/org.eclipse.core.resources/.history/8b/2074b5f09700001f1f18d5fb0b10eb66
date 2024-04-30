@@ -1,7 +1,0 @@
-package dao.Impl;
-
-import dao.LuongNhanVienDao;
-
-public class LuongNhanVienDaoImpl extends  implements LuongNhanVienDao{
-
-}

@@ -1,0 +1,117 @@
+package server;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+
+
+import dao.ChamCongCongNhanDao;
+import dao.ChamCongNhanVienDao;
+import dao.CongDoanDao;
+import dao.CongNhanDao;
+import dao.HopDongDAO;
+import dao.LuongNhanVienDao;
+import dao.LuonngCongNhanDao;
+import dao.NhanVienDao;
+import dao.PhanCongDao;
+import dao.SanPhamDAO;
+import dao.ThongKe_CN_Dao;
+import dao.ThongKe_HD_Dao;
+import dao.ThongKe_NV_Dao;
+import dao.ThongKe_SP_Dao;
+import dao.Impl.ChamCongCongNhanlmpl;
+import dao.Impl.ChamCongNhanVienDaoImpl;
+import dao.Impl.CongDoanDaoImpl;
+import dao.Impl.CongNhanlmpl;
+import dao.Impl.HopDongDAOImpl;
+import dao.Impl.LuongNhanVienDaoImpl;
+import dao.Impl.NhanVienDaoImpl;
+import dao.Impl.PhanCongDaoImpl;
+import dao.Impl.SanPhamDAOImpl;
+import dao.Impl.ThongKe_CN_lmpl;
+import dao.Impl.ThongKe_HD_Daolmpl;
+import dao.Impl.ThongKe_NV_Daolmpl;
+import dao.Impl.ThongKe_SP_lmpl;
+import dao.Impl.LuongCongNhanlmpl;
+
+import java.rmi.registry.LocateRegistry;
+
+public class Server {
+	private static final String URL = "rmi://TRANQUOCANH:9999/";
+	public static void main(String[] args) throws Exception {
+		Context context = new InitialContext();
+		
+		
+		ChamCongCongNhanDao chamCongCongNhanDao = new ChamCongCongNhanlmpl();
+		ChamCongNhanVienDao chamCongNhanVienDao = new ChamCongNhanVienDaoImpl();
+		CongDoanDao congDoanDao = new CongDoanDaoImpl();
+		CongNhanDao congNhanDao = new CongNhanlmpl();
+		HopDongDAO hopDongDAO = new HopDongDAOImpl();
+		LuongNhanVienDao luongNhanVienDao = new LuongNhanVienDaoImpl();
+		LuonngCongNhanDao luonngCongNhanDao = new LuongCongNhanlmpl();
+		NhanVienDao	nhanVienDao = new NhanVienDaoImpl();
+		PhanCongDao phanCongDao = new PhanCongDaoImpl();
+		SanPhamDAO sanPhamDAO = new SanPhamDAOImpl();
+		ThongKe_CN_Dao thongKe_CN_Dao = new ThongKe_CN_lmpl();
+		ThongKe_HD_Dao thongKe_HD_Dao = new ThongKe_HD_Daolmpl();
+		ThongKe_NV_Dao thongKe_NV_Dao = new ThongKe_NV_Daolmpl();
+		ThongKe_SP_Dao thongKe_SP_Dao = new ThongKe_SP_lmpl();
+		
+//		System.out.println(sanPhamDAO.getSoLuong("SP01"));
+		LocateRegistry.createRegistry(9999);
+		
+		context.bind(URL + "ChamCongCongNhanDao", chamCongCongNhanDao);
+		context.bind(URL + "ChamCongNhanVienDao", chamCongNhanVienDao);
+		context.bind(URL + "CongDoanDao", congDoanDao);
+		context.bind(URL + "CongNhanDao", congNhanDao);
+		context.bind(URL + "HopDongDAO", hopDongDAO);
+		context.bind(URL + "LuongNhanVienDao", luongNhanVienDao);
+		context.bind(URL + "LuonngCongNhanDao", luonngCongNhanDao);
+		context.bind(URL + "NhanVienDao", nhanVienDao);
+		context.bind(URL + "PhanCongDao", phanCongDao);
+		context.bind(URL + "SanPhamDAO", sanPhamDAO);
+		context.bind(URL + "ThongKe_CN_Dao", thongKe_CN_Dao);
+		context.bind(URL + "ThongKe_HD_Dao", thongKe_HD_Dao);
+		context.bind(URL + "ThongKe_NV_Dao", thongKe_NV_Dao);
+		context.bind(URL + "ThongKe_SP_Dao", thongKe_SP_Dao);
+		
+		
+		System.out.println("Server is running...");
+		
+		
+	} 
+}
+
+
+//public static void main(String[] args) {
+//final int PORT = 9999;
+//
+//try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+//  System.out.println("Server is running...");
+//
+//  while (true) {
+//      Socket socket = serverSocket.accept();
+//      System.out.println("Client connected: " + socket);
+//
+//      new Thread(() -> {
+//          try {
+//              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+//
+//              String request = in.readLine();
+//              if (request.equals("SHOW_INTERFACE")) {
+//                  System.out.println("Client requested to show the interface.");
+//
+//                  // Gửi phản hồi cho client để yêu cầu hiển thị giao diện
+//                  out.println("DISPLAY_INTERFACE");
+//              } else {
+//                  System.out.println("Unexpected request from client: " + request);
+//              }
+//          } catch (IOException e) {
+//              e.printStackTrace();
+//          }
+//      }).start();
+//  }
+//} catch (IOException e) {
+//  e.printStackTrace();
+//}
+//}

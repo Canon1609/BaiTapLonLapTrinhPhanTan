@@ -1,0 +1,22 @@
+package gui_Form;
+
+import client.Client;
+
+public class Main {
+	private static Client client = new Client();
+    public static void main(String[] args) {
+        // Tạo đối tượng form đăng nhập
+//        Form_DangNhap formDangNhap = new Form_DangNhap();
+//
+//        // Đảm bảo hiển thị formDangNhap chính giữa màn hình
+//        formDangNhap.setLocationRelativeTo(null);
+//
+//        // Hiển thị form đăng nhập
+//        formDangNhap.setVisible(true); 
+		TrangChu tc = new TrangChu();
+		tc.setLocationRelativeTo(null);
+		tc.setVisible(true);
+
+    }
+}
+

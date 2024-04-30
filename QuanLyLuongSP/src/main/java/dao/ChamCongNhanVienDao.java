@@ -14,5 +14,7 @@ public interface ChamCongNhanVienDao extends Remote{
 
 	List<CongCuaNhanVien> getAllCongNV() throws RemoteException;
 
+	boolean ChamCongChoTatCaNhanVien(CongCuaNhanVien congNV) throws RemoteException;
+
 
 }

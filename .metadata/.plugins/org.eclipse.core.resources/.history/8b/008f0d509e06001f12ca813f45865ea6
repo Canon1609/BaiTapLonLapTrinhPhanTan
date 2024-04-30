@@ -1,0 +1,16 @@
+package dao;
+
+import java.rmi.Remote;
+import java.util.List;
+
+import entity.LuongCongNhan;
+
+public interface ThongKe_CN_Dao extends Remote{
+	List<LuongCongNhan> getmatbNhanVien(String Ma);
+	List<LuongCongNhan> timKiemNgayLYear(String Year);
+	List<LuongCongNhan> timKiemNgayLMonth(String month);
+	List<LuongCongNhan> timKiemMonthMaHD(String date,String ma);
+	List<LuongCongNhan> timKiemMonthYear(String date,String year);
+	List<LuongCongNhan> timKiemYearMaHD(String year,String ma);
+	List<LuongCongNhan> timKiem(String date,String year,String ma);
+}

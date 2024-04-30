@@ -46,4 +46,7 @@ public class CongCuaNhanVien implements java.io.Serializable{
 	private String trangThai;
 	@Column(name = "nghiPhep", columnDefinition = "nvarchar(255)")
 	private String nghiPhep;
+	
+	
+	
 }

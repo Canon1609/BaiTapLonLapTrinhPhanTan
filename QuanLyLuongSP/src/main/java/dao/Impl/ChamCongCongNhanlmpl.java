@@ -1,6 +1,7 @@
 package dao.Impl;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
 import dao.ChamCongCongNhanDao;
@@ -12,7 +13,11 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 
-public class ChamCongCongNhanlmpl implements ChamCongCongNhanDao{
+public class ChamCongCongNhanlmpl extends UnicastRemoteObject implements ChamCongCongNhanDao{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9186046784410094386L;
 	private EntityManagerFactory emf;
 
 	public ChamCongCongNhanlmpl() throws RemoteException {

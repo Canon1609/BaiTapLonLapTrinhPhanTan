@@ -1,0 +1,21 @@
+package dao;
+
+
+import java.rmi.Remote;
+import java.util.List;
+
+import entity.CongNhan;
+
+
+
+public interface CongNhanDao extends Remote{
+	List<CongNhan> getAlltbCongNhan();
+	boolean create(CongNhan cn);
+	int getCNNumber();
+	boolean deleteCN(String maCN);
+	boolean update(CongNhan cn);
+	List<CongNhan> timKiemGT(String gt);
+	int getMaxEmployeeNumber();
+	List<CongNhan> timKiemTen(String ten);
+	
+}

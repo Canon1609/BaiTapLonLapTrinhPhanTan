@@ -6,6 +6,7 @@ import java.util.List;
 
 import dao.ChamCongNhanVienDao;
 import entity.CongCuaNhanVien;
+import entity.NhanVien;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
@@ -71,6 +72,54 @@ public class ChamCongNhanVienDaoImpl extends UnicastRemoteObject implements Cham
 
 		return false;
 	}
+	@Override
+	public boolean ChamCongChoTatCaNhanVien(CongCuaNhanVien congNV) {
+	    EntityManager em = emf.createEntityManager(); // Mở EntityManager
+	    EntityTransaction tx = em.getTransaction();
+	    try {
+	        tx.begin();
+
+	        // Lấy danh sách tất cả nhân viên
+	        List<NhanVien> danhSachNhanVien = em.createQuery("SELECT nv FROM NhanVien nv", NhanVien.class).getResultList();
+
+	        // Duyệt qua danh sách nhân viên và chấm công cho mỗi nhân viên
+	        for (NhanVien nv : danhSachNhanVien) {
+	            // Kiểm tra xem công của nhân viên đã tồn tại chưa
+	            CongCuaNhanVien existingCong = em.find(CongCuaNhanVien.class, congNV.getMaCongCuaNhanVien());
+	            if (existingCong == null) {
+	                // Tạo một bản sao của đối tượng công cho mỗi nhân viên
+	                CongCuaNhanVien congNhanVien = new CongCuaNhanVien();
+	                congNhanVien.setMaCongCuaNhanVien(congNV.getMaCongCuaNhanVien());
+	                congNhanVien.setMaNhanVien(nv);
+	                congNhanVien.setNgayChamCong(congNV.getNgayChamCong());
+	                congNhanVien.setCaLam(congNV.getCaLam());
+	                congNhanVien.setGioLam(congNV.getGioLam());
+	                congNhanVien.setLuongCaLam(congNV.getLuongCaLam());
+	                congNhanVien.setTrangThai(congNV.getTrangThai());
+	                congNhanVien.setNghiPhep(congNV.getNghiPhep());
+
+	                // Persist công của nhân viên vào cơ sở dữ liệu
+	                em.persist(congNhanVien);
+	            }
+	        }
+
+	        tx.commit();
+
+	        return true;
+	    } catch (Exception e) {
+	        if (tx != null && tx.isActive()) {
+	            tx.rollback();
+	        }
+	        e.printStackTrace();
+	    } finally {
+	        em.close(); // Đóng EntityManager sau khi sử dụng
+	    }
+
+	    return false;
+	}
+
+
+
 	
 	//Viết phương thức xóa 1 công nhân viên khỏi cơ sở dữ liệu trả về boolean
 	@Override

@@ -1,0 +1,15 @@
+package dao;
+
+
+import java.rmi.Remote;
+import java.util.List;
+
+import entity.CongCuaCongNhan;
+
+public interface ChamCongCongNhanDao extends Remote{
+	List<CongCuaCongNhan> getAlltbCongCuaCongNhan();
+	boolean create(CongCuaCongNhan congCN);
+	int getCNNumber();
+	public boolean delete(String maCongCN);
+	public int getMaxMaCongCN();
+}

@@ -1,0 +1,15 @@
+package dao;
+
+import java.rmi.RemoteException;
+import java.util.List;
+
+import entity.HopDong;
+import entity.SanPham;
+
+public interface ThongKe_SP_Dao {
+	public List<SanPham> getTheoMaSP(String ma) throws RemoteException;
+	public List<SanPham> getTheoTenSP(String ten) throws RemoteException;
+	public List<SanPham> getAllSP() throws RemoteException;
+	public List<SanPham> getMAANDTEN(String ma, String ten) throws RemoteException;
+	public List<HopDong> getHDTheoMaSP(String ma) throws RemoteException;
+}

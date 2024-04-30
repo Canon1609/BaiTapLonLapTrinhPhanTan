@@ -1,6 +1,7 @@
 package dao.Impl;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
 import javax.naming.CommunicationException;
@@ -16,7 +17,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-public class ThongKe_NV_Daolmpl extends CommunicationException implements ThongKe_NV_Dao{
+public class ThongKe_NV_Daolmpl extends UnicastRemoteObject implements ThongKe_NV_Dao{
 	private static final long serialVersionUID = 5929402348281005343L;
 	private EntityManagerFactory emf;
 	private EntityManager entityManager;

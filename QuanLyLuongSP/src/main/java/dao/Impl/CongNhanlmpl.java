@@ -2,6 +2,7 @@ package dao.Impl;
 
 
 
+import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
 import dao.CongNhanDao;
@@ -13,10 +14,14 @@ import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 
-public class CongNhanlmpl implements CongNhanDao{
+public class CongNhanlmpl extends UnicastRemoteObject implements CongNhanDao{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6400740473052409241L;
 	private EntityManagerFactory emf;
 
-	public CongNhanlmpl(){
+	public CongNhanlmpl() throws Exception{
 		// Khởi tạo EntityManagerFactory
 		emf = Persistence.createEntityManagerFactory("jpa-mssql");
 	}

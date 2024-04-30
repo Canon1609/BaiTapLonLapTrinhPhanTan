@@ -1,0 +1,14 @@
+package dao;
+
+import java.rmi.Remote;
+import java.util.ArrayList;
+
+import entity.LuongCongNhan;
+
+public interface LuonngCongNhanDao extends Remote{
+	ArrayList<LuongCongNhan> getAlltbLuongCuaCongNhan();
+	boolean create(LuongCongNhan luongCN);
+	public boolean delete(String maLuongCN);
+	public int getMaxMaLuongCN();
+	
+}
