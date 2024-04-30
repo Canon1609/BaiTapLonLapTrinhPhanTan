@@ -504,69 +504,69 @@ public class Form_NV_ChamCong extends JPanel {
 			}
 		});
 		// xử lý btn chấm công tất cả
-				btnChamCongTC.addActionListener(new ActionListener() {
+		btnChamCongTC.addActionListener(new ActionListener() {
 
-		            @Override
-		            public void actionPerformed(ActionEvent e) {
-		                if (valid()) {
-		                    
-		                    String caLam = cmbCaLam.getSelectedItem().toString();
-		                    String gioLam = txtGioLam.getText();
-		                    float luongCa = Float.parseFloat(txtLuongCa.getText());
-		                    String trangThai = "";
-		                    if (chkCoMat.isSelected()) {
-		                        trangThai = "Có mặt";
-		                    } else {
-		                        trangThai = "Nghỉ";
-		                    }
-		                    String nghiPhep = "";
-		                    if (chkCoPhep.isSelected()) {
-		                        nghiPhep = "Có";
-		                    } else {
-		                        nghiPhep = "Không";
-		                    }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (valid()) {
+                    
+                    String caLam = cmbCaLam.getSelectedItem().toString();
+                    String gioLam = txtGioLam.getText();
+                    float luongCa = Float.parseFloat(txtLuongCa.getText());
+                    String trangThai = "";
+                    if (chkCoMat.isSelected()) {
+                        trangThai = "Có mặt";
+                    } else {
+                        trangThai = "Nghỉ";
+                    }
+                    String nghiPhep = "";
+                    if (chkCoPhep.isSelected()) {
+                        nghiPhep = "Có";
+                    } else {
+                        nghiPhep = "Không";
+                    }
 
-		                    Date ngayCham = (Date) dateChooser.getDate();
-		                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		                    String ngayChamStr = dateFormat.format(ngayCham);
+                    Date ngayCham = (Date) dateChooser.getDate();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String ngayChamStr = dateFormat.format(ngayCham);
 
-//		                    for (int row = 0; row < tblNv.getRowCount(); row++) {
-//		                        String maNV = (String) tableModel.getValueAt(row, 0);
-//		                        NhanVien nv = new NhanVien(maNV);
-//		                        CongCuaNhanVien congNV = new CongCuaNhanVien(ma, nv, ngayChamStr, caLam, gioLam, luongCa,
-//		                                trangThai, nghiPhep);
-//		                        cnv_dao.ChamCongNhanVien(congNV);
-//		                        tableModelDSChamCong.addRow(new Object[] { congNV.getMaCongCuaNhanVien(),
-//		                                congNV.getMaNhanVien().getMaNhanVien(), congNV.getNgayChamCong(), congNV.getCaLam(),
-//		                                congNV.getGioLam(), congNV.getLuongCaLam(), congNV.getTrangThai(), congNV.getNghiPhep() });
-//		                    }
-		                    int maxMaCongNV = cnv_dao.getMaxMaCongNV();
-		                    int nextMaCongNv = maxMaCongNV;
-		                  //  System.out.println(nextMaCongNv);
-		                    for(int row = 0 ; row < tblDanhSachNV.getRowCount();row++)
-		                    {
-		                    	
-		                    	nextMaCongNv++;
-		                        String ma = String.format("C%02d", nextMaCongNv);
-		                        String maNV = (String) tblDanhSachNV.getValueAt(row,0);
-		                        NhanVien nv = new NhanVien(maNV);
-		                        CongCuaNhanVien congNV = new CongCuaNhanVien(ma, nv, ngayChamStr, caLam, gioLam, luongCa, trangThai, nghiPhep);
-		                        cnv_dao.ChamCongNhanVien(congNV);
-		                        tableModelDSChamCong.addRow(new Object[] { congNV.getMaCongCuaNhanVien(),
-		                              congNV.getMaNhanVien().getMaNhanVien(), congNV.getNgayChamCong(), congNV.getCaLam(),
-		                              congNV.getGioLam(), congNV.getLuongCaLam(), congNV.getTrangThai(), congNV.getNghiPhep() });
-		                    }
-		                    txtNhanVien.setText("");
-		                    txtGioLam.setText("");
-		                    txtLuongCa.setText("");
-		                    txtPhongBan.setText("");
-		                    dateChooser.setDate(null);
-		                   JOptionPane.showMessageDialog(null, "Chấm công tất cả thành công");
-		                }else {
-                            JOptionPane.showMessageDialog(null, "Chấm công không thành công");
-		            	}
-		                
-		                }});
+//                    for (int row = 0; row < tblNv.getRowCount(); row++) {
+//                        String maNV = (String) tableModel.getValueAt(row, 0);
+//                        NhanVien nv = new NhanVien(maNV);
+//                        CongCuaNhanVien congNV = new CongCuaNhanVien(ma, nv, ngayChamStr, caLam, gioLam, luongCa,
+//                                trangThai, nghiPhep);
+//                        cnv_dao.ChamCongNhanVien(congNV);
+//                        tableModelDSChamCong.addRow(new Object[] { congNV.getMaCongCuaNhanVien(),
+//                                congNV.getMaNhanVien().getMaNhanVien(), congNV.getNgayChamCong(), congNV.getCaLam(),
+//                                congNV.getGioLam(), congNV.getLuongCaLam(), congNV.getTrangThai(), congNV.getNghiPhep() });
+//                    }
+                    int maxMaCongNV = cnv_dao.getMaxMaCongNV();
+                    int nextMaCongNv = maxMaCongNV;
+                  //  System.out.println(nextMaCongNv);
+                    for(int row = 0 ; row < tblDanhSachNV.getRowCount();row++)
+                    {
+                    	
+                    	nextMaCongNv++;
+                        String ma = String.format("C%02d", nextMaCongNv);
+                        String maNV = (String) tblDanhSachNV.getValueAt(row,0);
+                        NhanVien nv = new NhanVien(maNV);
+                        CongCuaNhanVien congNV = new CongCuaNhanVien(ma, nv, ngayChamStr, caLam, gioLam, luongCa, trangThai, nghiPhep);
+                        cnv_dao.ChamCongNhanVien(congNV);
+                        tableModelDSChamCong.addRow(new Object[] { congNV.getMaCongCuaNhanVien(),
+                              congNV.getMaNhanVien().getMaNhanVien(), congNV.getNgayChamCong(), congNV.getCaLam(),
+                              congNV.getGioLam(), congNV.getLuongCaLam(), congNV.getTrangThai(), congNV.getNghiPhep() });
+                    }
+                    txtNhanVien.setText("");
+                    txtGioLam.setText("");
+                    txtLuongCa.setText("");
+                    txtPhongBan.setText("");
+                    dateChooser.setDate(null);
+                   JOptionPane.showMessageDialog(null, "Chấm công tất cả thành công");
+                }else {
+                    JOptionPane.showMessageDialog(null, "Chấm công không thành công");
+            	}
+                
+                }});
 
 
 		btnXoaChamCongNV.addActionListener(new ActionListener() {
